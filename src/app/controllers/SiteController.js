@@ -3,7 +3,7 @@ const {multipleMongooseToObject: multipleMongooseToObject}  = require('../../uti
 class SiteController {
     // [GET] /
     index(req, res, next) {
-        res.send('user ' + req.params.id)
+        res.send('DO AN CHUYEN NGANH')
     }
 
     // [GET] /search
