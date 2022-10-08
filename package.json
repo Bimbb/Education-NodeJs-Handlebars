@@ -1,0 +1,25 @@
+{
+  "name": "dacn",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ADONIIS1/Education_DACN.git"
+  },
+  "author": "nhom8",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/ADONIIS1/Education_DACN/issues"
+  },
+  "homepage": "https://github.com/ADONIIS1/Education_DACN#readme",
+  "dependencies": {
+    "express": "^4.18.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.20"
+  }
+}
