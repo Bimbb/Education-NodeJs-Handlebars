@@ -1,0 +1,280 @@
+<section class="exercise__detail">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            {{#ifCond exercises.length '>' 0}}
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="card-title text-uppercase">
+                                {{subject.name}} - Lớp {{grade.name}} - {{unit.name}}
+                            </div>
+                            <div class="card-title">
+                               Bài tập vận dụng Bài {{lesson.lessonNumber}} - {{lesson.name}}
+                            </div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <a href="/theories/detail?lesson={{lesson._id}}" class="btn btn-outline-primary">
+                                <i class="mdi mdi-book-open-variant mr-2"></i>
+                                Lý thuyết
+                            </a>
+                            <form action="/exercises/{{lesson._id}}/export" class="mb-0 ml-4" method="POST">
+                                <button class="btn btn-outline-success btn-icon-text">
+                                    <i class="mdi mdi-file-excel btn-icon-prepend"></i>
+                                    Xuất excel
+                                </button>
+                            </form>
+                            <a href="/units/{{unit._id}}/detail" class="btn btn-outline-warning btn-icon-text ml-4">
+                                <i class="mdi mdi-reload btn-icon-prepend"></i>
+                                Quay lại
+                            </a>
+                        </div>
+                    </div>
+                    <div class="text-dark mt-4">
+                        <div class="row">
+                            <div class="col-md-2 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-header text-center bg-secondary">
+                                        Nhấn vào câu hỏi để xem chi tiết
+                                    </div>
+                                    <div class="card-body">
+                                        <nav>
+                                            <div class="d-flex align-items-center justify-content-center nav nav-tabs border-0" role="tablist">
+                                                {{#each exercises}}
+                                                    <a href="#nav-{{sum @index 1}}" class="nav-item nav-link rounded-circle bg-secondary mr-3 mb-3" id="exercise-tab-{{sum @index 1}}"  data-toggle="tab"role="tab" aria-controls="nav-{{sum @index 1}}" aria-selected="fasle" >
+                                                        {{sum @index 1}}
+                                                    </a>
+                                                {{/each}}
+                                                <a href="/exercises/create?lesson={{lesson._id}}" class="btn border border-danger text-green  p-2 mb-3 mr-3">
+                                                    <i class="mdi mdi-upload"></i>
+                                                </a>
+                                            </div>
+                                        </nav>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-10 grid-margin stretch-card">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="tab-content border-0 p-0">
+                                            {{#each exercises}}
+                                            <div class="tab-pane fade" id="nav-{{sum @index 1}}", role="tabpanel", aria-labelledby="exercise-tab-{{sum @index 1}}">
+                                                <div class="d-flex align-items-center justify-content-between">
+                                                    <h4 class="card-title">Chi Tiết Câu {{ sum @index 1}}</h4>
+                                                    <button class="btn btn-outline-danger" data-toggle="modal" data-target="#deleteExerciseModal" data-id={{this._id}}>
+                                                        <i class="mdi mdi-delete"></i>
+                                                        <span>Xóa</span> 
+                                                    </button>
+                                                </div>
+                                                <form action="/exercises/{{this._id}}?_method=PUT" class="mt-4" method='POST'>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-12">
+                                                             <textarea type='text', placeholder='Nhập câu hỏi tại đây...', name='question' id="question" class="form-control">
+                                                                {{this.question}}
+                                                             </textarea>   
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <div class="col-sm-3">
+                                                            <div class="text-center position-relative">
+                                                                <input type="radio" class="form-check-input-custom color-1" id="custom1-{{sum @index 1}}"  name='answer' value='A'  {{#ifCond  this.answer "==" this.option1}}  checked = "true" {{/ifCond}} >
+                                                                <label for="custom1-{{sum @index 1}}">
+                                                                    <span>
+                                                                        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg' alt='Checked Icon' >
+                                                                    </span>
+                                                                </label>
+                                                                <div class="custom-desc">
+                                                                    Đánh dấu đây là câu trả lời đúng
+                                                                </div> 
+                                                            </div>
+                                                            <textarea class="form-control option-custom" type='text' rows='8' placeholder='Nhập 1 tùy chọn câu trả lời tại đây...' name='option1'>
+                                                                {{this.option1}}
+                                                            </textarea>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="text-center position-relative">
+                                                                <input type="radio" class="form-check-input-custom color-2" id="custom2-{{sum @index 1}}"  name='answer' value='B' {{#ifCond  this.answer "==" this.option2}}  checked = "true" {{/ifCond}}  >
+                                                                <label for="custom2-{{sum @index 1}}">
+                                                                    <span>
+                                                                        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg' alt='Checked Icon' >
+                                                                    </span>
+                                                                </label>
+                                                                <div class="custom-desc">
+                                                                    Đánh dấu đây là câu trả lời đúng
+                                                                </div> 
+                                                            </div>
+                                                            <textarea class="form-control option-custom" type='text' rows='8' placeholder='Nhập 1 tùy chọn câu trả lời tại đây...' name='option2'>
+                                                                {{this.option2}}
+                                                            </textarea>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="text-center position-relative">
+                                                                <input type="radio" class="form-check-input-custom color-3" id="custom3-{{sum @index 1}}"  name='answer' value='C' {{#ifCond  this.answer "==" this.option3}}  checked = "true" {{/ifCond}} >
+                                                                <label for="custom3-{{sum @index 1}}">
+                                                                    <span>
+                                                                        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg' alt='Checked Icon' >
+                                                                    </span>
+                                                                </label>
+                                                                <div class="custom-desc">
+                                                                    Đánh dấu đây là câu trả lời đúng
+                                                                </div> 
+                                                            </div>
+                                                            <textarea class="form-control option-custom" type='text' rows='8' placeholder='Nhập 1 tùy chọn câu trả lời tại đây...' name='option3'>
+                                                                {{this.option3}}
+                                                            </textarea>
+                                                        </div>
+                                                        <div class="col-sm-3">
+                                                            <div class="text-center position-relative">
+                                                                <input type="radio" class="form-check-input-custom color-4" id="custom4-{{sum @index 1}}"  name='answer' value='D' {{#ifCond  this.answer "==" this.option4}}  checked = "true" {{/ifCond}}>
+                                                                <label for="custom4-{{sum @index 1}}">
+                                                                    <span>
+                                                                        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg' alt='Checked Icon' >
+                                                                    </span>
+                                                                </label>
+                                                                <div class="custom-desc">
+                                                                    Đánh dấu đây là câu trả lời đúng
+                                                                </div> 
+                                                            </div>
+                                                            <textarea class="form-control option-custom" type='text' rows='8' placeholder='Nhập 1 tùy chọn câu trả lời tại đây...' name='option4'>
+                                                                {{this.option4}}
+                                                            </textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="recommend" class="col-sm-3 col-form-label text-dark">Gợi ý</label>
+                                                        <div class="col-sm-9">
+                                                            <textarea id="recommend" type='text', rows="4" placeholder='Nhập gợi ý', name='recommend' class="form-control">
+                                                                {{this.recommend}}
+                                                            </textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="form-group row">
+                                                        <label for="explain" class="col-sm-3 col-form-label text-dark"> Lời giải</label>
+                                                        <div class="col-sm-9">
+                                                            <textarea type='text', placeholder='Nhập lời giải', name='explain' id="explain"  class="form-control">
+                                                                {{this.explain}}
+                                                            </textarea>
+                                                        </div>
+                                                    </div>
+                                                    
+                                                    <div class="text-center">
+                                                        <button class="btn btn-primary ml-2" type='submit'>Lưu lại</button> 
+                                                    </div>        
+                                                </form> 
+                                            </div>
+                                            {{/each}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            {{/ifCond}}
+        </div>
+    </div>
+</section>
+
+<form name='delete-exercise-form', method='post' ></form>
+<div class="modal fade" id="deleteExerciseModal" tabindex="-1" role="dialog" aria-labelledby="deleteExerciseModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="transition: all 0.3s ease; max-width: 650px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong class="modal-title font-weight-bold text-dark text-uppercase" id="deleteExerciseModalLabel">Xóa câu hỏi !!!</strong>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"></button>
+                <span aria-hidden="true">×</span>
+            </div>
+            <div class="modal-body text-dark">
+                <p>Hành động này không thể khôi phục lại dữ liệu !!!</p>
+                <p>Bạn có chắc chắn muốn xóa câu hỏi này ???</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy bỏ</button>
+                <button class="btn btn-danger ml-2" id="btn-submit-delete-exercise" type="submit">Chắc chắn xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+{{#if errors}}
+    <div id="errors" style="visibility: hidden;">{{errors}}</div>
+{{else}}
+    {{#if success}}
+    <div id="success" style="visibility: hidden;">{{success}}</div>
+    {{/if}}
+{{/if}}
+
+<script>
+    var msgError = document.getElementById('errors');
+    ///toast message
+    let msgToastError = msgError.innerHTML;
+
+    if(msgToastError != ''){
+        Eggy({
+            title: 'Oops... Có gì đó không đúng',
+            message:  msgToastError,
+            type: 'warning',
+            duration: 5000,
+        });
+    }
+</script>
+<script>
+        var msgSuccess = document.getElementById('success');
+        let msgToastSuccess = msgSuccess.innerHTML;
+        if(msgToastSuccess != ''){
+            Eggy({
+                title: 'Thành Công',
+                message:  msgToastSuccess,
+                type: 'success',
+                duration: 5000,
+            });
+        }
+</script>
+<script>
+    var allEditorsQuestion = document.querySelectorAll('#question');
+    var allEditorsExplain = document.querySelectorAll('#explain');
+    var allEditorsRecommend = document.querySelectorAll('#recommend');
+    var allEditorsOption = document.querySelectorAll('textarea.option-custom');
+
+    for (var i = 0; i < allEditorsQuestion.length; ++i) {
+            ClassicEditor.create(allEditorsQuestion[i]);
+        }
+
+        for (var i = 0; i < allEditorsRecommend.length; ++i) {
+            ClassicEditor.create(allEditorsRecommend[i]);
+        }
+
+        for (var i = 0; i < allEditorsExplain.length; ++i) {
+            ClassicEditor.create(allEditorsExplain[i]);
+        }
+
+        for (var i = 0; i < allEditorsOption.length; ++i) {
+            ClassicEditor.create(allEditorsOption[i], {
+                toolbar: {
+                    items: [
+                        'uploadImage', 'link', 'subscript', 'superscript', 'MathType', 'ChemType'
+                    ],
+                    shouldNotGroupWhenFull: true
+                },
+            });
+        }
+        $(document).ready(function () {
+            var deleteExerciseModal = $("#deleteExerciseModal");
+            var deleteExerciseForm = $("form[name=delete-exercise-form]");
+            var btnSubmitDeleteExercise = $("#btn-submit-delete-exercise");
+            var exerciseId;
+
+            $("#exercise-tab-1").addClass("active");
+            $("#exercise-tab-1").attr("aria-selected", true);
+            $(".tab-content .tab-pane.fade").first().addClass("show active");
+
+            deleteExerciseModal.on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                exerciseId = button.data('id');
+            });
+
+            btnSubmitDeleteExercise.click(function (event) {
+                deleteExerciseForm.attr("action", "/exercises/" + exerciseId + "?_method=DELETE");
+                deleteExerciseForm.submit();
+            })
+        });
+</script>

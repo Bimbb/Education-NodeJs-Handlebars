@@ -1,0 +1,405 @@
+<section class="subject__content">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="card-title">Nội dung {{SubjectTheory.name}} - Của lớp {{grade.name}} </div>
+                <div class="d-flex align-items-center justify-content-between">
+                    <div class="form-group mb-0 text-dark">
+                        <span>{{units.length}} chuyên đề - {{lessons.length}} bài học</span>
+                    </div>
+                    <a class="btn btn-outline-warning btn-icon-text" href="/grade/list"> 
+                        <i class="mdi mdi-reload btn-icon-prepend"></i>
+                        Quay lại
+                    </a>
+                </div>
+               
+                <div class="mt-4">
+                    {{#each units}}
+                            <div>
+                                <div class="text-dark  d-flex align-items-center mb-4">
+                                    <span class="font-weight-bold">Chuyên đề {{sum @index 1}}: {{{this.name}}}</span>
+                                        <button class="ml-4 text-primary p-1 btn border border-primary" data-toggle="modal" data-target="#editUnitModal" data-name="{{this.name}}" data-id="{{this._id}}" data-subject="{{this.subjectID}}">
+                                            <i class="mdi mdi-lead-pencil" ></i>
+                                        </button>
+                                        <a class="ml-4  p-1 btn border border-primary " href="/units/{{this._id}}/detail">
+                                            <i class="fa-solid fa-ellipsis"></i>
+                                        </a>
+                                        <button class="ml-4 text-orange p-1 btn border border-danger" data-toggle="modal" data-target="#deleteUnitModal" data-id="{{this._id}}">
+                                            <i class="mdi mdi-delete"></i>
+                                        </button>
+                                </div>
+
+                            </div>
+                    {{/each}}
+                </div>
+                <p>
+                    <a 
+                        class="text-primary" 
+                        href="javascript:void(0)" 
+                        data-toggle="modal" 
+                        data-target="#addUnitModal" 
+                        data-id="{{SubjectTheory._id}}"
+                   >
+                       <i class="mdi mdi-auto-upload"></i>
+                       <span class="ml-2">Thêm mới chuyên đề</span>
+                   </a>
+                </p>
+
+
+
+                    {{!-- detail Unit --}}
+                    <div class="modal fade" id="detailUnitModal" tabindex="-1" role="dialog" aria-labelledby="detailUnitModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document" style="transition: all 0.3s ease; max-width: 800px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <strong class="modal-title font-weight-bold text-dark text-uppercase" id="detailUnitModalLabel">{{SubjectTheory.name}} - Của lớp {{grade.name}}- Bài Học Trong Chuyên Đề</strong>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body text-dark">
+                                    <p class="card-description">Nhập thông tin bên dưới để chỉnh sửa 1 bài học</p>
+
+
+                                    <form name="edit-lession-form" method="post">
+                                        <p class="ml-4 " >
+                                            <a 
+                                                class="text-primary"  
+                                                href="javascript:void(0)" 
+                                                data-toggle="modal" 
+                                                data-target="#addLessonModal" 
+                                                data-id="{{unit._id}}"
+                                                data-name="{{unit.name}}"
+                                            >
+                                                <i class="mdi mdi-auto-upload"  style="color: red;"></i>
+                                                <span class="ml-2"  style="color: red; ">Chi tiết chuyên đề</span>
+                                            </a>
+                                        </p>
+                                        <div class="mt-4">
+                                            <div class="form-group row">
+                                                <label class="col-sm-12 col-form-label text-dark label-unit-name font-weight-bold"></label>
+                                                <input class="form-control" type="text" name="unitID" hidden="hidden">
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label text-dark" for="name-lession-edit">Tên bài học</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="name-lession-edit" type="text" placeholder="Nhập tên bài học" name="name" required="required">
+                                                </div>
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label text-dark" for="lession-number">Bài học số</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="lession-number" type="number" placeholder="Nhập bài học số" name="lessionNumber" required="required">
+                                                </div>
+                                            </div>
+                                            <div class="float-right">
+                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy bỏ</button>
+                                                <button class="btn btn-primary ml-2" id="btn-submit-edit-lession" type="submit">Lưu lại</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{!-- edit Unit --}}
+                    <div class="modal fade" id="editUnitModal" tabindex="-1" role="dialog" aria-labelledby="editUnitModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document" style="transition: all 0.3s ease; max-width: 800px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <strong class="modal-title font-weight-bold text-dark text-uppercase" id="editUnitModalLabel">{{SubjectTheory.name}} - Của lớp {{grade.name}} - Chỉnh sửa chuyên đề</strong>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body text-dark">
+                                    <p class="card-description">Nhập thông tin bên dưới để chỉnh sửa 1 chuyên đề</p>
+                                    <form name="edit-unit-form" method="post">
+                                        <div class="mt-4">
+                                            <div class="form-group row">
+                                                <input class="form-control" type="text" name="subjectID" hidden="hidden">
+                                            </div>
+                                            <div class="form-group row">
+                                                <label class="col-sm-3 col-form-label text-dark" for="name">Tên chuyên đề</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" id="name" type="text" placeholder="Nhập tên chuyên đề" name="name" required="required">
+                                                </div>
+                                            </div>
+                                            <div class="float-right">
+                                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy bỏ</button>
+                                                <button class="btn btn-primary ml-2" id="btn-submit-edit-unit" type="submit">Lưu lại</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {{!-- add Unit --}}
+                    <div class="modal fade" id="addUnitModal" tabindex="-1" role="dialog" aria-labelledby="addUnitModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document" style="transition: all 0.3s ease; max-width: 800px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <strong class="modal-title font-weight-bold text-dark text-uppercase" id="addUnitModalLabel">{{SubjectTheory.name}} - Của lớp {{grade.name}}- Thêm mới chuyên đề</strong>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body text-dark">
+                                    <div class="d-flex align-items-center justify-content-between mb-4">
+                                        <form class="form-upload mb-0" action="/units/upload" method="post" enctype="multipart/form-data">
+                                            <div class="d-flex align-items-center">
+                                                <div class="file-drop-area">
+                                                    <span class="fake-btn">Chọn tệp</span>
+                                                    <span class="file-msg">hoặc kéo và thả tệp tại đây</span>
+                                                    <input class="file-input" type="file" name="file">
+                                                    <input type="text" name="subjectID" hidden="hidden">
+                                                </div>
+                                                <button class="ml-2 btn btn-sm btn-primary" type="submit">Lưu</button>
+                                                <button class="ml-2 btn btn-sm btn-secondary" type="button">Hủy</button>
+                                            </div>
+                                        </form>
+                                        <a class="btn btn-outline-primary btn-icon-text" href="/files/sample-create-units.xlsx" download="download"> 
+                                            <i class="mdi mdi-file-excel btn-icon-prepend"></i>
+                                            Excel mẫu
+                                        </a>
+                                    </div>
+                                    <div class="mb-4">
+                                        <i>--- hoặc ---</i>
+                                    </div>
+                                    <p class="card-description">Nhập thông tin bên dưới để thêm mới 1 chuyên đề</p>
+                                    <form class="mt-4" action="/units/create" method="POST">
+                                        <input class="form-control" type="text" name="subjectID" hidden="hidden">
+                                        <div class="form-group row">
+                                            <label class="col-sm-3 col-form-label text-dark" for="name-unit">Tên chuyên đề</label>
+                                            <div class="col-sm-9">
+                                                <input class="form-control" id="name-unit" type="text" placeholder="Nhập tên chuyên đề" name="name" required="required">
+                                            </div>
+                                        </div>
+                                        <div class="float-right">
+                                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy bỏ</button>
+                                            <button class="btn btn-primary ml-2" type="submit">Lưu lại</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{!-- delete Unit --}}
+                    <form class="mt-4" name="delete-unit-form" method="post"></form>
+                    <div class="modal fade" id="deleteUnitModal" tabindex="-1" role="dialog" aria-labelledby="deleteUnitModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document" style="transition: all 0.3s ease; max-width: 650px">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <strong class="modal-title font-weight-bold text-dark text-uppercase" id="deleteUnitModalLabel">{{SubjectTheory.name}} - Của lớp {{grade.name}} - Xóa chuyên đề !!!</strong>
+                                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">×</span>
+                                    </button>
+                                </div>
+                                <div class="modal-body text-dark">
+                                    <p>Hành động này sẽ xóa tất cả các bài học, nội dung lý thuyết, bài tập vận dụng và kết quả làm bài của chuyên đề này !!!</p>
+                                    <p>Hành động này rất nguy hiểm, không thể khôi phục lại dữ liệu.</p>
+                                    <p>Bạn có chắc chắn muốn xóa chuyên đề này ???</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy bỏ</button>
+                                    <button class="btn btn-danger ml-2" id="btn-submit-delete-unit" type="submit">Chắc chắn xóa</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{{#if errors}}
+    <div id="errors" style="visibility: hidden;">{{errors}}</div>
+{{else}}
+    {{#if success}}
+    <div id="success" style="visibility: hidden;">{{success}}</div>
+    {{/if}}
+{{/if}}
+
+
+<script>
+    var msgError = document.getElementById('errors');
+        ///toast message
+    let msgToastError = msgError.innerHTML;
+
+    if(msgToastError != ''){
+        Eggy({
+            title: 'Oops... Có gì đó không đúng',
+            message:  msgToastError,
+            type: 'warning',
+            duration: 5000,
+        });
+    }
+</script>
+<script>
+        var msgSuccess = document.getElementById('success');
+        let msgToastSuccess = msgSuccess.innerHTML;
+        if(msgToastSuccess != ''){
+            Eggy({
+                title: 'Thành Công',
+                message:  msgToastSuccess,
+                type: 'success',
+                duration: 5000,
+            });
+        }
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        var unitId, unitName, subjectId, lessionName, lessionNumber, lessionId;
+
+        //btn
+        var editUnitModal = $("#editUnitModal");
+        var deleteUnitModal = $("#deleteUnitModal");
+        var addUnitModal = $("#addUnitModal");
+
+
+
+
+        //form
+        var editUnitForm = $("form[name='edit-unit-form']");
+        var deleteUnitForm = $("form[name='delete-unit-form']");
+
+
+
+        //btn-submit
+        var btnSubmitEditUnit = $("#btn-submit-edit-unit");
+        var btnSubmitDeleteUnit = $("#btn-submit-delete-unit");
+
+        //add Unit
+        addUnitModal.on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            subjectId = button.data('id');
+            $("#addUnitModal input[name='subjectID']").val(subjectId);
+        });
+
+        ///edit Unit
+        editUnitModal.on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            subjectId = button.data('subject');
+            unitId = button.data('id');
+            unitName = button.data('name');
+            $("#editUnitModal input[name='subjectID']").val(subjectId);
+            $("#editUnitModal input[name='name']").val(unitName);
+        });
+        btnSubmitEditUnit.click(function (e) {
+            e.preventDefault();
+            if ($("#editUnitModal input[name='name']").val() === "") {
+                Eggy({
+                    title: 'Oops... Có gì đó không đúng',
+                    message:  'Vui lòng nhập tên chuyên đề!',
+                    type: 'warning',
+                    duration: 5000,
+                });
+            } else {
+                editUnitForm.attr("action", "/units/" + unitId + "?_method=PUT");
+                editUnitForm.submit();
+            }
+        });
+        //Delete unit
+        deleteUnitModal.on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                unitId = button.data('id');
+        });
+
+        btnSubmitDeleteUnit.click(function () {
+                deleteUnitForm.attr("action", "/units/" + unitId + "?_method=DELETE");
+                deleteUnitForm.submit();
+        })
+
+
+
+
+
+
+            ///read File add 
+            var $fileInput = $('#addUnitModal .file-input');
+            var $droparea = $('#addUnitModal .file-drop-area');
+            var btnSubmitAddUnitExcel = $("#addUnitModal .form-upload button[type=submit]");
+            var btnCancelUnitExcel = $("#addUnitModal .form-upload button[type=button]");
+
+            var $fileInput1 = $('#addLessionModal .file-input');
+            var $droparea1 = $('#addLessionModal .file-drop-area');
+            var btnSubmitAddLessionExcel = $("#addLessionModal .form-upload button[type=submit]");
+            var btnCancelLessionExcel = $("#addLessionModal .form-upload button[type=button]");
+
+         // highlight drag area
+            $fileInput.on('dragenter focus click', function() {
+                $droparea.addClass('is-active');
+            });
+
+            $fileInput1.on('dragenter focus click', function() {
+                $droparea1.addClass('is-active');
+            });
+
+            // back to normal state
+            $fileInput.on('dragleave blur drop', function() {
+                $droparea.removeClass('is-active');
+            });
+
+            $fileInput1.on('dragleave blur drop', function() {
+                $droparea1.removeClass('is-active');
+            });
+
+            // change inner text
+            $fileInput.on('change', function() {
+                var filesCount = $(this)[0].files.length;
+                var $textContainer = $(this).prev();
+
+                if (filesCount === 1) {
+                    // if single file is selected, show file name
+                    var fileName = $(this).val().split('\\').pop();
+                    $textContainer.text(fileName);
+                    btnSubmitAddUnitExcel.show();
+                    btnCancelUnitExcel.show();
+                } else {
+                    // otherwise show number of files
+                    $textContainer.text(filesCount + ' tệp được chọn');
+                    btnSubmitAddUnitExcel.hide();
+                }
+            });
+
+            $fileInput1.on('change', function() {
+                var filesCount = $(this)[0].files.length;
+                var $textContainer = $(this).prev();
+
+                if (filesCount === 1) {
+                    // if single file is selected, show file name
+                    var fileName = $(this).val().split('\\').pop();
+                    $textContainer.text(fileName);
+                    btnSubmitAddLessionExcel.show();
+                    btnCancelLessionExcel.show();
+                } else {
+                    // otherwise show number of files
+                    $textContainer.text(filesCount + ' tệp được chọn');
+                    btnSubmitAddLessionExcel.hide();
+                }
+            });
+
+            btnCancelUnitExcel.click(function() {
+                $(this).hide();
+                btnSubmitAddUnitExcel.hide();
+                $fileInput.val("");
+                $fileInput.prev().text('hoặc kéo và thả tệp tại đây');
+            })
+
+            btnCancelLessionExcel.click(function() {
+                $(this).hide();
+                btnSubmitAddLessionExcel.hide();
+                $fileInput1.val("");
+                $fileInput1.prev().text('hoặc kéo và thả tệp tại đây');
+            })
+
+
+
+
+
+    });
+</script>

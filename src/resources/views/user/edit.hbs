@@ -1,0 +1,110 @@
+<div class="content">
+            <div class="animated fadeIn">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Chỉnh Sửa Tài Khoản Người Dùng</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h4 class="card-title">Chỉnh Sửa </h4>
+                                    <div>
+                                        <a class="btn btn-outline-warning btn-icon-text ml-4" href="/user/list"><i class="mdi mdi-reload btn-icon-prepend"></i>&nbsp;Quay lại</a>
+                                    </div>
+                                </div>
+                               
+                                
+                                <form class="form-sample" method="POST" action="/user/{{user._id}}?_method=PUT">
+                                    <p class="card-description text-dark font-weight-bold h3">Thông tin cá nhân</p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="text-dark col-sm-3 col-form-label font-weight-bold">Họ Tên</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" name="fullname" placeholder="Nhập họ tên" required="required" value="{{user.fullname}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="text-dark col-sm-3 col-form-label font-weight-bold">Ngày sinh</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="date" value="{{formatDateYMD user.birthDay}}" name="birthDay" required="required" >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="text-dark col-sm-3 col-form-label font-weight-bold">Địa chỉ</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" placeholder="Nhập địa chỉ" name="address" required="required" value="{{user.address}}">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="card-description text-dark font-weight-bold h3">Thông tin tài khoản</p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="text-dark col-sm-3 col-form-label font-weight-bold">Email</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="email" placeholder="Nhập email" value="{{user.email}}" name="email" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="text-dark col-sm-3 col-form-label font-weight-bold">Số điện thoại</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" value="{{user.phone}}" placeholder="Nhập số điện thoại" name="phone" maxlength="10" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button class="btn btn-primary" type="submit">Cập Nhật</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content --> 
+
+
+    {{#if errors}}
+        <div id="errors" style="visibility: hidden;">{{errors}}</div>
+    {{else}}
+        {{#if success}}
+            <div id="success" style="visibility: hidden;">{{success}}</div>
+        {{/if}}
+    {{/if}}
+        <script>
+
+            var msgError = document.getElementById('errors');
+            var msgSuccess = document.getElementById('success');
+            let msgToastError = msgError.innerHTML;
+            if(msgToastError != ''){
+                Eggy({
+                    title: 'Oops... Có gì đó không đúng',
+                    message:  msgToastError,
+                    type: 'warning',
+                    duration: 5000,
+                });
+            }
+            let msgToastSuccess = msgSuccess.innerHTML;
+            if(msgToastSuccess != ''){
+                Eggy({
+                    title: 'Thành công',
+                    message:  msgToastSuccess,
+                    type: 'success',
+                    duration: 5000,
+                });
+            }  
+        </script>

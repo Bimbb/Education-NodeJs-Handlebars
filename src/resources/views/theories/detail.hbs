@@ -1,0 +1,149 @@
+<section class="theory__detail">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            {{#ifCond theory.length '>' 0}}
+            
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <div class="card-title text-uppercase">{{subject.name}} - Lớp {{grade.name}} - {{unit.name}}</div>
+                            <div class="card-title">Bài {{lesson.lessonNumber}} - {{lesson.name}}</div>
+                        </div>
+                        <div class="d-flex align-items-center">
+                            {{#each theory}}
+                            <a class="btn btn-outline-primary" href="/exercises/detail?lesson={{this.lesson._id}}">
+                                <i class="mdi mdi-book-open-page-variant mr-2"></i>
+                                Bài tập vận dụng
+                            </a>
+                            <form class="ml-4 mb-0" action="/theories/{{this.lesson._id}}/export" method="POST">
+                                <button class="btn btn-outline-danger" type="submit">
+                                    <i class="mdi mdi-file-pdf mr-2"></i>
+                                    Xuất PDF
+                                </button>
+                            </form>
+                            {{/each}}
+                            <a class="btn btn-outline-warning btn-icon-text ml-4" href="/units/{{unit._id}}/detail"> 
+                                <i class="mdi mdi-reload btn-icon-prepend"></i>
+                                Quay lại
+                            </a>
+                        </div>
+                    </div>
+                {{#each theory}}
+                    <div class="text-right">
+                        <button 
+                            class="btn btn-outline-danger" 
+                            data-toggle="modal" 
+                            data-target="#deleteTheoryModal" 
+                            data-id="{{this._id}}"
+                        >
+                            <i class="mdi mdi-delete"></i>
+                            <span>Xóa</span>
+                        </button>
+                    </div>
+                    <div class="text-dark mt-4">
+                        <form action="/theories/{{this._id}}?_method=PUT" method="post">
+                            <textarea class="form-control" id="content-theory" type="text" placeholder="Nhập nội dung lý thuyết ở đây" name="content" style="display: none;">
+                                {{{this.content}}}
+                            </textarea>
+                            <div class="text-center mt-4"><button class="btn btn-primary ml-2" type="submit">Lưu lại</button></div>
+                        </form>
+                    </div>
+                </div>   
+                {{/each}} 
+            {{else}}
+            <div class="text-dark p-4 text-center">
+                <p>
+                    Bài  {{lesson.lessonNumber}}  "{{lesson.name}}" chưa có nội dung lý thuyết.
+                </p>
+                <a href="/theories/create?lesson={{lesson._id}}" class="font-weight-bold mt-2 d-inline-block border border-danger text-orange p-4 rounded">
+                    Thêm nội dung lý thuyết cho môn học này tại đây!
+                </a>
+                <div class="mt-4">
+                    <a href="/units/{{unit._id}}/detail" class="btn btn-outline-warning btn-icon-text">
+                        <i class="mdi mdi-reload btn-icon-prepend"></i>
+                        Quay lại
+                    </a>
+                </div>       
+            </div>
+            {{/ifCond}}   
+
+        </div>
+    </div>
+</section>
+<form class="mt-4" name="delete-theory-form" method="post"></form>
+<div class="modal fade" id="deleteTheoryModal" tabindex="-1" role="dialog" aria-labelledby="deleteTheoryModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="transition: all 0.3s ease; max-width: 650px">
+        <div class="modal-content">
+            <div class="modal-header">
+                <strong class="modal-title font-weight-bold text-dark text-uppercase" id="deleteTheoryModalLabel">Xóa nội dung lý thuyết !!!</strong>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"></button>
+                <span aria-hidden="true">×</span>
+            </div>
+            <div class="modal-body text-dark">
+                <p>Hành động này không thể khôi phục lại dữ liệu.</p>
+                <p>Bạn có chắc chắn muốn xóa bài học này ???</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy bỏ</button>
+                <button class="btn btn-danger ml-2" id="btn-submit-delete-theory" type="submit">Chắc chắn xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+{{#if errors}}
+    <div id="errors" style="visibility: hidden;">{{errors}}</div>
+{{else}}
+    {{#if success}}
+    <div id="success" style="visibility: hidden;">{{success}}</div>
+    {{/if}}
+{{/if}}
+
+
+<script>
+    var msgError = document.getElementById('errors');
+        ///toast message
+    let msgToastError = msgError.innerHTML;
+
+    if(msgToastError != ''){
+        Eggy({
+            title: 'Oops... Có gì đó không đúng',
+            message:  msgToastError,
+            type: 'warning',
+            duration: 5000,
+        });
+    }
+</script>
+<script>
+        var msgSuccess = document.getElementById('success');
+        let msgToastSuccess = msgSuccess.innerHTML;
+        if(msgToastSuccess != ''){
+            Eggy({
+                title: 'Thành Công',
+                message:  msgToastSuccess,
+                type: 'success',
+                duration: 5000,
+            });
+        }
+</script>
+<script>
+    ClassicEditor.create(document.querySelector('#content-theory'));
+    $(document).ready(function () {
+            var deleteTheoryModal = $("#deleteTheoryModal");
+            var deleteTheoryForm = $("form[name='delete-theory-form']");
+            var btnSubmitDeleteTheory = $("#btn-submit-delete-theory");
+            var theoryId;
+
+            deleteTheoryModal.on('show.bs.modal', function (event) {
+                var button = $(event.relatedTarget);
+                theoryId = button.data('id');
+            });
+
+            btnSubmitDeleteTheory.click(function (e) {
+                e.preventDefault();
+                deleteTheoryForm.attr("action", "/theories/" + theoryId + "?_method=DELETE");
+                deleteTheoryForm.submit();
+            })
+        })
+</script>

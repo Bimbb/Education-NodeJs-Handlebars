@@ -1,0 +1,369 @@
+
+    <section class="system__list">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex  justify-content-between">
+                        <div class="card-title">Danh Sách Lớp Học</div>
+                        <div class="d-flex align-items-center">
+                            <div class="form-group mb-0 ml-4">
+                                <a class="btn btn-outline-info btn-icon-text"
+                                    href="/subjects/list"
+                                >
+                                   <i class="fa-solid fa-list"></i>
+                                    Danh Sách Học Phần
+                                </a>
+                            </div>
+                            &nbsp;&nbsp;&nbsp;
+                            <button class="btn btn-outline-success btn-icon-text ml-auto" data-toggle="modal" data-target="#addGradeModal">
+                                <i class="mdi mdi-upload btn-icon-prepend"></i>
+                                Thêm lớp mới
+                            </button>
+                       </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="bootstrap-data-table" class="table table-striped table-bordered">
+                            <thead>
+                                <tr>
+                                    <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;"  scope="col">#</th>
+                                    <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Tên lớp học</th>
+                                    <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Biểu tượng</th>
+                                    <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each grades }}
+                                    <tr>
+                                        <th scope="row" style="text-align: center;">{{sum @index 1}}</th>
+                                        <td style="text-align: center; color: #000000;">{{this.name}}</td>
+                                        <td style="text-align: center; color: #000000;"><ion-icon name="{{this.icon}}" role="img" class="md hydrated" aria-label="cog"></ion-icon></td>
+                                        <td style="text-align: center; ">
+                                            {{!-- <a class="btn btn-primary mr-2" href="/subjects/{{this._id}}/content">
+                                                <span class="ti-notepad"></span>&nbsp;
+                                                Nội dung
+                                            </a> --}}
+                                            
+                                            <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
+                                                <span class="ti-notepad"></span>&nbsp;
+                                                    Nội dung
+                                            </button>
+                                            <div class="dropdown-menu">
+                                                <form action="/subjects/{{this._id}}/theory" method="POST">
+                                                    <button class="dropdown-item " type="submit">Phần Lý Thuyết</button>
+                                                </form>
+                                                <form action="/subjects/{{this._id}}/bible" method="POST">
+                                                    <button class="dropdown-item" type="submit">Phần Kinh</button>
+                                                </form>
+                                            </div>
+                                            <a class="btn btn-warning mr-2" href="/statisticals?subject={{this._id}}">
+                                                <span class="ti-bar-chart-alt"></span>&nbsp;
+                                                Thống kê
+                                            </a>
+                                            <button 
+                                                class="btn btn-secondary mr-2" 
+                                                data-toggle="modal" 
+                                                data-target="#editGradeModal" 
+                                                data-name="{{this.name}}" 
+                                                data-id="{{this._id}}" 
+                                                data-icon="{{this.icon}}"
+                                            >
+                                                <span class="ti-pencil-alt"></span>&nbsp;
+                                                Sửa
+                                            </button>
+                                            <button 
+                                                class="btn btn-danger" 
+                                                data-toggle="modal" 
+                                                data-target="#delete-grade-modal" 
+                                                data-name="{{this.name}}" 
+                                                data-id="{{this._id}}"
+                                                >
+                                                <span class="ti-trash"></span>&nbsp;
+                                                Xóa
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {{else}}
+                                    <tr>
+                                        <td colspan="5" class="text-center">
+                                            Bạn Chưa Tạo lớp học nào nào.
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+
+    {{!-- Confirm  add grade --}}
+    <div class="modal fade" id="addGradeModal" tabindex="-1" role="dialog" aria-labelledby="addGradeModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="transition: all 0.3s ease; max-width: 800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong class="modal-title font-weight-bold text-dark text-uppercase" id="addGradeModalLabel">Thêm mới Lớp học</strong>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body text-dark">
+                    <div class="d-flex align-items-center justify-content-between mb-4">
+                        <form class="form-upload mb-0" action="/units/upload" method="post" enctype="multipart/form-data">
+                            <div class="d-flex align-items-center">
+                                <div class="file-drop-area">
+                                    <span class="fake-btn">Chọn tệp</span>
+                                    <span class="file-msg">hoặc kéo và thả tệp tại đây</span>
+                                    <input class="file-input" type="file" name="file">
+                                </div>
+                                <button class="ml-2 btn btn-sm btn-primary" type="submit">Lưu</button>
+                                <button class="ml-2 btn btn-sm btn-secondary" type="button">Hủy</button>
+                            </div>
+                        </form>
+                        <a class="btn btn-outline-primary btn-icon-text" href="/files/sample-create-units.xlsx" download="download"> 
+                            <i class="mdi mdi-file-excel btn-icon-prepend"></i>
+                            Excel mẫu
+                        </a>
+                    </div>
+                    <div class="mb-4">
+                        <i>--- hoặc ---</i>
+                    </div>
+                    <p class="card-description">Nhập thông tin bên dưới để thêm mới 1 Lớp</p>
+                    <form class="mt-4" action="/grade/list" method="post">
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-dark" for="name-grade">Tên Lớp</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="name-grade" type="text" placeholder="Nhập tên lớp" name="name" required="required">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-dark" for="name-grade">Biểu Tượng
+                                <a class=" d-block font-italic" href="https://ionic.io/ionicons" target="_blank">Mẫu biểu tượng</a>
+                            </label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="name-grade" type="text" placeholder="Nhập tên biểu tượng (Ví dụ: calculator, chỉ lấy phần name)" name="icon" >
+                            </div>
+                        </div>
+                        <div class="float-right">
+                            <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy bỏ</button>
+                            <button class="btn btn-primary ml-2" type="submit">Lưu lại</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {{!-- Confirm  edit grade --}}
+    <div class="modal fade show" id="editGradeModal" tabindex="-1" role="dialog" aria-labelledby="editGradeModalLabel" style="display: none;" aria-modal="true">
+        <div class="modal-dialog" role="document" style="transition: all 0.3s ease; max-width: 800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong class="modal-title font-weight-bold text-dark text-uppercase" id="editGradeModalLabel">Chỉnh sửa Lớp</strong>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body text-dark">
+                    <p class="card-description" id="descriptionName">Nhập thông tin bên dưới để chỉnh sửa Lớp</p>
+                    <form name="edit-grade-form" method="post">
+                        <input class="form-control" type="text" name="gradeID" hidden="hidden">
+                        <div class="mt-4">
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-dark" for="name-grade">Tên Lớp</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="name-grade" type="text" placeholder="Nhập tên lớp" name="name" required="required">
+                                </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-dark" for="name-grade">Biểu Tượng
+                                    <a class=" d-block font-italic" href="https://ionic.io/ionicons" target="_blank">Mẫu biểu tượng</a>
+                                </label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="name-grade" type="text" placeholder="Nhập tên biểu tượng (Ví dụ: calculator, chỉ lấy phần name)" name="icon" >
+                                </div>
+                            </div>
+                            <div class="float-right">
+                                <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy bỏ</button>
+                                <button class="btn btn-primary ml-2" id="btn-submit-edit-grade" type="button">Thay Đổi</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+
+
+
+    {{!-- Confirm  edit grade --}}
+    <div class="modal fade" id="delete-grade-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="transition: all 0.3s ease">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title font-weight-bold text-dark" id="deleteGradeModalLabel">Xác nhận xóa lớp học</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p id="delete-grade-name" style="font-weight: bold; text-align: center; font-size: large;"></p>
+                    <p>Hành động này không thể khôi phục.</p>
+                    <p>Bạn đã chắc chắn muốn xóa?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                    <button class="btn btn-danger" id="btn-delete-grade" type="button">Xác nhận xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <form name="delete-grade-form" method="POST"></form>
+
+
+
+   
+
+    {{#if errors}}
+        <div id="errors" style="visibility: hidden;">{{errors}}</div>
+    {{/if}}
+    {{#if success}}
+        <div id="success" style="visibility: hidden;">{{success}}</div>
+    {{/if}}
+
+<script>
+        var msgError = document.getElementById('errors');
+        ///toast message
+        let msgToastError = msgError.innerHTML;
+
+        if(msgToastError != ''){
+            Eggy({
+                title: 'Oops... Có gì đó không đúng',
+                message:  msgToastError,
+                type: 'warning',
+                duration: 5000,
+            });
+        }
+</script>
+<script>
+        var msgSuccess = document.getElementById('success');
+        let msgToastSuccess = msgSuccess.innerHTML;
+        if(msgToastSuccess != ''){
+            Eggy({
+                title: 'Thành Công',
+                message:  msgToastSuccess,
+                type: 'success',
+                duration: 5000,
+            });
+        }
+
+</script>
+<script>
+
+    document.addEventListener("DOMContentLoaded", function(){
+
+
+        //init 
+        var editGradeModal = $("#editGradeModal");
+        var icon, gradeName, gradeId;
+
+        var editGradeForm = document.forms["edit-grade-form"];
+        var btnSubmitEditGrade =document.getElementById('btn-submit-edit-grade');
+
+        var deleteFormGrade = document.forms["delete-grade-form"];
+        var btnDeleteGrade = document.getElementById('btn-delete-grade');
+
+
+
+        //add value of from edit grade
+        editGradeModal.on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            icon = button.data('icon');
+            gradeId = button.data('id');
+            gradeName = button.data('name');
+            $("#editGradeModal input[name='gradeID']").val(gradeId);
+            $("#editGradeModal input[name='name']").val(gradeName);
+            $("#editGradeModal input[name='icon']").val(icon);
+        });
+
+        //submit edit grade modal
+        btnSubmitEditGrade.onclick = function (e) {
+            e.preventDefault();
+            if ($("#editGradeModal input[name='name']").val() === "") {
+                Eggy({
+                    title: 'Oops... Có gì đó không đúng',
+                    message:  'Vui lòng nhập tên lớp!',
+                    type: 'warning',
+                    duration: 5000,
+                });
+            } else {
+                editGradeForm.action ='/grade/'+ gradeId +'?_method=PUT';
+                editGradeForm.submit();
+            }
+        };
+
+
+        $('#delete-grade-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget);
+            gradeId = button.data('id');
+            gradeName = button.data('name');
+            var textValue = document.getElementById('delete-grade-name');
+            textValue.innerHTML = "Lớp " + gradeName;
+        });
+        //Delete grade
+        btnDeleteGrade.onclick= function(e){
+            e.preventDefault();
+            deleteFormGrade.action ='/grade/'+ gradeId +'?_method=DELETE';
+            deleteFormGrade.submit();
+        }
+
+
+
+
+
+
+        //upload file 
+        var $fileInput = $('#addGradeModal .file-input');
+        var $droparea = $('#addGradeModal .file-drop-area');
+        var btnSubmitAddGradeExcel = $("#addGradeModal .form-upload button[type=submit]");
+        var btnCancelGradeExcel = $("#addGradeModal .form-upload button[type=button]");
+        
+        // highlight drag area
+        $fileInput.on('dragenter focus click', function() {
+            $droparea.addClass('is-active');
+        });
+
+        $fileInput.on('dragleave blur drop', function() {
+            $droparea.removeClass('is-active');
+        });
+        $fileInput.on('change', function() {
+            var filesCount = $(this)[0].files.length;
+            var $textContainer = $(this).prev();
+
+            if (filesCount === 1) {
+                // if single file is selected, show file name
+                var fileName = $(this).val().split('\\').pop();
+                $textContainer.text(fileName);
+                btnSubmitAddGradeExcel.show();
+                btnCancelGradeExcel.show();
+            } else {
+                // otherwise show number of files
+                $textContainer.text(filesCount + ' tệp được chọn');
+                btnSubmitAddGradeExcel.hide();
+            }
+        });
+        btnCancelGradeExcel.click(function() {
+            $(this).hide();
+            btnSubmitAddGradeExcel.hide();
+            $fileInput.val("");
+            $fileInput.prev().text('hoặc kéo và thả tệp tại đây');
+        })
+        
+      
+
+    });
+</script>

@@ -1,0 +1,57 @@
+<section class="theory__create">
+    <div class="col-md-9 grid-margin stretch-card mx-auto">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                    <h4 class="card-title">Thêm mới lý thuyết</h4>
+                    <a class="btn btn-outline-warning btn-icon-text" href="/units/{{unit._id}}/detail"> 
+                        <i class="mdi mdi-reload btn-icon-prepend"></i>
+                        Quay lại
+                    </a>
+                </div>
+
+                <hr>
+
+                <div>
+                    <div class="card-title text-uppercase">{{subject.name}} - Lớp {{grade.name}} - {{unit.name}}</div>
+                    <div class="card-title">Bài {{lesson.lessonNumber}} - {{lesson.name}}</div>
+                </div>
+                <p class="card-description">Nhập thông tin bên dưới để thêm mới nội dung lý thuyết</p>
+                <form class="mt-4" name="add-theory-form" action="/theories/create" method="post">
+                    <input type="text"  name='lessonID' value="{{lesson._id}}" hidden>
+                    <textarea class="form-control" id="content-theory" type="text" placeholder="Nhập nội dung lý thuyết tại đây..." name="content" style="display: none;">
+                    </textarea>
+                    <div class="text-center mt-4"><button class="btn btn-primary ml-2" id="btn-add-theory" type="submit">Lưu lại</button></div>
+                </form>
+
+
+
+            </div>
+        </div>
+    </div>
+</section>
+{{#if errors}}
+    <div id="errors" style="visibility: hidden;">{{errors}}</div>
+{{else}}
+    {{#if success}}
+    <div id="success" style="visibility: hidden;">{{success}}</div>
+    {{/if}}
+{{/if}}
+
+<script>
+    var msgError = document.getElementById('errors');
+    ///toast message
+    let msgToastError = msgError.innerHTML;
+
+    if(msgToastError != ''){
+        Eggy({
+            title: 'Oops... Có gì đó không đúng',
+            message:  msgToastError,
+            type: 'warning',
+            duration: 5000,
+        });
+    }
+</script>
+<script>
+    ClassicEditor.create(document.querySelector('#content-theory'));
+</script>

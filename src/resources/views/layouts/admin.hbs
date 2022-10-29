@@ -1,0 +1,93 @@
+{{!< default}}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang admin 
+
+    </title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/admin/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/admin/vendors/mdi/css/materialdesignicons.min.css">
+    <link rel="stylesheet" href="/admin/css/style.css">
+    <link rel="stylesheet" href="/admin/css/app.css">
+    
+    <link rel="stylesheet" href="/vendor/eggy-js/css/eggy.css">
+    <link rel="stylesheet" href="/vendor/eggy-js/css/progressbar.css">
+    <link rel="stylesheet" href="/vendor/eggy-js/css/theme.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-select@1.13.18/dist/css/bootstrap-select.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/4.6.2/js/bootstrap.min.js" integrity="sha512-7rusk8kGPFynZWu26OKbTeI+QPoYchtxsmPeBqkHIEXJxeun4yJ4ISYe7C6sz9wdxeE1Gk3VxsIWgCZTc+vX3g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/lykmapipo/themify-icons@0.1.2/css/themify-icons.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css" integrity="sha512-xh6O/CkQoPOWDdYTDqeRdPCVd1SpvCA9XXcUnZS2FmJNp1coAFzvtCN9BmamE+4aHK8yyUHUSCcJHgXloTyT2A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    
+
+    
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script nomodule="" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
+
+    <script src="/vendor/eggy-js/js/eggy.js"></script>
+    <script src="/vendor/ckeditor.js"></script>
+
+     <!-- import jqmath ckeditor help math UI -->
+    <link rel="stylesheet" href="/vendor/jqmath/jqmath-0.4.3.css">
+    <script src="/vendor/jqmath/jqmath-etc-0.4.6.min.js" charset="utf-8"></script>
+
+     <!-- import databale  UI -->
+    <link rel="stylesheet" href="/assets/css/lib/datatable/dataTables.bootstrap.min.css">
+
+
+</head>
+<body>
+   
+    <div class="container-ccroller">
+         {{> horizontal-menu}}
+            <div class="container-fluid page-body-wrapper">
+                <div class="main-panel">
+                    <div class="content-wrapper">
+                        {{{body}}}  
+                    </div>
+                </div>
+            </div> 
+    </div>
+
+
+    <script src="/assets/js/lib/data-table/datatables.min.js"></script>
+    <script src="/assets/js/lib/data-table/dataTables.bootstrap.min.js"></script>
+    <script src="/assets/js/lib/data-table/dataTables.buttons.min.js"></script>
+    <script src="/assets/js/init/datatables-init.js"></script>
+
+
+    <script src="/admin/vendors/base/vendor.bundle.base.js"></script>
+    <script src="/admin/js/template.js"></script>
+    <script src="/admin/vendors/chart.js/Chart.min.js"></script>
+    <script src="/admin/vendors/progressbar.js/progressbar.min.js"></script>
+    <script src="/admin/vendors/chartjs-plugin-datalabels/chartjs-plugin-datalabels.js"></script>
+    <script src="/admin/vendors/justgage/raphael-2.1.4.min.js"></script>
+    <script src="/admin/vendors/justgage/justgage.js"></script>
+    <script src="/admin/js/dashboard.js"></script>
+    <script src="/admin/js/select2.js"></script>
+    <script src="/admin/js/file-upload.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
+
+</body>
+</html>
+<script>
+    $(document).ready(function () {
+        $(function () {
+            var path = window.location.href;
+            $(".horizontal-menu .nav.page-navigation li a").each(function () {
+                if (this.href === path) {
+                    $(this).parent().addClass("active");
+                }
+                else{
+                    $(this).parent().removeClass("active");
+                }
+            });
+        });
+    })
+</script>

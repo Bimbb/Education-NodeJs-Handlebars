@@ -1,0 +1,177 @@
+<div class="content">
+    <div class="animated fadeIn">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                            <div class="card-header">
+                                <strong class="card-title">Thêm mới tài khoản</strong>
+                            </div>
+                            <div class="card-body">
+                                <div class="d-flex align-items-center justify-content-between">
+                                    <h3 class="card-title">Thêm</h3>
+                                    <div>
+                                        <a class="btn btn-outline-primary btn-icon-text" href="/files/sample-create-users.xlsx" download="download"> <i class="mdi mdi-file-excel btn-icon-prepend"></i>&nbsp;Excel mẫu</a>
+                                        <a class="btn btn-outline-warning btn-icon-text ml-4" href="/user/list"><i class="mdi mdi-reload btn-icon-prepend"></i>&nbsp;Quay lại</a>
+                                    </div>
+                                </div>
+                                <form class="form-upload" action="/user/upload" method="post" enctype="multipart/form-data">
+                                    <div class="d-flex align-items-center">
+                                        <div class="file-drop-area">
+                                            <span class="fake-btn">Chọn tệp</span>
+                                            <span class="file-msg">hoặc kéo và thả tệp tại đây</span>
+                                            <input class="file-input" type="file" name="filename">
+                                        </div>
+                                        <button class="ml-2 btn btn-sm btn-primary" type="submit">Lưu</button>
+                                        <button class="ml-2 btn btn-sm btn-secondary" type="button">Hủy</button>
+                                    </div>
+                                </form>
+                                <div class="mt-4 mb-4"><i>--- hoặc ---</i></div>
+                                <form class="form-sample" method="POST" action="/user/create">
+                                    <p class="card-description text-dark font-weight-bold h3">Thông tin cá nhân</p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="text-dark col-sm-3 col-form-label font-weight-bold">Họ</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" name="firstName" placeholder="Nhập họ" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="text-dark col-sm-3 col-form-label font-weight-bold">Tên</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" name="lastName" placeholder="Nhập tên" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="text-dark col-sm-3 col-form-label font-weight-bold">Ngày sinh</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="date" value="2021-09-17" name="birthDay" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="text-dark col-sm-3 col-form-label font-weight-bold">Địa chỉ</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" placeholder="Nhập địa chỉ" name="address" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <p class="card-description text-dark font-weight-bold font-weight-bold h3">Thông tin tài khoản</p>
+                                    <div class="row">
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="text-dark col-sm-3 col-form-label font-weight-bold">Email</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="email" placeholder="Nhập email" name="email" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-md-6">
+                                            <div class="form-group row">
+                                                <label class="text-dark col-sm-3 col-form-label font-weight-bold">Số điện thoại</label>
+                                                <div class="col-sm-9">
+                                                    <input class="form-control" type="text" placeholder="Nhập số điện thoại" name="phone" maxlength="10" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="text-center">
+                                        <button class="btn btn-primary" type="submit">Đăng ký</button>
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div><!-- .animated -->
+        </div><!-- .content --> 
+
+    {{#if errors}}
+        <div id="errors" style="visibility: hidden;">{{errors}}</div>
+    {{else}}
+        {{#if success}}
+        <div id="success" style="visibility: hidden;">{{success}}</div>
+        {{/if}}
+    {{/if}}
+    
+<script>
+            // toast message
+                var msgError = document.getElementById('errors');
+                var msgSuccess = document.getElementById('success');
+
+                let msgToastError = msgError.innerHTML;
+                if(msgToastError != ''){
+                    Eggy({
+                        title: 'Oops... Có gì đó không đúng',
+                        message:  msgToastError,
+                        type: 'warning',
+                        duration: 5000,
+                    });
+                }
+
+                let msgToastSuccess = msgSuccess.innerHTML;
+                if(msgToastSuccess != ''){
+                    Eggy({
+                        title: 'Thành công',
+                        message:  msgToastSuccess,
+                        type: 'success',
+                        duration: 5000,
+                    });
+                }  
+</script>
+ 
+<script>
+      
+        document.addEventListener('DOMContentLoaded', function() {
+                var $fileInput = $('.file-input');
+                var $droparea = $('.file-drop-area');
+                var btnSubmitAddUsersExcel = $(".form-upload button[type=submit]");
+                var btnCancelFormExcel = $(".form-upload button[type=button]");
+               
+                // highlight drag area
+                $fileInput.on('dragenter focus click', function() {
+                    $droparea.addClass('is-active');
+                });
+
+                // back to normal state
+                $fileInput.on('dragleave blur drop', function() {
+                    $droparea.removeClass('is-active');
+                });
+
+                // change inner text
+                $fileInput.on('change', function() {
+                    var filesCount = $(this)[0].files.length;
+                    var $textContainer = $(this).prev();
+
+                    if (filesCount === 1) {
+                        // if single file is selected, show file name
+                        var fileName = $(this).val().split('\\').pop();
+                        $textContainer.text(fileName);
+                        btnSubmitAddUsersExcel.show();
+                        btnCancelFormExcel.show();
+                    } else {
+                        // otherwise show number of files
+                        $textContainer.text(filesCount + ' tệp được chọn');
+                        btnSubmitAddUsersExcel.hide();
+                    }
+                });
+
+                btnCancelFormExcel.click(function() {
+                    $(this).hide();
+                    btnSubmitAddUsersExcel.hide();
+                    $fileInput.val("");
+                    $fileInput.prev().text('hoặc kéo và thả tệp tại đây');
+                })
+            })
+</script>
