@@ -192,10 +192,50 @@ class UserController{
                 fileName,
                 usersValid,
                 usersInvalid,
+                layout: "admin",
                 success: req.flash("success"),
                 errors: req.flash("error"),
             });
         });
+    }
+     // [POST]/user/export
+     async export(req, res) {
+        const users = await User.aggregate([
+            {
+                $lookup: {
+                    from: "roles",
+                    localField: "roleID",
+                    foreignField: "_id",
+                    as: "role",
+                },
+            },
+        ]);
+
+        let usersExcel = [];
+        users.forEach((item, index) => {
+            let user = {
+                STT: index + 1,
+                "Họ tên": item.fullname,
+                "Ngày sinh": moment(item.birthDay).format("DD-MM-YYYY"),
+                "Số điện thoại": item.phone,
+                "Địa chỉ hiện tại": item.address,
+                "Địa chỉ email": item.email,
+            };
+            usersExcel.push(user);
+        });
+
+        /* create a new blank workbook */
+        var wb = XLSX.utils.book_new();
+        var temp = JSON.stringify(usersExcel);
+        temp = JSON.parse(temp);
+        var ws = XLSX.utils.json_to_sheet(temp);
+        let down = path.resolve(
+            __dirname,
+            `../../public/exports/thong-ke-danh-sach-nguoi-dung.xlsx`
+        );
+        XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+        XLSX.writeFile(wb, down);
+        res.download(down);
     }
 }
 

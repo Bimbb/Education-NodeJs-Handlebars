@@ -309,10 +309,11 @@ class ExerciseController {
                         ceID: row[9],
                         lessonID: req.body.lessonID,
                     });
+
                     exercises.push(exercise);
                 });
 
-                await Exercise.create(exercises)
+                Exercise.create(exercises)
                     .then(() => {
                         req.flash("success", "Đã tải tệp lên thành công!");
                         res.redirect("back");

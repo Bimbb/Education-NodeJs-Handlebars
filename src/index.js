@@ -53,6 +53,7 @@ app.engine('hbs',
           sum :(a, b) => a + b,
           formatDate: ( a )=> moment(a).format("DD-MM-YYYY"),
           formatDateYMD: ( a )=> moment(a).format("YYYY-MM-DD"),
+          formatString:(a) => a,
           ifCond: function (v1, operator, v2, options) {
             switch (operator) {
                 case '==':

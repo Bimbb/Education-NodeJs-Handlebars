@@ -4,12 +4,23 @@
             <div class="card">
                 <div class="card-body">
                     <div class="d-flex align-items-center justify-content-between">
-                        <div class="card-title">Danh Sách Người Dùng
+                        <div class="card-title">Danh Sách Người Dùng </div>
+                        
+                        <div class="d-flex align-items-center">
+                            <form  action="/user/export" method="POST">
+                                <button class="btn btn-outline-primary btn-icon-text " type="submit">
+                                    <i class="mdi mdi-file-excel btn-icon-prepend"></i>
+                                    Xuất excel
+                                </button>
+                            </form>
+                             &nbsp;&nbsp;&nbsp;
+                            <div class="form-group mb-0 ml-4">
+                                <a class="btn btn-outline-success btn-icon-text ml-auto" href="/user/create">
+                                    <i class="mdi mdi-upload btn-icon-prepend"></i>
+                                    Thêm mới người Dùng
+                                </a>
+                            </div>
                         </div>
-                       <a class="btn btn-outline-success btn-icon-text ml-auto" href="/user/create">
-                            <i class="mdi mdi-upload btn-icon-prepend"></i>
-                            Thêm mới người Dùng
-                       </a>
                     </div>
                     <div class="card-body">
                         <table id="bootstrap-data-table" class="table table-striped table-bordered">
@@ -27,7 +38,7 @@
                                 {{#each users }}
                                     <tr>
                                         <th scope="row" style="text-align: center;">{{sum @index 1}}</th>
-                                        <td style="text-align: center; color: #000000;">{{this.fullname}}</td>
+                                        <td style="text-align: center; color: #000000;">{{ this.fullname}}</td>
                                         <td style="text-align: center; color: #000000;">{{this.email}}</td>
                                         <td style="text-align: center; color: #000000;">{{this.phone}}</td>
                                         <td style="text-align: center; color: #000000;">{{formatDate this.birthDay }}</td>
