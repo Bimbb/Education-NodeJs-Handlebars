@@ -1,0 +1,146 @@
+<section class="blog__category">
+    <div class="row">
+        <div class="col-md-8 grid-margin stretch-card mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h4 class="card-title">Danh sách thể loại</h4>
+                        <div>
+                            <button class="btn btn-outline-primary btn-icon-text ml-auto" id="btn-add-category" data-toggle="modal" data-target="#add-blog-category-modal">
+                                <i class="mdi mdi-upload btn-icon-prepend"></i>
+                                Thêm mới thể loại
+                            </button>
+                            <a class="btn btn-outline-warning btn-icon-text ml-4" href="/blog/list"> 
+                                <i class="mdi mdi-reload btn-icon-prepend"></i>
+                                Quay lại
+                            </a>
+                        </div>
+                    </div>
+                    <div class="table-responsive pt-3">
+                        <table class="table table-hover text-dark">
+                            <thead>
+                                <tr>
+                                    <th class="font-weight-bold">#</th>
+                                    <th class="font-weight-bold">Tên thể loại</th>
+                                    <th class="font-weight-bold">Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    {{#each categories}}
+                                        <td>{{sum @index 1}}</td>
+                                        <td>{{this.category}}</td>
+                                        <td style="width: 15%">
+                                            <button class="btn btn-danger" type="button" data-id="{{this._id}}" data-toggle="modal" data-target="#delete-category-modal">Xóa</button>
+                                        </td>
+                                    {{/each}}
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<div class="modal fade" id="add-blog-category-modal" tabindex="-1" role="dialog" aria-labelledby="addBlogCateModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="transition: all 0.3s ease; max-width: 650px">
+        <div class="modal-content">
+            <form method="POST" action="/blog/add-category">
+                <div class="modal-header">
+                    <h4 class="modal-title font-weight-bold text-dark">Thêm thể loại bài viết mới</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body mt-4 mb-4">
+                    <label>Tên thể loại</label>
+                    <input class="form-control" type="text" name="category" placeholder="Nhập tên thể loại" required="required">
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                    <button class="btn btn-primary" type="submit">Thêm mới</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<form method="POST" name="delete-category-form"></form>
+<div class="modal fade" id="delete-category-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document" style="transition: all 0.3s ease;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title font-weight-bold text-dark">Xác nhận xóa thể loại</h4>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <p>Hành động này không thể khôi phục.</p>
+                <p>Bạn đã chắc chắn muốn xóa!</p>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                <button class="btn btn-danger" id="btn-delete-category" type="button">Xác nhận xóa</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+{{#if errors}}
+    <div id="errors" style="visibility: hidden;">{{errors}}</div>
+{{else}}
+    {{#if success}}
+    <div id="success" style="visibility: hidden;">{{success}}</div>
+    {{/if}}
+{{/if}}
+
+<script>
+        var msgError = document.getElementById('errors');
+        ///toast message
+        let msgToastError = msgError.innerHTML;
+
+        if(msgToastError != ''){
+            Eggy({
+                title: 'Oops... Có gì đó không đúng',
+                message:  msgToastError,
+                type: 'warning',
+                duration: 5000,
+            });
+        }
+</script>
+<script>
+        var msgSuccess = document.getElementById('success');
+        let msgToastSuccess = msgSuccess.innerHTML;
+        if(msgToastSuccess != ''){
+            Eggy({
+                title: 'Thành Công',
+                message:  msgToastSuccess,
+                type: 'success',
+                duration: 5000,
+            });
+        }
+</script>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        //delete   
+        var categoryID;
+        var deleteForm = document.forms["delete-category-form"];
+        var btnDeleteCategory = document.getElementById('btn-delete-category');
+        $('#delete-category-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); 
+            var recipient = button.data('id');  
+            categoryID = recipient;     
+        });
+        btnDeleteCategory.onclick= function(){
+            deleteForm.action = '/blog/'+categoryID+'/delete-category?_method=DELETE';
+            deleteForm.submit();
+        }
+    })
+</script>

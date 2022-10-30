@@ -21,17 +21,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                 {{#each usersValid }}
+                                {{#each usersValid}}
                                     <tr>
                                         <td>{{sum @index 1}}</td>
                                         <td class="py-1">
                                             <img src="/img/nobody.jpg" >
                                         </td>
-                                        <td>{{this.fullname}}</td>
-                                        <td>{{this.phone}}</td>
-                                        <td>{{this.email}}</td>
+                                        <td>{{this._doc.fullname}}</td>
+                                        <td>{{this._doc.phone}}</td>
+                                        <td>{{this._doc.email}}</td>
                                         <td>{{formatDate this.birthDay}}</td>
-                                        <td>{{this.address}}</td>
+                                        <td>{{this._doc.address}}</td>
                                     </tr>
                                 {{/each}}
                             </tbody>
@@ -62,11 +62,11 @@
                                         <td class="py-1">
                                             <img src="/img/nobody.jpg" >
                                         </td>
-                                        <td>{{this.fullname}}</td>
-                                        <td>{{this.phone}}</td>
-                                        <td>{{this.email}}</td>
+                                        <td>{{this._doc.fullname}}</td>
+                                        <td>{{this._doc.phone}}</td>
+                                        <td>{{this._doc.email}}</td>
                                         <td>{{formatDate this.birthDay}}</td>
-                                        <td>{{this.address}}</td>
+                                        <td>{{this._doc.address}}</td>
                                     </tr>
                                 {{/each}}
                             </tbody>

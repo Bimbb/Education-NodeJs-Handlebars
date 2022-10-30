@@ -85,9 +85,10 @@ class UserController{
 
     // [DELETE] /user/:id
     destroy(req, res, next) {
+        
         User.deleteOne({ _id: req.params.id })
-            .then((user) => {
-                req.flash("success", "Đã Xóa Thành công!"+ user.fullname),
+            .then(() => {
+                req.flash("success", "Đã Xóa Thành công!"),
                 res.redirect('back')
             })
             .catch(next);

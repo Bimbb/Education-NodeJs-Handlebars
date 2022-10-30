@@ -84,7 +84,9 @@ class SubjectController{
             });
         }
     }
-// [POST]/subject/:gradeID/bible
+
+    
+    // [POST]/subject/:gradeID/bible
     async createSubjectBible(req, res, next) {
         var formSubject = req.body;
         const grade = await Grade.findOne({ _id: req.params.gradeId });
@@ -98,44 +100,54 @@ class SubjectController{
             res.redirect('/grade/list');
             return ;
         }else{
-            const units = await Unit.find({ subjectID: SubjectTheory._id });
-            const unitIdArray = units.map(({ _id }) => _id);
-            const lessons = await Lesson.aggregate([
-                { $match: { unitID: { $in: unitIdArray } } },
-                {
-                    $lookup: {
-                        from: "theories",
-                        localField: "_id",
-                        foreignField: "lessonID",
-                        as: "theory",
+            const unit = await Unit.findOne({ subjectID: SubjectTheory._id });
+            if(!unit){
+                var formUnit = req.body;
+                formUnit.subjectID = SubjectTheory._id;
+                formUnit.name = "Phần Kinh";
+                const unitNew = new Unit(formUnit); 
+                await unitNew.save();
+                res.redirect('/grade/list');
+                return ;
+            }else{
+                const lessons = await Lesson.aggregate([
+                    { $match: { unitID: unit._id } },
+                    {
+                        $lookup: {
+                            from: "theories",
+                            localField: "_id",
+                            foreignField: "lessonID",
+                            as: "theory",
+                        },
                     },
-                },
-                {
-                    $lookup: {
-                        from: "exercises",
-                        localField: "_id",
-                        foreignField: "lessonID",
-                        as: "exercises",
+                    {
+                        $lookup: {
+                            from: "exercises",
+                            localField: "_id",
+                            foreignField: "lessonID",
+                            as: "exercises",
+                        },
                     },
-                },
-                {
-                    $lookup: {
-                        from: "statisticals",
-                        localField: "_id",
-                        foreignField: "lessonID",
-                        as: "statisticals",
+                    {
+                        $lookup: {
+                            from: "statisticals",
+                            localField: "_id",
+                            foreignField: "lessonID",
+                            as: "statisticals",
+                        },
                     },
-                },
-            ]);
-            res.render("subjects/theory", {
-                SubjectTheory: mongooseToObject(SubjectTheory),
-                grade: mongooseToObject(grade),
-                units : multipleMongooseToObject(units),
-                layout:'admin',
-                lessons,
-                success: req.flash("success"),
-                errors: req.flash("error"),
-            });
+                ]);
+                res.render("subjects/bible", {
+                    SubjectTheory: mongooseToObject(SubjectTheory),
+                    grade: mongooseToObject(grade),
+                    unit : mongooseToObject(unit),
+                    layout:'admin',
+                    lessons,
+                    success: req.flash("success"),
+                    errors: req.flash("error"),
+                });
+            }
+
         }
     }
     
