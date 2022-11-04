@@ -8,8 +8,6 @@ class CompetitionController {
 
     // [GET]/competition/ranks
     async ranks(req, res) {
-        let perPage = 3;
-        let page = req.params.page || 1;
 
         const ranks = await Rank.aggregate([
             {
@@ -21,16 +19,10 @@ class CompetitionController {
                 },
             },
             { $sort: { score: -1, victory: -1 } },
-            { $skip: perPage * page - perPage },
-            { $limit: perPage },
         ]);
-        const ranksCount = await Rank.countDocuments();
-
         res.render("competition/ranks", {
             ranks,
-            current: page,
             layout: "admin",
-            pages: Math.ceil(ranksCount / perPage),
         });
     }
 

@@ -9,8 +9,8 @@ const theoriesRouter = require("./theories");
 const exercisesRouter = require("./exercises");
 const blogRouter = require("./blog");
 const competitionRouter = require("./competition");
-
-
+const reportRouter = require("./reports");
+const statisticalsRouter = require("./statisticals");
 
 function route(app){
 
@@ -24,6 +24,8 @@ function route(app){
     app.use("/exercises", exercisesRouter);
     app.use("/blog", blogRouter);
     app.use("/competition", competitionRouter);
+    app.use("/reports", reportRouter);
+    app.use("/statisticals", statisticalsRouter);
 
 }
 module.exports = route

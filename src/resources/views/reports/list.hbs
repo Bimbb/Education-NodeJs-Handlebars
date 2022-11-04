@@ -1,0 +1,210 @@
+
+    <section class="system__list">
+        <div class="col-lg-12 grid-margin stretch-card">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="card-title">Danh Sách Báo Cáo Lỗi </div>
+                        
+                        <div class="d-flex align-items-center">
+                            <form  action="/reports/export" method="POST">
+                                <button class="btn btn-outline-primary btn-icon-text ml-auto " type="submit">
+                                    <i class="mdi mdi-file-excel btn-icon-prepend"></i>
+                                    Xuất excel
+                                </button>
+                            </form>
+                            
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <table id="bootstrap-data-table" class="table  table-hover table-striped table-bordered text-dark">
+                            <thead>
+                                <tr>
+                                    <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;"  scope="col">#</th>
+                                    <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Mục lỗi</th>
+                                    <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Nội dung chi tiết</th>
+                                    <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Ngày báo cáo</th>
+                                    <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Người báo cáo lỗi</th>
+                                    <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Hành động</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#each reports }}
+                                    <tr>
+                                        <th scope="row" style="text-align: center;">{{sum @index 1}}</th>
+                                        <td style="text-align: center; color: #000000;">{{this.summary}}</td>
+                                        <td style="text-align: center; color: #000000;">{{this.content}}</td>
+                                        <td style="text-align: center; color: #000000;">{{formatDate this.createdAt}}</td>
+                                        {{#this.user}}
+                                        <td style="text-align: center; color: #000000;">
+                                            <a href="/user/{{_id}}/edit">
+                                                <img src="{{avatar}}" alt=""style="width:30px;height:30px; border-radius:20px">
+                                                {{fullname}}
+                                            </a>
+                                        </td>
+                                        {{/this.user}}
+                                        <td style="text-align: center; ">
+                                            <button 
+                                                class="btn btn-secondary edit" 
+                                                type="button" 
+                                                data-toggle="modal" 
+                                                data-target="#detailReportModal"
+                                                {{#this.user}}
+                                                    data-fullName="{{fullname}}"
+                                                    data-email = "{{email}}"
+                                                {{/this.user}}
+                                                data-summary="{{this.summary}}"
+                                                data-content="{{this.content}}"
+                                                data-createAt="{{formatDate this.createdAt}}"
+                                            >
+                                                <span class="ti-pencil-alt"></span>&nbsp;
+                                                Chi Tiết
+                                            </button>
+                                            <button class="btn btn-danger remove" type="button" data-id="{{this._id}}" data-toggle="modal" data-target="#delete-report-modal">  
+                                                <span class="ti-trash"></span>&nbsp;
+                                                Xóa
+                                            </button>
+                                        </td>
+                                    </tr>
+                                {{/each}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    {{!-- Delete hidden form --}}
+    <form name="delete-report-form" method="POST"></form>
+    {{!-- Confirm  delete courses --}}
+    <div class="modal fade" id="delete-report-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="transition: all 0.3s ease; max-width: 800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title font-weight-bold text-dark" id="deleteReportModalLabel">Xác nhận xóa báo lỗi</h4>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <p>Hành động này không thể khôi phục.</p>
+                    <p>Bạn đã chắc chắn muốn xóa?</p>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
+                    <button class="btn btn-danger" id="btn-delete-report" type="button">Xác nhận xóa</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    {{!-- Confirm detailReportModal --}}
+    <div class="modal fade show" id="detailReportModal" tabindex="-1" role="dialog" aria-labelledby="detailReportModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" role="document" style="transition: all 0.3s ease; max-width: 800px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <strong class="modal-title font-weight-bold text-dark text-uppercase" id="detailReportModalLabel">Chi Tiết Báo Cáo Lỗi</strong>
+                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">×</span>
+                    </button>
+                </div>
+                <div class="modal-body text-dark">
+                    
+                    <div class="mt-4">
+                        <div class="form-group row align-items-center">
+                            <label class="col-sm-3 col-form-label text-dark mb-0">Người báo cáo lỗi</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="name" type="text" name="fullname"  disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-dark" for="summary">Mục lỗi</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="name" type="text" name="summary"  disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-dark" for="content">Nội dụng báo cáo</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="icon" type="text" name="content"  disabled="disabled">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label class="col-sm-3 col-form-label text-dark" for="createdAt">Ngày báo cáo</label>
+                            <div class="col-sm-9">
+                                <input class="form-control" id="icon" type="date" name="createdAt" value="2022-10-31" disabled="disabled">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+
+    {{#if errors}}
+        <div id="errors" style="visibility: hidden;">{{errors}}</div>
+    {{else}}
+        {{#if success}}
+        <div id="success" style="visibility: hidden;">{{success}}</div>
+        {{/if}}
+    {{/if}}
+
+<script>
+        var msgError = document.getElementById('errors');
+        ///toast message
+        let msgToastError = msgError.innerHTML;
+
+        if(msgToastError != ''){
+            Eggy({
+                title: 'Oops... Có gì đó không đúng',
+                message:  msgToastError,
+                type: 'warning',
+                duration: 5000,
+            });
+        }
+</script>
+<script>
+        var msgSuccess = document.getElementById('success');
+        let msgToastSuccess = msgSuccess.innerHTML;
+        if(msgToastSuccess != ''){
+            Eggy({
+                title: 'Thành Công',
+                message:  msgToastSuccess,
+                type: 'success',
+                duration: 5000,
+            });
+        }
+</script>
+<script>
+
+
+    document.addEventListener("DOMContentLoaded", function(){
+        //Delete
+        var ReportID, fullName, email, summary, content, createAt;
+        var deleteForm = document.forms["delete-report-form"];
+        var btnDeleteReport = document.getElementById('btn-delete-report');
+            
+        $('#delete-report-modal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); 
+            ReportID = button.data('id');  
+        });
+        
+        $('#detailReportModal').on('show.bs.modal', function (event) {
+            var button = $(event.relatedTarget); 
+            fullName = button.data('fullname');  
+            email = button.data('email');  
+            summary = button.data('summary');  
+            content = button.data('content');  
+            createAt = button.data('createAt');  
+            $("#detailReportModal input[name='fullname']").val(fullName + " - " + email);
+            $("#detailReportModal input[name='content']").val(content);
+            $("#detailReportModal input[name='summary']").val(summary);
+            $("#detailReportModal input[name='createAt']").val(createAt);
+        });
+        
+        btnDeleteReport.onclick= function(){
+            deleteForm.action ='/reports/'+ ReportID +'?_method=DELETE';
+            deleteForm.submit();
+        }
+    });
+</script>

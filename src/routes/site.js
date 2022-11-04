@@ -3,7 +3,15 @@ const router = express.Router();
 
 const siteController = require('../app/controllers/SiteController');
 
-router.get('/', siteController.index);
-router.get("/admin",siteController.admin);
+const {
+    checkRequireAdmin,
+} = require("../app/middlewares/AuthMiddleware");
 
+
+
+router.get('/', siteController.index);
+router.get("/admin", checkRequireAdmin ,siteController.admin);
+router.get("/login-admin",siteController.LoginAdmin);
+router.post("/login-admin", siteController.postLoginAdmin);
+router.get("/logout-admin", checkRequireAdmin, siteController.logoutAdmin);
 module.exports = router;

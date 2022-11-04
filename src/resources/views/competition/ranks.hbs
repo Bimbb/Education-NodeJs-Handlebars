@@ -6,9 +6,9 @@
                     <h4 class="card-title">Bảng xếp hạng thi đấu</h4>
                 </div>
                 <div class="table-responsive pt-3">
-                    <table class="table table-hover text-dark">
+                    <table class="table table-hover table-striped table-bordered text-dark" id="bootstrap-data-table">
                         <thead>
-                            <tr>
+                            <tr >
                                 <th class="font-weight-bold">#</th>
                                 <th class="font-weight-bold">Thành viên</th>
                                 <th class="font-weight-bold">Email</th>
@@ -18,7 +18,24 @@
                             </tr>
                         </thead>
                         <tbody>
+                            {{#each ranks}}
+                                <tr >
+                                    <td>{{sum @index 1}}</td>
+                                    {{#this.user}}
+                                        <td>
+                                            <a href="/user/{{_id}}/edit">
+                                                <img src="{{avatar}}" alt=""style="width:30px;height:30px; border-radius:20px">
+                                                {{fullname}}
+                                            </a>
+                                        </td>
+                                        <td>{{email}}</td>
+                                    {{/this.user}}
+                                    <td>{{round this.score}} điểm</td>
+                                    <td >{{this.victory}}</td>
+                                    <td>{{formatDateLocale this.updatedAt}}</td>
+                                </tr>
 
+                            {{/each}}
                         </tbody>
                     </table>
                 </div>

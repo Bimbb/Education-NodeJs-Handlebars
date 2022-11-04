@@ -12,6 +12,8 @@ const Room = require("../models/Room");
 const Rank = require("../models/Rank");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
+const Admin = require('../models/Admin');
+const Report = require("../models/Report");
 const ObjectId = mongoose.Types.ObjectId;
 
 class SiteController {
@@ -28,13 +30,13 @@ class SiteController {
     // [GET]/admin
     async admin(req, res) {
         const countUsers = await User.countDocuments({});
-        const countSubjects = await Subject.countDocuments({});
+        const countGrade = await Grade.countDocuments({});
         const countUnits = await Unit.countDocuments({});
         const countLessons = await Lesson.countDocuments({});
         const countExercises = await Exercise.countDocuments({});
         const countBlogs = await Blog.countDocuments({});
-
-        const top3 = await Statistical.aggregate([
+        const countReport = await Report.countDocuments({read: "Chưa Đọc"});
+        const statisticalTop5 = await Statistical.aggregate([
             {
                 $group: {
                     _id: "$userID",
@@ -61,7 +63,7 @@ class SiteController {
                 },
             },
             { $sort: { totalScore: -1 } },
-            { $limit: 3 },
+            { $limit: 5 },
         ]);
 
         const ranks = await Rank.aggregate([
@@ -74,21 +76,74 @@ class SiteController {
                 },
             },
             { $sort: { score: -1, victory: -1 } },
-            { $limit: 3 },
+            { $limit: 5 },
         ]);
+        
 
         res.render("admin", {
             countUsers,
-            countSubjects,
+            countGrade,
             countUnits,
             countLessons,
             countExercises,
             countBlogs,
-            top3,
+            countReport,
+            statisticalTop5,
             ranks,
             layout: "admin",
         });
     }
+
+
+    // [GET]/login-admin
+    LoginAdmin(req, res) {
+        res.render("login-admin",{
+            layout: "",
+            errors: req.flash("error"),
+            success: req.flash("success"),
+        });
+    }
+
+    // [POST]/login
+    async postLoginAdmin(req, res) {
+        const { userName, password } = req.body;
+        const admin = await Admin.findOne({ userName: userName });
+        if (!admin) {
+            req.flash("error", "Tài khoản admin này không tồn tại!");
+            res.render("login-admin", {
+                values: req.body,
+                errors: req.flash("error"),
+                layout:""
+            });
+            return;
+        }
+
+
+        if (!(password === admin.password)) {
+            req.flash("error", "Mật khẩu của bạn không khớp!");
+            res.render("login-admin", {
+                values: req.body,
+                errors: req.flash("error"),
+                layout:""
+
+            });
+            return;
+        }
+        
+        res.cookie("adminId", admin._id,{
+            signed: true,
+        });
+        res.redirect("/admin");
+    }
+    
+    // [GET]/logout
+    logoutAdmin(req, res) {
+        res.clearCookie("adminId");
+        res.clearCookie("sessionId");
+        res.redirect("/login-admin");
+    }
+    
+
 }
 
 module.exports = new SiteController();

@@ -6,6 +6,8 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Trang admin </title>
+
+    <link rel="icon" href='https://hdgmvietnam.com/admin/upload/image/giao-hoi-cong-giao-dan-than-trong-su-mang-giao-duc.jpg' type='image/jpg', sizes='16x16'>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&amp;display=swap" rel="stylesheet">
@@ -24,6 +26,9 @@
     
 
     
+
+
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" integrity="sha512-894YE6QWD5I59HgZOGReFYm4dnWc1Qt5NtvYSaNcOP+u1T9qYdvdihz0PPSiiqn/+/3e7Jo4EaG7TubfWGUrMQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script nomodule="" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.js"></script>
     <script type="module" src="https://unpkg.com/ionicons@5.5.2/dist/ionicons/ionicons.esm.js"></script>
@@ -37,19 +42,21 @@
 
      <!-- import databale  UI -->
     <link rel="stylesheet" href="/assets/css/lib/datatable/dataTables.bootstrap.min.css">
-
-
 </head>
 <body>
    
-    <div class="container-ccroller">
+    <div class="container">
          {{> horizontal-menu}}
-            <div class="container-fluid page-body-wrapper">
-                <div class="main-panel">
-                    <div class="content-wrapper">
-                        {{{body}}}  
+            <div class="main">
+                <div class="topbar">
+                    <div class="toggle">
+                        <ion-icon name="menu-outline"></ion-icon>
+                    </div>
+                    <div class="user">
+                        <img src="/img/nobody.jpg" alt="">
                     </div>
                 </div>
+                {{{body}}}
             </div> 
     </div>
 
@@ -70,20 +77,30 @@
     <script src="/admin/js/dashboard.js"></script>
     <script src="/admin/js/select2.js"></script>
     <script src="/admin/js/file-upload.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-select/1.13.18/js/bootstrap-select.min.js"></script>
+    <script src="/admin/js/main.js"></script>
 
 </body>
 </html>
 <script>
     $(document).ready(function () {
         $(function () {
+            let navigation = document.querySelector(".navigation");
+            let main = document.querySelector(".main");
+            navigation.classList.toggle("active");
+            main.classList.toggle("active");
+        }
+    }
+</script>
+<script>
+    $(document).ready(function () {
+        $(function () {
             var path = window.location.href;
-            $(".horizontal-menu .nav.page-navigation li a").each(function () {
+            $(".navigation ul li a").each(function () {
                 if (this.href === path) {
-                    $(this).parent().addClass("active");
+                    $(this).parent().addClass("hovered");
                 }
                 else{
-                    $(this).parent().removeClass("active");
+                    $(this).parent().removeClass("hovered");
                 }
             });
         });

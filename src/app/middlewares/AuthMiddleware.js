@@ -1,4 +1,5 @@
 const User = require("../models/User");
+const Admin = require("../models/Admin");
 const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 
@@ -28,19 +29,23 @@ module.exports = {
         next();
     },
 
-    checkAdmin: async function (req, res, next) {
-        // try {
-        //     const roleName = res.locals.user[0].role[0].roleName;
-        //     if (roleName === "admin") {
-        //         next();
-        //     } else {
-        //         req.flash("error", "Bạn không có quyền truy cập trang này!");
-        //         res.redirect("/error");
-        //     }
-        // } catch (error) {
-        //     console.log(error);
-        // }
-        next();
+    checkRequireAdmin: async function (req, res, next) {
+
+        if (!req.signedCookies.adminId) {
+            res.redirect("/login-admin");
+            return;
+        }
+
+        const admin = await Admin.aggregate([
+            { $match: { _id: ObjectId(req.signedCookies.adminId) } },
+        ]);
+        if (admin.length > 0) {
+            res.locals.admin = admin;
+            return next();
+        } else {
+            res.redirect("/login-admin");
+        }
+        return next();
     },
 
     authValidate: function (req, res, next) {

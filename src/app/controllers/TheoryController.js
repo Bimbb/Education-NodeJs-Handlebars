@@ -69,10 +69,10 @@ class TheoryController {
                         errors: req.flash("error"),
                     });
                 } else {
-                    res.render("error");
+                    res.render("error",{layout:""});
                 }
             } else {
-                res.render("error");
+                res.render("error",{layout:""});
             }
         } catch (error) {
             console.log(error);
@@ -100,7 +100,7 @@ class TheoryController {
                 errors: req.flash("error"),
             });
         } else {
-            res.render("error");
+            res.render("error",{layout:""});
         }
     }
 

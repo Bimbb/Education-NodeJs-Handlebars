@@ -1,6 +1,7 @@
 const Subject = require("../models/Subject");
 const Lesson = require("../models/Lesson");
 const ExerciseCategory = require("../models/ExerciseCategory");
+const Grade = require("../models/Grade");
 const Exercise = require("../models/Exercise");
 const Result = require("../models/Result");
 const Unit = require("../models/Unit");
@@ -12,6 +13,7 @@ const readXlsxFile = require("read-excel-file/node");
 const path = require("path");
 const XLSX = require("xlsx");
 const moment = require("moment");
+const { multipleMongooseToObject, mongooseToObject}  = require('../../util/mongoose')
 
 
 class StatisticalController {
@@ -20,11 +22,9 @@ class StatisticalController {
         if (ObjectId.isValid(req.query.lesson)) {
             const lesson = await Lesson.findById(req.query.lesson);
             if (lesson) {
-                let perPage = 3;
-                let page = req.query.page || 1;
-
                 const unit = await Unit.findOne({ _id: lesson.unitID });
                 const subject = await Subject.findOne({ _id: unit.subjectID });
+                const grade = await Grade.findOne({ _id: subject.gradeID });
                 const exercises = await Exercise.find({
                     lessonID: lesson._id,
                 });
@@ -39,31 +39,30 @@ class StatisticalController {
                         },
                     },
                     { $sort: { score: -1 } },
-                    { $skip: perPage * page - perPage },
-                    { $limit: perPage },
                 ]);
 
-                res.render("statisticals/list", {
-                    lesson,
+                res.render("statisticals/statisticals-lessons", {
+                    lesson : mongooseToObject(lesson),
                     statisticals,
-                    unit,
-                    subject,
+                    unit: mongooseToObject(unit),
+                    subject : mongooseToObject(subject),
+                    grade: mongooseToObject(grade),
                     countExercises: exercises.length,
-                    current: page,
-                    pages: Math.ceil(statisticals.length / perPage),
+                    layout: "admin",
                     errors: req.flash("error"),
                     success: req.flash("success"),
                 });
             } else {
-                res.render("error");
+                res.render("error",{layout:""});
             }
-        } else if (ObjectId.isValid(req.query.subject)) {
-            const subject = await Subject.findById(req.query.subject);
-            if (subject) {
-                let perPage = 3;
-                let page = req.query.page || 1;
-
-                const units = await Unit.find({ subjectID: subject._id });
+        } else if (ObjectId.isValid(req.query.grade)) {
+            const grade = await Grade.findById(req.query.grade);
+            if (grade) {
+                const subject = await Subject.find({ gradeID : grade._id }) 
+                const subjectIdArray = subject.map(({ _id }) => _id);
+                const units = await Unit.find({
+                    subjectID: { $in: subjectIdArray },
+                });
                 const unitIdArray = units.map(({ _id }) => _id);
                 const lessons = await Lesson.find({
                     unitID: { $in: unitIdArray },
@@ -103,22 +102,20 @@ class StatisticalController {
                         },
                     },
                     { $sort: { totalScore: -1 } },
-                    { $skip: perPage * page - perPage },
-                    { $limit: perPage },
+
                 ]);
 
-                res.render("statisticals/result", {
-                    subject,
-                    ranks,
+                res.render("statisticals/statisticals-grade", {
+                    grade: mongooseToObject(grade),
                     countLessons: lessons.length,
-                    current: page,
-                    pages: Math.ceil(ranks.length / perPage),
+                    ranks,
+                    layout: "admin",
                 });
             } else {
-                res.render("error");
+                res.render("error",{layout:""});
             }
         } else {
-            res.render("error");
+            res.render("error",{layout:""});
         }
     }
 }

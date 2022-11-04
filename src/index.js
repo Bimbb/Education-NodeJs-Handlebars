@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
@@ -10,7 +12,6 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const app = express();
 const port = 8888;
-
 const route  = require('./routes');
 const db = require('./config/db');
 
@@ -20,18 +21,25 @@ db.connect();
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-app.use(cookieParser(process.env.SESSION_SECRET));
+
 
 app.use(
   express.urlencoded({
       extended: true,
   }),
-  );
+);
+
+
 app.use(morgan('combined'));
+
 
 app.use(express.json());
 
+
 app.use(methodOverride('_method'));
+
+
+app.use(cookieParser('MY SECRET'));
 
 app.use(
   session({
@@ -54,6 +62,9 @@ app.engine('hbs',
           formatDate: ( a )=> moment(a).format("DD-MM-YYYY"),
           formatDateYMD: ( a )=> moment(a).format("YYYY-MM-DD"),
           formatString:(a) => a,
+          formatDateLocale:(a) =>moment(a).locale("vi").fromNow(),
+          round: ( a ) => Math.round(a),
+          percent: (a, b) => Math.round((a/b)*100),
           ifCond: function (v1, operator, v2, options) {
             switch (operator) {
                 case '==':
@@ -102,6 +113,12 @@ app.set('views', path.join(__dirname, 'resources', 'views'));
 
 ///Route init
 route(app);
+
+// app.use(function (req, res) {
+//     res.status(404).render("error",{
+//         layout:"",
+//     });
+// });
 
 
 app.listen(port, () => {

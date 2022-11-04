@@ -3,7 +3,12 @@ const router = express.Router();
 
 const competitionController = require("../app/controllers/CompetitionController");
 
-router.get("/ranks", competitionController.ranks);
-router.get("/:id", competitionController.detail);
+const {
+    checkRequireAdmin,
+} = require("../app/middlewares/AuthMiddleware");
+
+
+router.get("/ranks", checkRequireAdmin, competitionController.ranks);
+router.get("/:id", checkRequireAdmin, competitionController.detail);
 
 module.exports = router;

@@ -9194,7 +9194,7 @@ pre code {
   overflow-y: scroll;
 }
 
-.container,
+/* .container,
 .container-fluid,
 .container-sm,
 .container-md,
@@ -9229,7 +9229,7 @@ pre code {
   .container, .container-sm, .container-md, .container-lg, .container-xl {
     max-width: 1140px;
   }
-}
+} */
 
 .row {
   display: flex;

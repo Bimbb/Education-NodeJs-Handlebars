@@ -89,10 +89,10 @@ class ExerciseController {
                     );
                 }
             } else {
-                res.render("error");
+                res.render("error",{layout:""});
             }
         } else {
-            res.render("error");
+            res.render("error",{layout:""});
         }
     }
 
@@ -116,7 +116,7 @@ class ExerciseController {
                 errors: req.flash("error"),
             });
         } else {
-            res.render("error");
+            res.render("error",{layout:""});
         }
     }
 
