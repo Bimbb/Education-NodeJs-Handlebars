@@ -1,68 +1,78 @@
 <!DOCTYPE html>
 <html>
+
 <head>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1.0">
-	<title>Đăng Nhập Admin</title>
-    <link rel="icon" href='https://hdgmvietnam.com/admin/upload/image/giao-hoi-cong-giao-dan-than-trong-su-mang-giao-duc.jpg' type='image/jpg', sizes='16x16'>
-	<link rel="stylesheet" type="text/css" href="/admin/css/transparent-login-form.css">
-	<link href="http://infiniteiotdevices.com/images/logo.png" rel="icon" sizes="16x16" type="image/gif" />
-	<!-- <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
-	<link rel="stylesheet" href="/css/app.css">
-	<link rel="stylesheet" href="/vendor/eggy-js/css/eggy.css">
-	<link rel="stylesheet" href="/vendor/eggy-js/css/progressbar.css">
-	<link rel="stylesheet" href="/vendor/eggy-js/css/theme.css">
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đăng Nhập Admin</title>
+    <link rel="icon"
+        href='https://hdgmvietnam.com/admin/upload/image/giao-hoi-cong-giao-dan-than-trong-su-mang-giao-duc.jpg'
+        type='image/jpg' , sizes='16x16'>
+    <link rel="stylesheet" type="text/css" href="/admin/css/transparent-login-form.css">
+    <link href="http://infiniteiotdevices.com/images/logo.png" rel="icon" sizes="16x16" type="image/gif" />
+    <!-- <link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"> -->
+    <link rel="stylesheet" href="/css/app.css">
+    <link rel="stylesheet" href="/vendor/eggy-js/css/eggy.css">
+    <link rel="stylesheet" href="/vendor/eggy-js/css/progressbar.css">
+    <link rel="stylesheet" href="/vendor/eggy-js/css/theme.css">
 
 </head>
+
 <body>
-	<div class="loginBox">
-		<img src="https://png.pngtree.com/png-clipart/20190520/original/pngtree-vector-user-management-icon-png-image_3773556.jpg" class="user">
-		<h2>Đăng Nhập Admin</h2>
-		<form action='/login-admin'  method='POST' >
-			<p>Tên Tài Khoản</p>
-			<input type="text" name="userName" placeholder="Nhập Tên Tài Khoản" {{#if values}} value="{{values.userName}}" {{/if}}>
-			<p>Mật khẩu</p>
-			<input type="password" name="password" placeholder="••••••••" {{#if values}} value="{{values.password}}" {{/if}}>
-			<input type="submit" name="" value="Đăng Nhập" >
-		</form>
-	</div>
+    <div class="loginBox">
+        <img src="https://png.pngtree.com/png-clipart/20190520/original/pngtree-vector-user-management-icon-png-image_3773556.jpg"
+            class="user">
+        <h2>Đăng Nhập Admin ở đây</h2>
+        <form action='/login-admin' method='POST'>
+            <p>Tên Tài Khoản</p>
+            <input type="text" name="userName" placeholder="Nhập Tên Tài Khoản" {{#if values}}
+                value="{{values.userName}}" {{/if}}>
+            <p>Mật khẩu</p>
+            <input type="password" name="password" placeholder="••••••••" {{#if values}} value="{{values.password}}"
+                {{/if}}>
+            <input type="submit" name="" value="Đăng Nhập">
+        </form>
+    </div>
 </body>
+
 </html>
 <script src="/vendor/eggy-js/js/eggy.js"></script>
-<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js' integrity='sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM' crossorigin='anonymous'></script>
+<script src='https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js'
+    integrity='sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM'
+    crossorigin='anonymous'></script>
 
 {{#if errors}}
-    <div id="errors" style="visibility: hidden;">{{errors}}</div>
+<div id="errors" style="visibility: hidden;">{{errors}}</div>
 {{else}}
-    {{#if success}}
-    <div id="success" style="visibility: hidden;">{{success}}</div>
-    {{/if}}
+{{#if success}}
+<div id="success" style="visibility: hidden;">{{success}}</div>
+{{/if}}
 {{/if}}
 
 
 <script>
     var msgError = document.getElementById('errors');
-        ///toast message
+    ///toast message
     let msgToastError = msgError.innerHTML;
 
-    if(msgToastError != ''){
+    if (msgToastError != '') {
         Eggy({
             title: 'Oops... Có gì đó không đúng',
-            message:  msgToastError,
+            message: msgToastError,
             type: 'warning',
             duration: 5000,
         });
     }
 </script>
 <script>
-        var msgSuccess = document.getElementById('success');
-        let msgToastSuccess = msgSuccess.innerHTML;
-        if(msgToastSuccess != ''){
-            Eggy({
-                title: 'Thành Công',
-                message:  msgToastSuccess,
-                type: 'success',
-                duration: 5000,
-            });
-        }
+    var msgSuccess = document.getElementById('success');
+    let msgToastSuccess = msgSuccess.innerHTML;
+    if (msgToastSuccess != '') {
+        Eggy({
+            title: 'Thành Công',
+            message: msgToastSuccess,
+            type: 'success',
+            duration: 5000,
+        });
+    }
 </script>
