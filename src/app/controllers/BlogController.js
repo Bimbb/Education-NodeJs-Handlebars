@@ -9,7 +9,8 @@ class BlogController {
     async create(req, res) {
         const categories = await BlogCategory.find({});
         res.render("blog/create", {
-            categories,
+            categories: multipleMongooseToObject(categories),
+            layout: "admin",
             success: req.flash("success"),
             errors: req.flash("error"),
         });
@@ -18,36 +19,36 @@ class BlogController {
     //Post /blog/post
     async postBlog(req, res) {
         const formDate = req.body;
-        formDate.userID = req.signedCookies.userId;
         const blog = new Blog(formDate);
         await blog.save();
         req.flash("success", "Đã thêm 1 bài viết mới thành công!");
-        res.redirect("back");
+        res.redirect("/blog/list");
     }
 
-    // [GET]/blog/:id/update
+    // [GET]/blog/:id/edit
     async update(req, res) {
         const blog = await Blog.findOne({ _id: req.params.id });
         const categories = await BlogCategory.find({});
-        res.render("blog/update", {
+        res.render("blog/edit", {
             success: req.flash("success"),
             errors: req.flash("error"),
-            categories,
-            blog,
+            categories : multipleMongooseToObject(categories),
+            layout: "admin",
+            blog : mongooseToObject(blog),
         });
     }
 
-    // [PUT]/blog/:id/update
+    // [PUT]/blog/:id/edit
     async putUpdate(req, res) {
         await Blog.updateOne({ _id: req.params.id }, req.body);
         req.flash("success", "Cập nhật bài viết thành công!");
-        res.redirect("back");
+        res.redirect("/blog/list");
     }
 
     async deleteBlog(req, res) {
         await Blog.deleteOne({ _id: req.params.id });
         req.flash("success", "Xóa bài viết thành công!");
-        res.redirect("back");
+        res.redirect("/blog/list");
     }
 
     async addCategory(req, res) {
@@ -55,7 +56,7 @@ class BlogController {
         const category = new BlogCategory(formDate);
         await category.save();
         req.flash("success", "Đã thêm 1 thể loại!");
-        res.redirect("/blog/list-category");
+        res.redirect("back");
     }
 
     async listCategory(req, res) {
@@ -73,7 +74,7 @@ class BlogController {
         req.flash("success", "Đã xóa thành công!");
         res.redirect("back");
     }
-    // [GET]/blog/list
+    // [GET]/blog/list-blog
     async listBlog(req, res) {
         const categories = await BlogCategory.find({});
         const blogs = await Blog.aggregate([

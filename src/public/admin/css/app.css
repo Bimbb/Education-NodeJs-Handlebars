@@ -505,6 +505,45 @@ body {
   cursor: pointer;
   box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
 }
+.cardBox .carddd {
+  position: relative;
+  background: #54B435;
+  padding: 30px;
+  border-radius: 20px;
+  display: flex;
+  justify-content: space-between;
+  cursor: pointer;
+  box-shadow: 0 7px 25px rgba(0, 0, 0, 0.08);
+}
+.cardBox .carddd .numbers {
+  position: relative;
+  font-weight: 500;
+  font-size: 2.5rem;
+  color: #153462;
+}
+.cardBox .carddd:hover {
+  background: #BCE29E;
+}
+
+.cardBox .carddd .numbers {
+  position: relative;
+  font-weight: 500;
+  font-size: 2.5rem;
+  color: var(--blue);
+}
+
+.cardBox .carddd .cardName {
+  color: #153462;
+  font-size: 1.1rem;
+  margin-top: 5px;
+}
+
+.cardBox .carddd .iconBx {
+  font-size: 3.5rem;
+  color: red;
+  text-align: center;
+}
+
 
 .cardBox .cardd .numbers {
   position: relative;

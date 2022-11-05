@@ -36,6 +36,7 @@ class SiteController {
         const countExercises = await Exercise.countDocuments({});
         const countBlogs = await Blog.countDocuments({});
         const countReport = await Report.countDocuments({read: "Chưa Đọc"});
+        const countRoom = await Room.countDocuments({});
         const statisticalTop5 = await Statistical.aggregate([
             {
                 $group: {
@@ -88,6 +89,7 @@ class SiteController {
             countExercises,
             countBlogs,
             countReport,
+            countRoom,
             statisticalTop5,
             ranks,
             layout: "admin",

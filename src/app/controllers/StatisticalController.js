@@ -114,10 +114,108 @@ class StatisticalController {
             } else {
                 res.render("error",{layout:""});
             }
-        } else {
+        } else if (ObjectId.isValid(req.query.subject)) {
+            const subject = await Subject.findById(req.query.subject);
+            if (subject) {
+                const grade = await Grade.findById(subject.gradeID);
+                const units = await Unit.find({ subjectID: subject._id });
+                const unitIdArray = units.map(({ _id }) => _id);
+                const lessons = await Lesson.find({
+                    unitID: { $in: unitIdArray },
+                });
+                const lessonIdArray = lessons.map(({ _id }) => _id);
+
+                const ranks = await Statistical.aggregate([
+                    {
+                        $match: {
+                            lessonID: { $in: lessonIdArray },
+                        },
+                    },
+                    {
+                        $group: {
+                            _id: "$userID",
+                            totalScore: { $sum: "$score" },
+                            totalLessonDone: { $count: {} },
+                        },
+                    },
+                    {
+                        $lookup: {
+                            from: "users",
+                            localField: "_id",
+                            foreignField: "_id",
+                            as: "user",
+                        },
+                    },
+                    {
+                        $project: {
+                            "user.birthDay": 0,
+                            "user.active": 0,
+                            "user.password": 0,
+                            "user.phone": 0,
+                            "user.roleID": 0,
+                            "user.address": 0,
+                            "user.username": 0,
+                        },
+                    },
+                ]);
+
+                res.render("statisticals/statisticals-grade", {
+                    subject : mongooseToObject(subject),
+                    grade: mongooseToObject(grade),
+                    ranks,
+                    countLessons: lessons.length,
+                });
+            } else {
+                res.render("error",{layout:""});
+            }
+        }
+        else {
             res.render("error",{layout:""});
         }
     }
+
+    // [GET]/statisticals/:id/detail
+    async detail(req, res) {
+        if (ObjectId.isValid(req.params.id)) {
+            const statistical = await Statistical.findById(req.params.id);
+            if (statistical) {
+                const user = await User.findById(statistical.userID);
+                const lesson = await Lesson.findById(statistical.lessonID);
+                const unit = await Unit.findById(lesson.unitID);
+                const subject = await Subject.findById(unit.subjectID);
+                const grade = await Grade.findOne({ _id: subject.gradeID });
+                const results = await Result.aggregate([
+                    { $match: { statisticalID: ObjectId(statistical._id) } },
+                    {
+                        $lookup: {
+                            from: "exercises",
+                            localField: "exerciseID",
+                            foreignField: "_id",
+                            as: "exercise",
+                        },
+                    },
+                ]);
+                res.render("statisticals/detail", {
+                    results,
+                    user : mongooseToObject(user),
+                    lesson : mongooseToObject(lesson),
+                    unit : mongooseToObject(unit),
+                    subject : mongooseToObject(subject),
+                    grade: mongooseToObject(grade),
+                    statistical : mongooseToObject(statistical),
+                    layout: "admin",
+                });
+            } else {
+                res.render("error");
+            }
+        } else {
+            res.render("error");
+        }
+    }
+
+
+
+
 }
 
 module.exports = new StatisticalController();

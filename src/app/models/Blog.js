@@ -13,7 +13,6 @@ const Blog = new Schema(
             ref: "Blog-Category",
             require: true,
         },
-        userID: { type: Schema.Types.ObjectId, ref: "User", require: true },
     },
     {
         timestamps: true,

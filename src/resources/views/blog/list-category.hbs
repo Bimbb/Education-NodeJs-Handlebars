@@ -26,15 +26,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    {{#each categories}}
+                                {{#each categories}}
+                                    <tr>
+                                    
                                         <td>{{sum @index 1}}</td>
                                         <td>{{this.category}}</td>
                                         <td style="width: 15%">
                                             <button class="btn btn-danger" type="button" data-id="{{this._id}}" data-toggle="modal" data-target="#delete-category-modal">Xóa</button>
                                         </td>
-                                    {{/each}}
-                                </tr>
+                                    </tr>
+                                {{/each}}
                             </tbody>
                         </table>
                     </div>

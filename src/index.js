@@ -11,9 +11,23 @@ const moment = require("moment");
 const session = require("express-session");
 const flash = require("connect-flash");
 const app = express();
-const port = 8888;
+
 const route  = require('./routes');
 const db = require('./config/db');
+
+
+
+///MODel
+
+const Subject = require("./app/models/Subject");
+const Unit = require("./app/models/Unit");
+const Lesson = require("./app/models/Lesson");
+const Exercise = require("./app/models/Exercise");
+const Room = require("./app/models/Room");
+const Rank = require("./app/models/Rank");
+const User = require("./app/models/User");
+const mongoose = require("mongoose");
+const ObjectId = mongoose.Types.ObjectId;
 
 //Connect to db 
 db.connect();
@@ -121,6 +135,203 @@ route(app);
 // });
 
 
-app.listen(port, () => {
-  console.log(`Example app listening on port ${port}`)
-})
+//socket
+const server = require("http").Server(app);
+const io = require("socket.io")(server);
+
+var countMessage = 0;
+var connected_socket = 0;
+var $ipsConnected = [];
+let ranks = [];
+let users_answered = [];
+let users_scored = [];
+
+
+io.on("connection", async (socket) => {
+    // qaController.respond(socket);
+
+    console.log(socket.id + " ket noi");
+
+    var $ipAddress = socket.handshake.address;
+    if (!$ipsConnected.hasOwnProperty($ipAddress)) {
+        $ipsConnected[$ipAddress] = 1;
+        connected_socket++;
+        io.sockets.emit("server-send-counter", connected_socket);
+    }
+
+    // ngắt kết nối
+    socket.on("disconnect", async () => {
+        if ($ipsConnected.hasOwnProperty($ipAddress)) {
+            delete $ipsConnected[$ipAddress];
+            connected_socket--;
+            socket.emit("server-send-counter", connected_socket);
+            console.log(socket.id + " ngat ket noi");
+        }
+
+        const rooms = await Room.find({});
+        rooms.forEach(async (room) => {
+            if (room.socketID === socket.id) {
+                if (room.members.length > 0) {
+                    await Room.deleteOne({ socketID: socket.id });
+                    const roomsNew = await Room.aggregate([
+                        {
+                            $lookup: {
+                                from: "subjects",
+                                localField: "subjectID",
+                                foreignField: "_id",
+                                as: "subject",
+                            },
+                        },
+                        {
+                            $lookup: {
+                                from: "units",
+                                localField: "unitID",
+                                foreignField: "_id",
+                                as: "unit",
+                            },
+                        },
+                        {
+                            $lookup: {
+                                from: "lessions",
+                                localField: "lessionID",
+                                foreignField: "_id",
+                                as: "lession",
+                            },
+                        },
+                    ]);
+
+                    io.sockets.emit("server-send-rooms", roomsNew);
+                    io.sockets.in(room.roomName).emit("master-handle-out-room");
+                }
+            } else {
+                if (room.status === "Full") {
+                    room.members.forEach(async (member) => {
+                        if (member.socketID === socket.id) {
+                            await Room.updateOne(
+                                { _id: room._id },
+                                {
+                                    status: "Đang chờ...",
+                                    $pull: {
+                                        members: {
+                                            socketID: socket.id,
+                                        },
+                                    },
+                                }
+                            );
+
+                            const roomMembers = await Room.findOne({
+                                roomName: room.roomName,
+                            });
+                            const roomsNew = await Room.aggregate([
+                                {
+                                    $lookup: {
+                                        from: "subjects",
+                                        localField: "subjectID",
+                                        foreignField: "_id",
+                                        as: "subject",
+                                    },
+                                },
+                                {
+                                    $lookup: {
+                                        from: "units",
+                                        localField: "unitID",
+                                        foreignField: "_id",
+                                        as: "unit",
+                                    },
+                                },
+                                {
+                                    $lookup: {
+                                        from: "lessions",
+                                        localField: "lessionID",
+                                        foreignField: "_id",
+                                        as: "lession",
+                                    },
+                                },
+                            ]);
+
+                            io.sockets.emit("server-send-rooms", roomsNew);
+                            io.sockets
+                                .in(room.roomName)
+                                .emit(
+                                    "server-send-members-in-room",
+                                    roomMembers.members
+                                );
+                        }
+                    });
+                } else if (room.status === "Đang thi...") {
+                    room.members.forEach(async (member) => {
+                        if (member.socketID === socket.id) {
+                            await Room.updateOne(
+                                { _id: room._id },
+                                {
+                                    $pull: {
+                                        members: {
+                                            socketID: socket.id,
+                                        },
+                                    },
+                                }
+                            );
+
+                            const roomMembers = await Room.findOne({
+                                roomName: room.roomName,
+                            });
+                            const roomsNew = await Room.aggregate([
+                                {
+                                    $lookup: {
+                                        from: "subjects",
+                                        localField: "subjectID",
+                                        foreignField: "_id",
+                                        as: "subject",
+                                    },
+                                },
+                                {
+                                    $lookup: {
+                                        from: "units",
+                                        localField: "unitID",
+                                        foreignField: "_id",
+                                        as: "unit",
+                                    },
+                                },
+                                {
+                                    $lookup: {
+                                        from: "lessions",
+                                        localField: "lessionID",
+                                        foreignField: "_id",
+                                        as: "lession",
+                                    },
+                                },
+                            ]);
+
+                            io.sockets.emit("server-send-rooms", roomsNew);
+                            io.sockets
+                                .in(room.roomName)
+                                .emit(
+                                    "server-send-members-in-room",
+                                    roomMembers.members
+                                );
+                        }
+                    });
+                }
+            }
+        });
+
+        // delete socket when disconnect
+        ranks = ranks.filter(
+            (item) => item.socketID === socket.id && ranks.indexOf(item) === -1
+        );
+
+        users_answered = users_answered.filter(
+            (item) =>
+                item.socketID === socket.id &&
+                users_answered.indexOf(item) === -1
+        );
+    });
+    
+});
+
+
+
+let port = process.env.PORT || 8888;
+var listener = server.listen(port, function () {
+    console.log("Listening on port " + listener.address().port);
+});

@@ -1,157 +1,141 @@
   <!-- ======================= Cards ================== -->
-            <div class="cardBox">
-                <div class="cardd">
-                    <div>
-                        <div class="numbers">{{countUsers}}</div>
-                        <div class="cardName">THÀNH VIÊN</div>
-                    </div>
+<div class="cardBox">
+    <div class="cardd">
+        <div>
+            <div class="numbers">{{countUsers}}</div>
+            <div class="cardName">THÀNH VIÊN</div>
+        </div>
 
-                    <div class="iconBx">
-                        <ion-icon name="people-outline"></ion-icon>
-                    </div>
-                </div>
-                <div class="cardd">
-                    <div>
-                        <div class="numbers">{{countGrade}}</div>
-                        <div class="cardName">LỚP HỌC</div>
-                    </div>
+        <div class="iconBx">
+            <ion-icon name="people-sharp"></ion-icon>
+        </div>
+    </div>
+    <div class="cardd">
+        <div>
+            <div class="numbers">{{countGrade}}</div>
+            <div class="cardName">LỚP HỌC</div>
+        </div>
 
-                    <div class="iconBx">
-                        <ion-icon name="file-tray-stacked-outline"></ion-icon>
-                    </div>
-                </div><div class="cardd">
-                    <div>
-                        <div class="numbers">{{countUnits}}</div>
-                        <div class="cardName">CHUYÊN ĐỀ</div>
-                    </div>
+        <div class="iconBx">
+            <ion-icon name="file-tray-stacked-outline"></ion-icon>
+        </div>
+    </div><div class="cardd">
+        <div>
+            <div class="numbers">{{countUnits}}</div>
+            <div class="cardName">CHUYÊN ĐỀ</div>
+        </div>
 
-                    <div class="iconBx">
-                        <ion-icon name="bookmark-outline"></ion-icon>
-                    </div>
-                </div><div class="cardd">
-                    <div>
-                        <div class="numbers">{{countLessons}}</div>
-                        <div class="cardName">BÀI HỌC</div>
-                    </div>
+        <div class="iconBx">
+            <ion-icon name="bookmark-sharp"></ion-icon>
+        </div>
+    </div><div class="cardd">
+        <div>
+            <div class="numbers">{{countLessons}}</div>
+            <div class="cardName">BÀI HỌC</div>
+        </div>
 
-                    <div class="iconBx">
-                        <ion-icon name="laptop-outline"></ion-icon>
-                    </div>
-                </div>
+        <div class="iconBx">
+            <ion-icon name="laptop-sharp"></ion-icon>
+        </div>
+    </div>
 
-                <div class="cardd">
-                    <div>
-                        <div class="numbers">{{countExercises}}</div>
-                        <div class="cardName">BÀI TẬP</div>
-                    </div>
+    <div class="cardd">
+        <div>
+            <div class="numbers">{{countExercises}}</div>
+            <div class="cardName">BÀI TẬP</div>
+        </div>
 
-                    <div class="iconBx">
-                        <ion-icon name="document-text-outline"></ion-icon>
-                    </div>
-                </div>
-                 <div class="cardd">
-                    <div>
-                        <div class="numbers">{{countExercises}}</div>
-                        <div class="cardName">ROOM</div>
-                    </div>
+        <div class="iconBx">
+            <ion-icon name="document-text-sharp"></ion-icon>
+        </div>
+    </div>
+    <div class="cardd">
+        <div>
+            <div class="numbers">{{countRoom}}</div>
+            <div class="cardName">ROOM</div>
+        </div>
 
-                    <div class="iconBx">
-                        <ion-icon name="clipboard-outline"></ion-icon>
-                    </div>
-                </div>
-                 <div class="cardd">
-                    <div>
-                        <div class="numbers">{{countReport}}</div>
-                        <div class="cardName">BÁO LỖI</div>
-                    </div>
+        <div class="iconBx">
+            <ion-icon name="cube-sharp"></ion-icon>
+        </div>
+    </div>
+    <div class="cardd">
+        <div>
+            <div class="numbers">{{countReport}}</div>
+            <div class="cardName">BÁO LỖI</div>
+        </div>
 
-                    <div class="iconBx">
-                        <ion-icon name="alert-outline"></ion-icon>
-                    </div>
-                </div>
-            </div>
-            <!-- ================ Order Details List ================= -->
-            <div class="details">
-                <div class="recentOrders">
-                    <div class="cardHeader">
-                        <h2>Top học sinh đạt điểm cao</h2>
-                        <a href="#" class="btn">Xem Tất cả</a>
-                      
-                    </div>
-                    <table>
-                        <thead>
-                            <tr>
-                                
-                                <td>Họ và tên</td>
-                                <td>Email</td>
-                                <td>Số điểm</td>
-                                {{!-- <td>Status</td> --}}
-                            </tr>
-                        </thead>
+        <div class="iconBx">
+            <ion-icon name="alert-sharp"></ion-icon>
+        </div>
+    </div>
+    <div class="carddd">
+        <div>
+            <div class="numbers" id="visitors"></div>
+            <div class="cardName">Người Đang hoạt động</div>
+        </div>
 
-                        <tbody>
-                            {{#each statisticalTop5}}
-                                <tr>
-                                    {{#this.user}}
-                                        <td>
-                                            <img src="{{avatar}}" alt=""style="width:40px;height:40px; border-radius:20px">
-                                            {{fullname}}
-                                        </td>
-                                        <td>{{email}}</td>
-                                    {{/this.user}}
-                                    
-                                    <td>{{this.totalScore}} <i class="mdi mdi-heart" style="color: red;"></i></td>
-                                </tr>
-                           {{/each}}
-                       
-                        </tbody>
-                    </table>
-                </div>
+        <div class="iconBx">
+            <ion-icon name="heart-sharp"></ion-icon>
+        </div>
+    </div>
+</div>
+<!-- ================ Order Details List ================= -->
+<div class="details">
+    <div class="recentOrders">
+        <div class="cardHeader">
+            <h2>Top học sinh đạt điểm cao</h2>
+            <a href="/competition/ranks" class="btn">Xem Tất cả</a>
+            
+        </div>
+        <table>
+            <thead>
+                <tr>
+                    
+                    <td>Họ và tên</td>
+                    <td>Email</td>
+                    <td>Số điểm</td>
+                    {{!-- <td>Status</td> --}}
+                </tr>
+            </thead>
 
-                <!-- ================= New Customers ================ -->
-                {{!-- <div class="recentCustomers">
-                    <div class="cardHeader">
-                        <h2>Recent Customers</h2>
-                    </div>
-
-                    <!-- <table>
-                      
-
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
-                            </td>
+            <tbody>
+                {{#each ranks}}
+                    <tr>
+                        {{#this.user}}
                             <td>
-                                <h4>David <br> <span>Italy</span></h4>
+                                <img src="{{avatar}}" alt=""style="width:40px;height:40px; border-radius:20px">
+                                {{fullname}}
                             </td>
-                        </tr>
+                            <td>{{email}}</td>
+                        {{/this.user}}
+                        
+                        <td>{{this.score}} <i class="mdi mdi-heart" style="color: red;"></i></td>
+                    </tr>
+                {{/each}}
+            
+            </tbody>
+        </table>
+    </div>
 
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
+    <!-- ================= New Customers ================ -->
+    <div class="recentCustomers">
+        <div class="cardHeader">
+            <h2>Người Đang Hoạt Động
+                
+            </h2>
+            
+        </div>
+    </div>
+</div>
 
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="assets/imgs/customer01.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>David <br> <span>Italy</span></h4>
-                            </td>
-                        </tr>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+    const socket = io();
+    socket.on("server-send-counter", (data) => {
+        $("#visitors").html(data);
+    });
 
-                        <tr>
-                            <td width="60px">
-                                <div class="imgBx"><img src="assets/imgs/customer02.jpg" alt=""></div>
-                            </td>
-                            <td>
-                                <h4>Amit <br> <span>India</span></h4>
-                            </td>
-                        </tr>
-                    </table> -->
-                </div> --}}
-            </div>
+</script>
+
+ 

@@ -38,12 +38,10 @@
                         <thead>
                             <tr>
                                 <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;"  scope="col">#</th>
-                                <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Ảnh bìa</th>
+                                <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Ảnh</th>
                                 <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Tiêu đề</th>
                                 <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Thể loại</th>
-                                <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Người đăng</th>
                                 <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Ngày đăng</th>
-                                <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Lượt xem</th>
                                 <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Hành động</th>
                             </tr>
                         </thead>
@@ -51,14 +49,14 @@
                             {{#each blogs }}
                                 <tr>
                                     <th scope="row" style="text-align: center;">{{sum @index 1}}</th>
-                                    <td class="py-1">
+                                    <td class="py-1" style="text-align: center;">
                                         <img src="{{this.image}}" alt="image">
                                     </td>
                                     <td style="text-align: center; color: #000000;">{{this.title}}</td>
-                                    <td style="text-align: center; color: #000000;">{{this.BlogCategory.category}}</td>
-                                    <td style="text-align: center; color: #000000;">{{this.User.fullname}}</td>
+                                    {{#BlogCategory}}
+                                    <td style="text-align: center; color: #000000;">{{category}}</td>
+                                    {{/BlogCategory}}
                                     <td style="text-align: center; color: #000000;">{{formatDate this.createdAt }}</td>
-                                    <td style="text-align: center; color: #000000;">{{this.view }}</td>
                                     <td style="text-align: center; ">
                                         <a href="/blog/{{this._id}}/edit"   class="btn btn-secondary edit" >
                                             <span class="ti-pencil-alt"></span>&nbsp;

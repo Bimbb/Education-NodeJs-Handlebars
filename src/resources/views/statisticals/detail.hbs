@@ -1,0 +1,224 @@
+<section class="statistical__detail">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card">
+            <div class="card-body">
+                <div class="d-flex align-items-center justify-content-between">
+                      <div class="card-title text-uppercase">{{subject.name}} - Của lớp {{grade.name}} 
+                        <div class="card-title m-3"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;- Chuyên đề: {{unit.name}}</div>
+                    </div>
+                    <a class="btn btn-outline-warning btn-icon-text" href="/statisticals?lesson={{lesson._id}}"> 
+                        <i class="mdi mdi-reload btn-icon-prepend"></i>
+                        Quay lại
+                    </a>
+                </div>
+                <hr>
+                <div class="card-title">Chi tiết kết quả học tập  "Bài {{lesson.lessonNumber}}. {{lesson.name}}"</div>
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card">
+                            <div class="card-body text-dark">
+                                {{!-- <div class="text-center">
+                                    
+                                </div> --}}
+                                <div>
+                                    <p class="card-text font-weight-bold">Học sinh:</p>
+                                    <p class="card-text">
+                                        <img class="rounded-pill" src="/img/nobody.jpg" height="22" width="22" style="object-fit: cover">
+                                        {{user.fullname}}
+                                    </p>
+                                    <p class="card-text">&nbsp;&nbsp;&nbsp;&nbsp;- {{user.email}}</p>
+                                    <p class="card-text font-weight-bold">Kết quả:</p>
+                                    <p class="card-text">&nbsp;&nbsp;&nbsp;&nbsp;- {{statistical.score}}  điểm</p>
+                                    <p class="card-text">&nbsp;&nbsp;&nbsp;&nbsp;- Thời gian làm: {{statistical.time}}</p>
+                                    <p class="card-text">&nbsp;&nbsp;&nbsp;&nbsp;- Số câu đúng: {{statistical.totalAnswerTrue}}/{{results.length}}</p>
+                                </div> 
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-9">
+                       
+                        <div class="tab-content border-0">
+                            {{#each results}}
+                                <div class="tab-pane fade" id="nav-{{sum @index 1}}" role="tabpanel" aria-labelledby="result-tab-{{sum @index 1}}">
+                                    <div class="card">
+                                        <div class="card-body">
+                                        {{#this.exercise}}
+                                            <div class="d-flex align-items-center">
+                                                <h4 class="mb-0 card-title"> Câu  {{sum @index 1}}:</h4>
+                                            </div>
+                                            <div class="text-dark mt-4"> Câu Hỏi: {{question}}</div>
+                                            <div class="row ml-0">
+                                                {{#ifCond answer "===" option1 }}
+                                                    <div class="col-sm-6 p-2 form-check d-flex align-items-center bg-green">
+                                                        <input class="form-check-input mt-0 ml-0" type="radio" disabled="disabled">
+                                                        <label class="form-check-label text-white">
+                                                            A. {{option1}}
+                                                            <i class="input-helper"></i>
+                                                        </label>
+                                                    </div>
+                                                {{else}}
+                                                    {{#ifCond option "===" option1}}   
+                                                        <div class="col-sm-6 p-2 form-check d-flex align-items-center bg-danger">
+                                                            <input class="form-check-input mt-0 ml-0" type="radio" disabled="disabled">
+                                                            <label class="form-check-label text-white">
+                                                                A. {{option1}}
+                                                                <i class="input-helper"></i>
+                                                            </label>
+                                                        </div>
+                                                    {{else}}
+                                                        <div class="col-sm-6 p-2 form-check d-flex align-items-center ">
+                                                            <input class="form-check-input mt-0 ml-0" type="radio" disabled="disabled">
+                                                            <label class="form-check-label text-dark">
+                                                                A. {{option1}}
+                                                                <i class="input-helper"></i>
+                                                            </label>
+                                                        </div>
+                                                    {{/ifCond}}   
+                                                {{/ifCond}}   
+                                                {{!-- B --}}
+                                                
+                                                {{#ifCond answer "===" option2 }}
+                                                    <div class="col-sm-6 p-2 form-check d-flex align-items-center bg-green">
+                                                        <input class="form-check-input mt-0 ml-0" type="radio" disabled="disabled">
+                                                        <label class="form-check-label text-white">
+                                                            B. {{option2}}
+                                                            <i class="input-helper"></i>
+                                                        </label>
+                                                    </div>
+                                                {{else}}
+                                                    {{#ifCond option "===" option2}}   
+                                                        <div class="col-sm-6 p-2 form-check d-flex align-items-center bg-danger">
+                                                            <input class="form-check-input mt-0 ml-0" type="radio" disabled="disabled">
+                                                            <label class="form-check-label text-white">
+                                                                B. {{option2}}
+                                                                <i class="input-helper"></i>
+                                                            </label>
+                                                        </div>
+                                                    {{else}}
+                                                        <div class="col-sm-6 p-2 form-check d-flex align-items-center ">
+                                                            <input class="form-check-input mt-0 ml-0" type="radio" disabled="disabled">
+                                                            <label class="form-check-label text-dark">
+                                                                B. {{option2}}
+                                                                <i class="input-helper"></i>
+                                                            </label>
+                                                        </div>
+                                                    {{/ifCond}}   
+                                                {{/ifCond}}  
+
+                                                {{!-- C  --}}
+                                                {{#ifCond answer "===" option3 }}
+                                                    <div class="col-sm-6 p-2 form-check d-flex align-items-center bg-green">
+                                                        <input class="form-check-input mt-0 ml-0" type="radio" disabled="disabled">
+                                                        <label class="form-check-label text-white">
+                                                            C. {{option3}}
+                                                            <i class="input-helper"></i>
+                                                        </label>
+                                                    </div>
+                                                {{else}}
+                                                    {{#ifCond option "===" option3}}   
+                                                        <div class="col-sm-6 p-2 form-check d-flex align-items-center bg-danger">
+                                                            <input class="form-check-input mt-0 ml-0" type="radio" disabled="disabled">
+                                                            <label class="form-check-label text-white">
+                                                                C. {{option3}}
+                                                                <i class="input-helper"></i>
+                                                            </label>
+                                                        </div>
+                                                    {{else}}
+                                                        <div class="col-sm-6 p-2 form-check d-flex align-items-center ">
+                                                            <input class="form-check-input mt-0 ml-0" type="radio" disabled="disabled">
+                                                            <label class="form-check-label text-dark">
+                                                                C. {{option3}}
+                                                                <i class="input-helper"></i>
+                                                            </label>
+                                                        </div>
+                                                    {{/ifCond}}   
+                                                {{/ifCond}}   
+
+                                                {{!-- D --}}
+                                                {{#ifCond answer "===" option4 }}
+                                                    <div class="col-sm-6 p-2 form-check d-flex align-items-center bg-green">
+                                                        <input class="form-check-input mt-0 ml-0" type="radio" disabled="disabled">
+                                                        <label class="form-check-label text-white">
+                                                            D. {{option4}}
+                                                            <i class="input-helper"></i>
+                                                        </label>
+                                                    </div>
+                                                {{else}}
+                                                    {{#ifCond this.option "===" option4}}   
+                                                        <div class="col-sm-6 p-2 form-check d-flex align-items-center bg-danger">
+                                                            <input class="form-check-input mt-0 ml-0" type="radio" disabled="disabled">
+                                                            <label class="form-check-label text-white">
+                                                                D. {{option4}}
+                                                                <i class="input-helper"></i>
+                                                            </label>
+                                                        </div>
+                                                    {{else}}
+                                                        <div class="col-sm-6 p-2 form-check d-flex align-items-center ">
+                                                            <input class="form-check-input mt-0 ml-0" type="radio" disabled="disabled">
+                                                            <label class="form-check-label text-dark">
+                                                                D. {{option4}}
+                                                                <i class="input-helper"></i>
+                                                            </label>
+                                                        </div>
+                                                    {{/ifCond}}   
+                                                {{/ifCond}}   
+                                            </div>
+                                            <div class="mt-4">
+                                                <div class="text-dark">
+                                                    <div>
+                                                        <i class="mdi mdi-arrow-right"></i>
+                                                        <span class="ml-2 font-weight-bold">Phương pháp giải</span>
+                                                    </div>
+                                                    {{#if recommend}}
+                                                        <div class="mt-2">{{recommend}}</div>
+                                                    {{else}}
+                                                        <div class="mt-2">Không có Phương pháp giải</div>
+                                                    {{/if}}
+                                                </div>
+                                                <div class="text-dark mt-4">
+                                                    <div>
+                                                        <i class="mdi mdi-arrow-right"></i>
+                                                        <span class="ml-2 font-weight-bold">Lời giải</span>
+                                                    </div>
+                                                    {{#if explain}}
+                                                        <div class="mt-2">{{explain}}</div>
+                                                    {{else}}
+                                                        <div class="mt-2">Không có lời giải chi tiết</div>
+                                                    {{/if}}
+                                                </div>
+                                            </div>
+                                        {{/this.exercise}}
+                                        </div>
+                                    </div>
+                                </div>
+                                {{else}}
+                                    <div class="text-center">Không có dữ liệu</div>
+                            {{/each}}
+                            
+                        </div>
+                        {{#if results.length}}
+                         <nav>
+                            
+                            <div class="text-center">(Bấm vào câu hỏi để xem chi tiết)</div>
+                            <div class="d-flex align-items-center justify-content-center nav nav-tabs border-0" role="tablist">
+                                {{#each results }}
+                                    <a class="nav-item nav-link rounded-circle bg-secondary mr-3 mb-3" id="result-tab-{{sum @index 1}}" data-toggle="tab" href="#nav-{{sum @index 1}}" role="tab" aria-controls="nav-{{sum @index 1}}" aria-selected="true">{{sum @index 1}}</a>
+                                {{/each}}                                        
+                            </div>
+                        </nav>
+                        {{/if}}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script>
+    $(document).ready(function () {
+        $("#result-tab-1").addClass("active");
+        $("#result-tab-1").attr("aria-selected", true);
+        $(".tab-content .tab-pane.fade").first().addClass("show active");
+    })
+</script>

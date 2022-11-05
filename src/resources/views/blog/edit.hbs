@@ -1,0 +1,82 @@
+<section class="blog-create">
+    <div class="row">
+        <div class="col-md-10 grid-marign stretch-card mx-auto">
+            <div class="card">
+                <div class="card-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <h4 class="card-title">Chỉnh sửa bài viết</h4>
+                        <a href="/blog/list" class="btn btn-outline-warning btn-icon-text ml-2">
+                            <i class="mdi mdi-reload btn-icon-prepend"></i>
+                            Quay Lại
+                        </a>
+                    </div>
+                    
+                    <p class="card-description">Nhập thông tin bên dưới để chỉnh sửa 1 bài viết</p>
+                    <hr>
+                    <form action="/blog/{{blog._id}}/edit?_method=PUT" class="forms-sample" method="post">
+                        <div class="form-group">
+                            <label for="title" class="text-dark">Tiêu Đề</label>
+                            <input type="text" id="title" class="form-control" placeholder='Nhập tiêu đề' name='title'value="{{blog.title}}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="category" class="text-dark">Thể Loại</label>
+                            <select name="bcID" id="category" class="form-control" required>
+                                {{#each categories}}
+                                    <option value="{{this._id}}" {{#ifCond  this._id "==" blog.bcID}}  checked = "true" {{/ifCond}}>{{this.category}}</option>
+                                {{/each}}
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label for="exampleTextarea1" class="text-dark">Nội dung</label>
+                            <textarea name="content" id="ckeditor-content" cols="30" rows="10" class="form-control">{{blog.content}}</textarea>
+                        </div>
+                        <div class="form-group">
+                            <label for="image" class="text-dark">Hình ảnh</label>
+                            <input type="text" id="image" placeholder='Nhập link hình ảnh' name='image' class="form-control" value="{{blog.image}}">
+                        </div>
+                            <a href="/blog/list" class="btn btn-light">Hủy</a>
+                            <button class="btn btn-primary ml-4" id="btn-create-blog" type="submit">Lưu lại</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{{#if errors}}
+    <div id="errors" style="visibility: hidden;">{{errors}}</div>
+{{/if}}
+{{#if success}}
+    <div id="success" style="visibility: hidden;">{{success}}</div>
+{{/if}}
+
+<script>
+        var msgError = document.getElementById('errors');
+        ///toast message
+        let msgToastError = msgError.innerHTML;
+
+        if(msgToastError != ''){
+            Eggy({
+                title: 'Oops... Có gì đó không đúng',
+                message:  msgToastError,
+                type: 'warning',
+                duration: 5000,
+            });
+        }
+</script>
+<script>
+        var msgSuccess = document.getElementById('success');
+        let msgToastSuccess = msgSuccess.innerHTML;
+        if(msgToastSuccess != ''){
+            Eggy({
+                title: 'Thành Công',
+                message:  msgToastSuccess,
+                type: 'success',
+                duration: 5000,
+            });
+        }
+
+</script>
+<script>
+    ClassicEditor.create(document.querySelector('#ckeditor-content'));
+</script>
