@@ -1,4 +1,4 @@
-const {multipleMongooseToObject: multipleMongooseToObject}  = require('../../util/mongoose')
+const { multipleMongooseToObject: multipleMongooseToObject } = require('../../util/mongoose')
 const Subject = require("../models/Subject");
 const Grade = require("../models/Grade");
 const User = require("../models/User");
@@ -19,7 +19,7 @@ const ObjectId = mongoose.Types.ObjectId;
 class SiteController {
     // [GET] /
     index(req, res, next) {
-        res.send('DO AN CHUYEN NGANH')
+        res.render('index');
     }
 
     // [GET] /search
@@ -35,7 +35,7 @@ class SiteController {
         const countLessons = await Lesson.countDocuments({});
         const countExercises = await Exercise.countDocuments({});
         const countBlogs = await Blog.countDocuments({});
-        const countReport = await Report.countDocuments({read: "Chưa Đọc"});
+        const countReport = await Report.countDocuments({ read: "Chưa Đọc" });
         const statisticalTop5 = await Statistical.aggregate([
             {
                 $group: {
@@ -78,7 +78,7 @@ class SiteController {
             { $sort: { score: -1, victory: -1 } },
             { $limit: 5 },
         ]);
-        
+
 
         res.render("admin", {
             countUsers,
@@ -97,7 +97,7 @@ class SiteController {
 
     // [GET]/login-admin
     LoginAdmin(req, res) {
-        res.render("login-admin",{
+        res.render("login-admin", {
             layout: "",
             errors: req.flash("error"),
             success: req.flash("success"),
@@ -113,7 +113,7 @@ class SiteController {
             res.render("login-admin", {
                 values: req.body,
                 errors: req.flash("error"),
-                layout:""
+                layout: ""
             });
             return;
         }
@@ -124,25 +124,25 @@ class SiteController {
             res.render("login-admin", {
                 values: req.body,
                 errors: req.flash("error"),
-                layout:""
+                layout: ""
 
             });
             return;
         }
-        
-        res.cookie("adminId", admin._id,{
+
+        res.cookie("adminId", admin._id, {
             signed: true,
         });
         res.redirect("/admin");
     }
-    
+
     // [GET]/logout
     logoutAdmin(req, res) {
         res.clearCookie("adminId");
         res.clearCookie("sessionId");
         res.redirect("/login-admin");
     }
-    
+
 
 }
 
