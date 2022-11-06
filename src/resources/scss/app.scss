@@ -19,15 +19,18 @@
         @content;
     }
 }
-.card-course-item{
+
+.card-course-item {
     margin-top: 10px;
 }
-.user-avatar{
+
+.user-avatar {
     width: 28px;
     height: 28px;
     border-radius: 50%;
     margin-right: 4px;
 }
+
 .main-datatable>thead>tr>th {
     border-bottom-width: 0;
     color: #443f3f;
@@ -38,14 +41,15 @@
     text-align: center;
 }
 
-.edit{
+.edit {
     margin-right: 20px;
     border-right-width: 10px;
     border-left-width: 10px;
     border-radius: 10px;
     color: #000000;
 }
-.remove{
+
+.remove {
     border-radius: 10px;
     border-right-width: 10px;
     border-left-width: 10px;
@@ -53,19 +57,23 @@
 }
 
 div.dataTables_wrapper div.dataTables_filter label {
-    font-weight: bold; 
+    font-weight: bold;
     font-size: large;
 }
-div.dataTables_wrapper div.dataTables_filter input{
+
+div.dataTables_wrapper div.dataTables_filter input {
     border-radius: 50px;
     margin-left: 8px;
     height: 34px;
     padding: 0px 25px 0px 10px;
 }
+
 .eggy .title,
 .eggy .message {
-  line-height: 1.5; 
+    line-height: 1.5;
 }
+
 @import './main';
 @import "./button";
 @import "./sidebar";
+@import "./login"
