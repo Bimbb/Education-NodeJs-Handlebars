@@ -144,7 +144,54 @@ class SiteController {
         res.clearCookie("sessionId");
         res.redirect("/login-admin");
     }
+    // [GET]/competition
+    async competition(req, res) {
+        const rooms = await Room.aggregate([
+            {
+                $lookup: {
+                    from: "subjects",
+                    localField: "subjectID",
+                    foreignField: "_id",
+                    as: "subject",
+                },
+            },
+            {
+                $lookup: {
+                    from: "units",
+                    localField: "unitID",
+                    foreignField: "_id",
+                    as: "unit",
+                },
+            },
+            {
+                $lookup: {
+                    from: "lessons",
+                    localField: "lessonID",
+                    foreignField: "_id",
+                    as: "lesson",
+                },
+            },
+        ]);
 
+        // load ranks in competition
+        const ranksCompetition = await Rank.aggregate([
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "userID",
+                    foreignField: "_id",
+                    as: "user",
+                },
+            },
+            {
+                $sort: { score: -1, victory: -1 },
+            },
+        ]);
+        res.render("competition", {
+            rooms,
+            ranksCompetition,
+        });
+    }
 
 }
 
