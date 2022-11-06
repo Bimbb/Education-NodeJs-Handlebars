@@ -1,0 +1,240 @@
+.section__infor {
+    border-radius: 16px;
+    margin-left: 40px;
+    margin-top: 15px;
+
+    @include mobile {
+        margin-left: 0;
+        box-shadow: none !important;
+    }
+}
+
+.Boxchange__avatar {
+    @include mobile {
+        margin-top: 20px !important;
+        margin-bottom: 30px !important;
+    }
+
+    .change__avatar {
+        width: 178px;
+        height: 178px;
+        background-color: #fff;
+        border-radius: 50%;
+        border: 10px solid rgba(0, 0, 0, 0.1);
+        margin: auto;
+        position: relative;
+        cursor: pointer;
+
+        img {
+            border-radius: inherit;
+            object-fit: cover;
+
+            &:hover {
+                opacity: 0.9;
+            }
+        }
+
+        .avatar__upload {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            background: #3a3b3c;
+            color: $white-color;
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            bottom: 20px;
+            right: 20px;
+            transform: translate(50%, 50%);
+
+            &:hover {
+                opacity: 0.9;
+            }
+
+            ion-icon {
+                color: $white-color;
+                font-size: 22px;
+            }
+        }
+
+        // .action-change-avatar {
+        //     display: none;
+        //     text-align: center;
+        //     margin-top: 24px;
+        // }
+    }
+}
+
+.infor__title {
+    margin-left: 40px;
+    margin-top: 36px;
+    line-height: 1.5;
+
+    @include mobile {
+        padding-bottom: 8px;
+        margin-left: 0;
+        border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+    }
+}
+
+.box__infor {
+    padding: 20px;
+
+    @include mobile {
+        padding: 0;
+
+        p {
+            margin-bottom: 40px !important;
+
+            .user-name,
+            .email {
+                display: block;
+                margin-top: 8px;
+                padding-bottom: 8px;
+                border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+            }
+
+            .infor__input {
+                margin-top: 8px;
+                width: 100% !important;
+            }
+        }
+    }
+
+    p {
+        label {
+            width: 170px;
+            display: inline-block;
+            vertical-align: middle;
+            font-weight: 600;
+        }
+
+        .infor__input {
+            padding: 0 12px;
+            width: 70%;
+            height: 35px;
+            border-radius: 5px;
+            outline: none;
+            color: #999;
+            border: 1px solid #e1e1e1;
+        }
+    }
+}
+
+.box__update {
+    margin-bottom: 30px;
+    margin-top: 30px;
+    text-align: center;
+}
+
+.btn__update {
+    height: 42px;
+    width: 240px;
+    display: inline-block;
+    padding: 10px 0;
+    background-color: #8ac53e;
+    color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    font-size: 16px;
+    margin: 0 5px;
+
+    &:hover {
+        background-color: #e29000;
+    }
+
+    @include mobile {
+        width: 100%;
+        margin: 0;
+    }
+}
+
+.section__changePass {
+    border-radius: 16px;
+    margin-left: 40px;
+    margin-top: 15px;
+
+    @include mobile {
+        margin-top: 0;
+        margin-left: 0;
+        box-shadow: none !important;
+
+        .banner__changePass {
+            display: none !important;
+        }
+
+        .form__changePass {
+            padding: 0 12px !important;
+        }
+    }
+
+    .banner__changePass {
+        background-image: linear-gradient(to right, #113685, #04000a);
+        min-height: 450px;
+        height: 100%;
+        border-top-left-radius: 16px;
+        border-bottom-left-radius: 16px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+
+        img {
+            width: 127px;
+            height: 127px;
+            border-radius: 10px;
+            margin-bottom: 10px;
+        }
+    }
+
+    .form__changePass {
+        padding: 0 120px;
+
+        .form__wrapper {
+            padding-top: 50px;
+
+            .form__group {
+                display: block;
+                overflow: hidden;
+                margin-bottom: 15px;
+
+                label {
+                    margin-bottom: 10px;
+                    padding: 0 !important;
+                    font-weight: 600;
+                }
+
+                .col-sm-12 {
+                    padding-right: 12px;
+                    padding-left: 12px;
+                }
+
+                .form-control {
+                    display: block;
+                    width: 100%;
+                    height: 34px;
+                    padding: 6px 12px;
+                    font-size: 14px;
+                    line-height: 1.42857143;
+                    color: #555;
+                    background-color: #fff;
+                    background-image: none;
+                    border-radius: 4px;
+                    box-shadow: unset !important;
+                }
+            }
+
+            @include mobile {
+                padding-top: 30px;
+
+                .ps-0 {
+                    padding-right: 0 !important;
+                }
+
+                .form__group {
+                    margin-bottom: 35px !important;
+                }
+            }
+        }
+    }
+}

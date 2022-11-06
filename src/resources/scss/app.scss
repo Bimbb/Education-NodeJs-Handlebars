@@ -1,9 +1,27 @@
 @import 'variables';
 @import 'toast';
+
+
+@mixin mobile {
+    @media (max-width: $mobile) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media (max-width: $tablet) and (min-width: $mobile) {
+        @content;
+    }
+}
+
+@mixin laptop {
+    @media (max-width: $laptop) {
+        @content;
+    }
+}
 .card-course-item{
     margin-top: 10px;
 }
-
 .user-avatar{
     width: 28px;
     height: 28px;
@@ -48,3 +66,6 @@ div.dataTables_wrapper div.dataTables_filter input{
 .eggy .message {
   line-height: 1.5; 
 }
+@import './main';
+@import "./button";
+@import "./sidebar";
