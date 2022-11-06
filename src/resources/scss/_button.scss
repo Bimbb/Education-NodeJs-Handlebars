@@ -1,0 +1,65 @@
+.btn.btn-primary,
+.btn.btn-secondary,
+.btn.btn-exercise,
+.btn.btn-success {
+    border-color: unset;
+    border-radius: 8px;
+    padding: 8px 24px;
+    opacity: 1;
+    transition: all 0.3s ease;
+    color: $white-color;
+
+    &:disabled {
+        opacity: 0.65 !important;
+    }
+
+    &:hover {
+        opacity: 0.9;
+    }
+
+    &:focus {
+        border-color: unset;
+        box-shadow: unset;
+    }
+
+    .text-uppercase {
+        letter-spacing: 1px;
+    }
+}
+
+.btn.btn-primary {
+    background: $primary-color;
+}
+
+.btn.btn-outline-primary {
+    border: 2px solid $white-color;
+    color: $white-color;
+    font-weight: 600;
+
+    &:hover {
+        background: $white-color;
+        color: $primary-color;
+    }
+}
+
+.btn.btn-exercise {
+    background: #fb5533;
+}
+
+.btn.btn-secondary,
+.btn.btn-success {
+    &:hover {
+        opacity: 0.8;
+    }
+}
+
+.btn-type {
+    border-bottom-right-radius: 16px !important;
+    border-bottom-left-radius: 0 !important;
+    border-top-left-radius: 16px !important;
+    border-top-right-radius: 0 !important;
+}
+
+.btn-padding {
+    padding: 4px 12px !important;
+}

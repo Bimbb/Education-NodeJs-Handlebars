@@ -1,0 +1,61 @@
+a,
+a:hover {
+    color: #292929;
+    text-decoration: none;
+}
+
+p,
+li {
+    word-break: break-word;
+    line-height: 1.5;
+}
+
+ul {
+    list-style-type: none;
+}
+
+blockquote {
+    border-left: 5px solid #fb5533;
+}
+
+.fs-7 {
+    font-size: 0.9rem !important;
+}
+
+.fs-8 {
+    font-size: 0.8rem !important;
+}
+
+.fw-primary {
+    font-weight: 600;
+}
+
+// ion-icon {
+//     pointer-events: none;
+// }
+
+.text-primary {
+    color: $primary-color;
+    font-weight: 600;
+    transition: all 0.3s ease;
+
+    ion-icon {
+        transition: all 0.3s ease;
+    }
+
+    &:hover {
+        text-decoration: underline;
+
+        ion-icon {
+            transform: translate(6px, 0);
+        }
+    }
+}
+
+// toast message
+.eggy {
+    .title,
+    .message {
+        line-height: 1.5;
+    }
+}
