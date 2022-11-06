@@ -18,8 +18,24 @@ const ObjectId = mongoose.Types.ObjectId;
 
 class SiteController {
     // [GET] /
-    index(req, res, next) {
-        res.render('index');
+    async index(req, res, next) {
+        const customSubject = await Grade.aggregate([
+            {
+                $lookup: {
+                    from: "subjects",
+                    localField: "_id",
+                    foreignField: "gradeID",
+                    as: "subject",
+                },
+            },
+        ]);
+
+
+        res.render("index", {
+            success: req.flash("success"),
+            errors: req.flash("error"),
+            customSubject,
+        });
     }
 
     // [GET] /search
@@ -35,7 +51,7 @@ class SiteController {
         const countLessons = await Lesson.countDocuments({});
         const countExercises = await Exercise.countDocuments({});
         const countBlogs = await Blog.countDocuments({});
-        const countReport = await Report.countDocuments({read: "Chưa Đọc"});
+        const countReport = await Report.countDocuments({ read: "Chưa Đọc" });
         const countRoom = await Room.countDocuments({});
         const statisticalTop5 = await Statistical.aggregate([
             {
