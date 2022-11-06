@@ -154,6 +154,33 @@ class SiteController {
         res.redirect("/admin");
     }
 
+    // [GET]/login-admin
+    LoginUser(req, res) {
+        res.render("login-user", {
+            layout: "",
+            errors: req.flash("error"),
+            success: req.flash("success"),
+        });
+    }
+
+    // [POST]/login
+    async postLoginUser(req, res) {
+        const { userName, password } = req.body;
+        const user = await User.findOne({ userName: userName });
+
+        if (!(password === admin.password)) {
+            req.flash("error", "Mật khẩu của bạn không khớp!");
+            res.render("login-user", {
+                values: req.body,
+                errors: req.flash("error"),
+                layout: ""
+
+            });
+            return;
+        }
+        res.redirect("/");
+    }
+
     // [GET]/logout
     logoutAdmin(req, res) {
         res.clearCookie("adminId");
