@@ -1,0 +1,153 @@
+<section class="competition">
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="card shadow border-0 p-2 rounded-3">
+                <div class="card-body">
+                    <div class="d-flex align-items-center">
+                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#competitionModal">Tạo phòng</button>
+                        <div class="ms-4">
+                            <div class="input-group">
+                                <span class="input-group-text">
+                                    <ion-icon name="search" role="img" class="md hydrated" aria-label="search"></ion-icon>
+                                </span>
+                                <input class="form-control" id="search-client" type="text" placeholder="Tìm kiếm thành viên">
+                            </div>
+                        </div>
+                        <div class="ms-4">
+                            <select class="form-select" id="select-filter-grade">
+                                <option disabled="disabled" selected="selected" value="">-- Chọn khối --</option>
+                                <option value="12">Khối 12</option>
+                                <option value="11">Khối 11</option>
+                                <option value="10">Khối 10</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="table-responsive pt-4">
+                        <table class="table table-hover">
+                            <thead>
+                                <tr class="text-center">
+                                    <th scope="col">#</th>
+                                    <th scope="col">Chủ phòng</th>
+                                    <th scope="col">Khối</th>
+                                    <th scope="col">Chủ đề</th>
+                                    <th scope="col">Thành viên</th>
+                                    <th scope="col">Trạng thái</th>
+                                    <th scope="col"></th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="leaderboard d-block">
+        <h1 class="d-flex align-items-center justify-content-center">
+            <ion-icon class="fs-5 md hydrated" name="trophy" role="img" aria-label="trophy"></ion-icon>
+            <span class="ms-2 me-2">Bảng xếp hạng</span>
+            <ion-icon class="fs-5 md hydrated" name="chevron-down" role="img" aria-label="chevron down"></ion-icon>
+        </h1>
+        <div>
+            <ol>
+                <li>
+                    <img class="rounded-circle" src="/img/nobody.jpg" width="30" height="30" style="object-fit: cover">
+                    <mark>Hoàng</mark>
+                    <small>70</small>
+                </li>
+                <li>
+                    <img class="rounded-circle" src="/img/nobody.jpg" width="30" height="30" style="object-fit: cover">
+                    <mark>Lê Đình Lan</mark>
+                    <small>55</small>
+                </li>
+            </ol>
+        </div>
+        <button class="btn btn-light btn-padding d-flex align-items-center rounded-pill fs-8 mx-auto mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#ranksDetailModal">
+            <span class="me-1">Xem chi tiết</span>
+            <ion-icon name="arrow-forward" role="img" class="md hydrated" aria-label="arrow forward"></ion-icon>
+        </button>
+    </div>
+    <div class="modal fade" id="ranksDetailModal" tabindex="-1" aria-labelledby="ranksDetailModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-scrollable" style="max-width: 850px">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="ranksDetailModalLabel">Bảng xếp hạng thi đấu</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div>
+                            <button class="btn btn-primary btn-padding btn-week-ranks active fs-7">Tuần</button>
+                            <button class="btn btn-primary btn-padding btn-month-ranks ms-2 fs-7">Tháng</button>
+                        </div>
+                        <div class="tab-rank d-flex align-items-center">
+                            <span class="icon-chevron-back">
+                                <ion-icon name="chevron-back" role="img" class="md hydrated" aria-label="chevron back"></ion-icon>
+                            </span>
+                            <strong class="ps-2 pe-2"></strong>
+                            <span class="icon-chevron-forward">
+                                <ion-icon name="chevron-forward" role="img" class="md hydrated" aria-label="chevron forward"></ion-icon>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="table-responsive mt-2">
+                        <table class="table text-center">
+                            <thead class="table-secondary">
+                                <tr>
+                                    <th scope="col">Xếp hạng</th>
+                                    <th scope="col">Thành viên</th>
+                                    <th scope="col">Điểm</th>
+                                    <th scope="col">Trận đã thắng</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary btn-padding" type="button" data-bs-dismiss="modal">Đóng</button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="chat">
+        <div class="msger">
+            <header class="msger-header">
+                <div class="msger-header-title d-flex align-items-center">
+                    <span>
+                        <ion-icon name="chatbubbles" role="img" class="md hydrated" aria-label="chatbubbles"> </ion-icon>
+                    </span>
+                    <span class="ms-2 fw-bold">Chat</span>
+                    <span id="counter"></span>
+                </div>
+                <div class="msger-header-options">
+                    <span class="fs-5">
+                        <ion-icon name="remove" role="img" class="md hydrated" aria-label="remove"></ion-icon>
+                    </span>
+                </div>
+            </header>
+            <main class="msger-chat">
+                <div class="msg-content"></div>
+                <div class="msg-loading"></div>
+            </main>
+            <div class="msger-inputarea">
+                <input class="msger-input" type="text" placeholder="Aa">
+                <button class="msger-send-btn" type="button">
+                    <ion-icon name="paper-plane" role="img" class="md hydrated" aria-label="paper plane"></ion-icon>
+                </button>
+            </div>
+        </div>
+    </div>
+    <div class="chat-show">
+        <div class="d-flex align-items-center justify-content-center h-100">
+            <span class="text-white fs-4">
+                <ion-icon name="chatbubbles" role="img" class="md hydrated" aria-label="chatbubbles"></ion-icon>
+            </span>
+        </div>
+        <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="count-message"></span>
+    </div>
+</section>

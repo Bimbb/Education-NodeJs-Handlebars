@@ -8,6 +8,7 @@ const {
 } = require("../app/middlewares/AuthMiddleware");
 
 
+
 router.get("/ranks", checkRequireAdmin, competitionController.ranks);
 router.get("/:id", checkRequireAdmin, competitionController.detail);
 

@@ -14,4 +14,7 @@ router.get("/admin", checkRequireAdmin ,siteController.admin);
 router.get("/login-admin",siteController.LoginAdmin);
 router.post("/login-admin", siteController.postLoginAdmin);
 router.get("/logout-admin", checkRequireAdmin, siteController.logoutAdmin);
+router.get("/competition",  siteController.competition);
+
+
 module.exports = router;
