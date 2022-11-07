@@ -10,15 +10,15 @@
                                 <span class="input-group-text">
                                     <ion-icon name="search" role="img" class="md hydrated" aria-label="search"></ion-icon>
                                 </span>
-                                <input class="form-control" id="search-client" type="text" placeholder="Tìm kiếm thành viên">
+                                <input class="form-control" id="search-client" type="text" placeholder="Tìm Kiếm">
                             </div>
                         </div>
                         <div class="ms-4">
                             <select class="form-select" id="select-filter-grade">
-                                <option disabled="disabled" selected="selected" value="">-- Chọn khối --</option>
-                                <option value="12">Khối 12</option>
-                                <option value="11">Khối 11</option>
-                                <option value="10">Khối 10</option>
+                                <option disabled="disabled" selected="selected" value="">-- Chọn Lớp --</option>
+                                {{#each grades}}
+                                <option value="{{this.name}}">{{this.name}}</option>
+                                {{/each}}
                             </select>
                         </div>
                     </div>
@@ -52,16 +52,15 @@
         </h1>
         <div>
             <ol>
+                {{#each ranksCompetition}}
                 <li>
-                    <img class="rounded-circle" src="/img/nobody.jpg" width="30" height="30" style="object-fit: cover">
-                    <mark>Hoàng</mark>
-                    <small>70</small>
+                    {{#this.user}}
+                    <img class="rounded-circle" src="{{avatar}}" width="30" height="30" style="object-fit: cover">
+                    <mark>{{fullname}}</mark>
+                    {{/this.user}}
+                    <small>{{this.score}}</small>
                 </li>
-                <li>
-                    <img class="rounded-circle" src="/img/nobody.jpg" width="30" height="30" style="object-fit: cover">
-                    <mark>Lê Đình Lan</mark>
-                    <small>55</small>
-                </li>
+                {{/each}}
             </ol>
         </div>
         <button class="btn btn-light btn-padding d-flex align-items-center rounded-pill fs-8 mx-auto mt-1 mb-1" data-bs-toggle="modal" data-bs-target="#ranksDetailModal">
@@ -69,6 +68,7 @@
             <ion-icon name="arrow-forward" role="img" class="md hydrated" aria-label="arrow forward"></ion-icon>
         </button>
     </div>
+
     <div class="modal fade" id="ranksDetailModal" tabindex="-1" aria-labelledby="ranksDetailModalLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-scrollable" style="max-width: 850px">
             <div class="modal-content">
@@ -114,6 +114,7 @@
             </div>
         </div>
     </div>
+
     <div class="chat">
         <div class="msger">
             <header class="msger-header">
@@ -142,6 +143,7 @@
             </div>
         </div>
     </div>
+
     <div class="chat-show">
         <div class="d-flex align-items-center justify-content-center h-100">
             <span class="text-white fs-4">
@@ -150,4 +152,59 @@
         </div>
         <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger" id="count-message"></span>
     </div>
+
 </section>
+
+
+<div class="modal fade" id="competitionModal" tabindex="-1" aria-labelledby="competitionModalLabel" style="display: none;" aria-hidden="true">
+    <div class="modal-dialog" style="transition: all 0.3s ease; max-width: 650px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="competitionModalLabel">Tạo phòng đấu</h5>
+                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="row mt-4">
+                    <div class="col-sm-12"> 
+                        <div class="mb-2 fw-bold">Chọn Lớp</div>
+                        <select class="form-select" id="select-grade">
+                            <option disabled="disabled" selected="selected" value="">-- Chọn lớp --</option>
+                            {{#each grades}}
+                                <option value="{{this.name}}">{{this.name}}</option>
+                            {{/each}}
+                        </select>
+                    </div>
+                    {{!-- <div class="col-sm-6">
+                        <div class="mb-2 fw-bold">Chọn môn</div>
+                        <select class="form-select" id="select-subject">
+                            <option disabled="disabled" selected="selected" value="">-- Chọn môn --</option>
+                        </select>
+                    </div> --}}
+                </div>
+                {{!-- <div class="row mt-4">
+                    <div class="col-sm-12">
+                        <div class="mb-2 fw-bold">Chọn chuyên đề</div>
+                        <select class="form-select" id="select-unit">
+                            <option disabled="disabled" selected="selected" value="">-- Chọn chuyên đề --</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="row mt-4">
+                    <div class="col-sm-12">
+                        <div class="mb-2 fw-bold">Chọn chủ đề</div>
+                        <select class="form-select" id="select-lession">
+                            <option disabled="disabled" selected="selected" value="">-- Chọn chủ đề --</option>
+                        </select>
+                    </div>
+                </div> --}}
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" id="btn-cancel-room" type="button" data-bs-dismiss="modal">Hủy</button>
+                <button class="btn btn-primary" id="btn-create-room" type="button">Tạo phòng</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/socket.io/socket.io.js"></script>
+<script src='/js/competition.js'></script>
+<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js'></script>

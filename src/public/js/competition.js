@@ -60,6 +60,9 @@ socket.on("user-stopping-message", () => {
     $(".msg-loading").html("");
 });
 
+
+
+
 // create-room
 socket.on("server-send-rooms", (data) => {
     $("table tbody").html("");
@@ -210,14 +213,14 @@ $(document).ready(function () {
             grade: $("#select-grade").val(),
             subject: $("#select-subject").val(),
             unit: $("#select-unit").val(),
-            lession: $("#select-lession").val(),
+            lesson: $("#select-lesson").val(),
         };
 
         if (
             data.grade === null ||
             data.subject === null ||
             data.unit === null ||
-            data.lession === null
+            data.lesson === null
         ) {
             alert("Bạn vui lòng chọn đầy đủ thông tin để tạo phòng!");
             return;
@@ -257,6 +260,7 @@ $(document).ready(function () {
         socket.emit("user-search", $(this).val());
         console.log($(this).val());
     });
+
 
     // get ranks by weeks, months
     let currentWeek = 0;

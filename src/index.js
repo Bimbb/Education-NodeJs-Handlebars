@@ -4,7 +4,7 @@ const express = require('express');
 const morgan = require('morgan');
 const path = require('path');
 const cookieParser = require("cookie-parser");
-
+const { messages } = require("./util/message-data");
 const methodOverride = require('method-override');
 const handlebars = require('express-handlebars').engine;
 const moment = require("moment");
@@ -325,7 +325,92 @@ io.on("connection", async (socket) => {
                 item.socketID === socket.id &&
                 users_answered.indexOf(item) === -1
         );
+        });
+
+
+    // chat all
+    socket.on("user-send-message", (data) => {
+        countMessage++;
+        let message = data.message;
+        messages.forEach((item) => {
+            if (message.toLowerCase().includes(item)) {
+                message = message.replace(item, "***");
+                return;
+            }
+        });
+        data.message = message;
+
+        io.sockets.emit("server-send-message", data);
+        socket.broadcast.emit("server-send-count-message", countMessage);
     });
+
+    // handle typing messages
+    socket.on("writing-message", (data) => {
+        countMessage = 0;
+        io.sockets.emit("user-writing-message", data);
+        socket.emit("server-send-count-message", countMessage);
+    });
+
+    // handle stopping messages
+    socket.on("stopping-message", () => {
+        io.sockets.emit("user-stopping-message");
+    });
+
+    
+    // create room
+    socket.on("create-room", async (data) => {
+        var roomId = data.username;
+        socket.join(roomId);
+        socket.room = roomId;
+
+        // save db
+        const room = new Room({
+            roomName: roomId,
+            socketID: socket.id,
+            master: data.name,
+            avatar: data.avatar,
+            gradeID: data.grade,
+            subjectID: data.subject,
+            unitID: data.unit,
+            lessionID: data.lession,
+        });
+        await room.save();
+
+        const rooms = await Room.aggregate([
+            {
+                $lookup: {
+                    from: "subjects",
+                    localField: "subjectID",
+                    foreignField: "_id",
+                    as: "subject",
+                },
+            },
+            {
+                $lookup: {
+                    from: "units",
+                    localField: "unitID",
+                    foreignField: "_id",
+                    as: "unit",
+                },
+            },
+            {
+                $lookup: {
+                    from: "lessions",
+                    localField: "lessionID",
+                    foreignField: "_id",
+                    as: "lession",
+                },
+            },
+        ]);
+
+        io.sockets.emit("server-send-rooms", rooms);
+        socket.emit("room-id", roomId);
+        // console.log(socket.adapter.rooms);
+    });
+
+
+
+
     
 });
 

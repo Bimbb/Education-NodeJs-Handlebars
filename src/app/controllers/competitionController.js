@@ -51,18 +51,15 @@ class CompetitionController {
             },
             {
                 $lookup: {
-                    from: "lessions",
-                    localField: "lessionID",
+                    from: "lessons",
+                    localField: "lessonID",
                     foreignField: "_id",
-                    as: "lession",
+                    as: "lesson",
                 },
             },
         ]);
 
-        // const user = await User.findOne({
-        //     username: room[0].roomName.split("@").join(""),
-        // });
-        // const rank = await Rank.findOne({ userID: user._id });
+
 
         if (room.length > 0) {
             res.render("competition/detail", {
@@ -72,6 +69,65 @@ class CompetitionController {
             res.redirect("/competition");
         }
     }
+    //[GET]/competition/ranks/week
+    async ranksWeek(req, res) {
+        const ranks = await Rank.aggregate([
+            {
+                $match: {
+                    updatedAt: {
+                        $gt: new Date(req.body.startOfWeek),
+                        $lt: new Date(req.body.endOfWeek),
+                    },
+                },
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "userID",
+                    foreignField: "_id",
+                    as: "user",
+                },
+            },
+            { $sort: { score: -1, victory: -1 } },
+            { $limit: 10 },
+        ]);
+
+        res.render("helper/ranks", { ranks, layout: "" });
+    }
+
+    //[GET]/competition/ranks/month
+    async ranksMonth(req, res) {
+        const ranks = await Rank.aggregate([
+            {
+                $addFields: {
+                    month_document: { $month: "$updatedAt" },
+                    month_date: { $month: new Date(req.body.month) },
+                },
+            },
+            {
+                // the expression is equivalent to using the $eq operator
+                $match: { $expr: { $eq: ["$month_document", "$month_date"] } },
+            },
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "userID",
+                    foreignField: "_id",
+                    as: "user",
+                },
+            },
+            { $sort: { score: -1, victory: -1 } },
+            { $limit: 10 },
+        ]);
+
+        res.render("helper/ranks", { ranks, layout: "" });
+    }
+
+
+
+
+
+
 }
 
 module.exports = new CompetitionController();

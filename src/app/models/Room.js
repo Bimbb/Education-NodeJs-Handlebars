@@ -8,10 +8,7 @@ const Room = new Schema(
         socketID: { type: String },
         master: { type: String },
         avatar: { type: String },
-        gradeID: { type: Number },
-        subjectID: { type: Schema.Types.ObjectId },
-        unitID: { type: Schema.Types.ObjectId },
-        lessionID: { type: Schema.Types.ObjectId },
+        gradeID: { type: Schema.Types.ObjectId },
         status: { type: String, default: "Đang chờ..." },
         members: [
             {

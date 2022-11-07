@@ -122,7 +122,7 @@ class SiteController {
         });
     }
 
-    // [POST]/login
+    // [POST]/login-admin
     async postLoginAdmin(req, res) {
         const { userName, password } = req.body;
         const admin = await Admin.findOne({ userName: userName });
@@ -203,9 +203,12 @@ class SiteController {
                 $sort: { score: -1, victory: -1 },
             },
         ]);
+        const grades = await Grade.find({});
+
         res.render("competition", {
             rooms,
             ranksCompetition,
+            grades: multipleMongooseToObject(grades),
         });
     }
 
