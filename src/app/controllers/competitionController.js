@@ -35,32 +35,14 @@ class CompetitionController {
             },
             {
                 $lookup: {
-                    from: "subjects",
-                    localField: "subjectID",
+                    from: "grades",
+                    localField: "gradeId",
                     foreignField: "_id",
-                    as: "subject",
+                    as: "grade",
                 },
             },
-            {
-                $lookup: {
-                    from: "units",
-                    localField: "unitID",
-                    foreignField: "_id",
-                    as: "unit",
-                },
-            },
-            {
-                $lookup: {
-                    from: "lessons",
-                    localField: "lessonID",
-                    foreignField: "_id",
-                    as: "lesson",
-                },
-            },
+           
         ]);
-
-
-
         if (room.length > 0) {
             res.render("competition/detail", {
                 room,

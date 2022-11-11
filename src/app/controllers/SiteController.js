@@ -153,67 +153,82 @@ class SiteController {
         });
         res.redirect("/admin");
     }
-
-    // [GET]/login-admin
-    LoginUser(req, res) {
-        res.render("login-user", {
-            layout: "",
-            errors: req.flash("error"),
-            success: req.flash("success"),
-        });
-    }
-
-    // [POST]/login
-    async postLoginUser(req, res) {
-        const { userName, password } = req.body;
-        const user = await User.findOne({ userName: userName });
-
-        if (!(password === admin.password)) {
-            req.flash("error", "Mật khẩu của bạn không khớp!");
-            res.render("login-user", {
-                values: req.body,
-                errors: req.flash("error"),
-                layout: ""
-
-            });
-            return;
-        }
-        res.redirect("/");
-    }
-
-    // [GET]/logout
+    // [GET]/logout-admin
     logoutAdmin(req, res) {
         res.clearCookie("adminId");
         res.clearCookie("sessionId");
         res.redirect("/login-admin");
     }
+
+    // [GET]/login
+    login(req, res) {
+        res.render("login", {
+            errors: req.flash("error"),
+            success: req.flash("success"),
+            layout:"",
+        });
+    }
+
+    // [POST]/login
+    async postLogin(req, res) {
+        const { email, password } = req.body;
+        const user = await User.findOne({ email: email });
+        if (!user) {
+            req.flash("error", "Người dùng có email này không tồn tại!");
+            res.render("login", {
+                values: req.body,
+                errors: req.flash("error"),
+                layout:"",
+            });
+            return;
+        }
+
+        const matchPassword = await bcrypt.compare(password, user.password);
+        if (!matchPassword) {
+            req.flash("error", "Mật khẩu của bạn không khớp!");
+            res.render("login", {
+                values: req.body,
+                errors: req.flash("error"),
+                layout:"",
+            });
+            return;
+        }
+
+        const isActive = user.active;
+        if (!isActive) {
+            req.flash("error", "Tài khoản của bạn chưa được kích hoạt!");
+            res.render("login", {
+                errors: req.flash("error"),
+                layout:"",
+            });
+            return;
+        }
+
+        res.cookie("userId", user._id, {
+            signed: true,
+        });
+        res.redirect("/");
+    }
+
+    // [GET]/logout
+    logout(req, res) {
+        res.clearCookie("userId");
+        res.clearCookie("sessionId");
+        res.redirect("/");
+    }
+
     // [GET]/competition
     async competition(req, res) {
         const rooms = await Room.aggregate([
             {
                 $lookup: {
-                    from: "subjects",
-                    localField: "subjectID",
+                    from: "grades",
+                    localField: "gradeId",
                     foreignField: "_id",
-                    as: "subject",
+                    as: "grade",
                 },
             },
-            {
-                $lookup: {
-                    from: "units",
-                    localField: "unitID",
-                    foreignField: "_id",
-                    as: "unit",
-                },
-            },
-            {
-                $lookup: {
-                    from: "lessons",
-                    localField: "lessonID",
-                    foreignField: "_id",
-                    as: "lesson",
-                },
-            },
+            
         ]);
 
         // load ranks in competition

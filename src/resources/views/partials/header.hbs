@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-lg bg-light">
   <div class="container-fluid">
     <a class="navbar-brand" href="#">
-      <img src="/img/logo.jpg" alt="logo" style="height: 30px;width: 30px; margin-right: 20px;margin-left: 20px">
+      <img src="https://hdgmvietnam.com/admin/upload/image/giao-hoi-cong-giao-dan-than-trong-su-mang-giao-duc.jpg" alt="logo" style="height: 30px;width: 30px; margin-right: 20px;margin-left: 20px">
     </a>
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
       aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -18,9 +18,9 @@
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
             Dropdown
-          </a>
+          </a>  
           <ul class="dropdown-menu">
-            <li><a class="dropdown-item" href="#">Tạo phòng
+            <li><a class="dropdown-item" href="/competition">Tạo phòng
                 {{!-- thêm hình gì đó hợp lý --}}
                 <span>
                   <img src="/img/logo.jpg" alt=""
@@ -40,25 +40,117 @@
 
         </li>
       </ul>
-
-      {{!-- search --}}
-      {{!-- <form class="d-flex" role="search">
-        <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search">
-        <button class="btn btn-outline-success" type="submit">Search</button>
-
-      </form> --}}
-      <div class="SiteAvatar TopNavigationItem">
-        {{!-- ảnh đại diện --}}
-        <div data-overlay-container="true">
-          <div type="button" tabindex="0" id="react-aria1488067590-35" aria-haspopup="true" aria-expanded="false"
-            aria-label="Cài đặt" role="button"><img alt="Ảnh hồ sơ" class="AssemblyAvatar" src=""
-              style="width: 30px;height: 30px;">
-          </div>
+      <div class="header__actions--user">
+        {{#each user}}
+        <div class="header__actions--avatar">
+          <img src="{{this.avatar}}">
         </div>
-
-        {{!-- không có tài khoản --}}
-        {{!-- button đăng nhập --}}
+        <div class="header__actions--userMenu shadow">
+          <div class="user">
+            <div class="user__avatar">
+              <img src="{{this.avatar}}">
+            </div>
+            <div class="user__info">
+              <div class="name">{{this.fullname}}</div>
+              <div class="username">@{{this.username}}</div>
+            </div>
+          </div>
+        {{/each}}
+          <hr>
+          <ul class="list">
+            <li class="list__item">
+              <a class="list__link" href="/admin">Quản lý hệ thống</a>
+            </li>
+          </ul>
+          <hr>
+          <ul class="list">
+            <li class="list__item">
+              <a class="list__link" href="/new-question">Đặt câu hỏi</a>
+            </li>
+            <li class="list__item">
+              <a class="list__link" href="/my-qa">Câu hỏi của tôi</a>
+            </li>
+          </ul>
+          <hr>
+          <ul class="list">
+            <li class="list__item">
+              <a class="list__link" href="/infor">Thông tin cá nhân</a>
+            </li>
+            <li class="list__item">
+              <a class="list__link" href="/password/change">Đổi mật khẩu</a>
+            </li>
+            <li class="list__item">
+              <a class="list__link" href="/learning/result?subject=toan-hoc-10">Kết quả học tập</a>
+            </li>
+          </ul>
+          <hr>
+          <ul class="list">
+            <li class="list__item">
+              <a class="list__link" href="/logout">Đăng xuất</a>
+            </li>
+          </ul>
+        </div>
       </div>
     </div>
   </div>
 </nav>
+<script>
+          document.addEventListener('DOMContentLoaded', function() {
+            var searchAll = $("#search__all");
+            var iconClose = $("ion-icon[name=close]");
+            var searchResult = $(".search__result");
+            var markAllRead = $(".mark-all-read");
+
+            searchAll.keyup(function(e) {
+                iconClose.addClass("d-block");
+                searchResult.addClass("d-block");
+                var searchString = $(this).val();
+                $(".search__string").text(`Kết quả cho '${searchString}'`)
+
+                if ($(this).val() == "") {
+                    clearSearch();
+                }
+                else {
+                    $.ajax({
+                        method: 'POST',
+                        url: '/search',
+                        contentType: 'application/json',
+                        data: JSON.stringify({query: searchString}),
+                        success: function (data) {
+                            $(".search__result--content").replaceWith(data);
+                        }
+                    });     
+                }
+            });
+
+            markAllRead.click(function(e) {
+                $.ajax({
+                    method: 'POST',
+                    url: '/notif/mark-all-read',
+                    contentType: 'application/json',
+                    data: JSON.stringify({action: 'mark all as read'}),
+                    success: function (data) {
+                        $(".header__actions--notiMenu .notiMenu-container").replaceWith(data);
+                        $(".header__actions--notiIcon span").html("");
+                    }
+                });  
+            })
+
+            iconClose.click(function (e) {
+                clearSearch();
+            })
+
+            $(document).click(function (e) {
+                // Nếu click bên ngoài đối tượng container thì ẩn nó đi
+                if (!searchResult.is(e.target) && searchResult.has(e.target).length === 0) {
+                    clearSearch();
+                }
+            });
+
+            function clearSearch() {
+                iconClose.removeClass("d-block");
+                searchResult.removeClass("d-block");
+                searchAll.val("");
+            }
+        });
+</script>

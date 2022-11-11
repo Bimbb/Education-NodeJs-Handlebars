@@ -1,0 +1,134 @@
+<section class="competition">
+    <div class="row">
+        <div class="col-sm-10">
+            <div class="card shadow border-0">
+                <div class="card-body p-5">
+                    <div class="d-flex align-items-center justify-content-between">
+                        <div class="master d-flex align-items-center">
+                            {{#each room}}
+                                <img class="rounded-circle" src="{{this.avatar}}" width="100" height="100" style="object-fit: cover">
+                                <div class="ms-4">
+                                    <span class="text-warning fw-bold">Chủ phòng</span>
+                                    <span class="d-block mt-2">{{this.master}}</span>
+                                </div>
+                            {{/each}}
+                        </div>
+                        <div class="d-flex align-items-center">
+                            <button class="d-flex align-items-center btn btn-primary" id="btn-start">
+                                <ion-icon class="fs-4 md hydrated" name="play" role="img" aria-label="play"></ion-icon>
+                                <span class="ms-2">Bắt đầu</span>
+                            </button>
+                            <button class="d-flex align-items-center btn btn-exercise ms-4" id="btn-copy-link">
+                                <ion-icon class="fs-4 md hydrated" name="link" role="img" aria-label="link"></ion-icon>
+                                <span class="ms-2">Copy link</span>
+                            </button>
+                            <button class="d-flex align-items-center btn btn-secondary ms-4" data-bs-toggle="modal" data-bs-target="#outRoomModal">
+                                <ion-icon class="fs-4 md hydrated" name="log-out" role="img" aria-label="log out"></ion-icon>
+                                <span class="ms-2">Rời phòng</span>
+                            </button>
+                        </div>
+                    </div>
+                    {{#each room}}
+                    <input type="text" id="roomId" value="{{this.roomName}}" hidden>
+                    {{!-- <div class="text-center mt-4">
+                        
+                        {{#this.grade}}
+                        <h2 class="text-danger fw-bold">Lớp {{name}}</h2>
+                        {{/this.grade}}
+                    </div> --}}
+                    <div class="members mt-5">
+                        <div class="row">
+                            {{#this.members}}    
+                            <div class="col-sm-4">
+                                <div class="card shadow mb-4">
+                                    <div class="card-body">
+                                        <div class="d-flex align-items-center">
+                                            <img src="{{avatar}}" width="100" height="100" style='object-fit: cover' class="rounded-circle">
+                                            <div class="ms-4">
+                                                <span class="text-warning fw-bold">Thành viên</span>
+                                                <span class="d-block mt-2">{{fullname}}</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            {{/this.members}}
+                        </div>
+                    </div>
+                    {{/each}}
+                    <div class="quiz mt-4">
+                        
+                    </div>
+                    <div class="leaderboard">
+                        <h1 class="d-flex align-items-center justify-content-center">
+                            <ion-icon class="fs-5 md hydrated" name="trophy" role="img" aria-label="trophy"></ion-icon>
+                            <span class="ms-2 me-2">Bảng xếp hạng</span>
+                            <ion-icon class="fs-5 md hydrated" name="chevron-down" role="img" aria-label="chevron down"></ion-icon>
+                        </h1>
+                         <div>
+                            <ol>
+
+                            </ol>
+                         </div>
+                    </div>
+                    <div class="overlay_ranking">
+                        <div class="table_ranking row">
+                            <div class="col-sm-4 ranking r2 animated"></div>
+                            <div class="col-sm-4 ranking r1 animated first"></div>
+                            <div class="col-sm-4 ranking r3 animated"></div>
+                        </div>
+                        <div class="d-flex justify-content-center">
+                            <button class="d-flex align-items-center btn btn-secondary" id="btn-choose-competition">
+                                <ion-icon class="fs-4 md hydrated" name="log-out" role="img" aria-label="log out"></ion-icon>
+                                <span class="ms-2">Chọn phòng đấu khác</span>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        </div>
+    <div id="overlay">
+        <div class="d-flex align-items-center justify-content-center flex-column">
+            <div class="rounded-circle bg-white circle-time text-center mt-5">
+                <span class="text-uppercase fw-bold d-block mt-5">Bắt đầu sau</span>
+                <div class="countdown fw-bold">10</div>
+                <span class="text-uppercase fs-7"></span>
+            </div>
+            <button class="d-flex align-items-center btn btn-secondary mt-4" data-bs-toggle="modal" data-bs-target="#outRoomModal">Rời phòng</button>
+            <div class="notes fw-bold fs-5 mt-5">
+                <p>Bạn nên biết:</p>
+                <div class="ms-4">
+                    <p>1. Trong vòng 30s phải hoàn thành câu hỏi.</p>
+                    <p>2. Thành viên trả lời đúng đầu tiên được cộng 20 điểm, đúng thứ hai sẽ được cộng 15 điểm và từ thứ 3 trở đi sẽ được cộng 10 điểm.</p><p>3. Hãy tập trung vì sau khi thành viên cuối cùng trả lời câu hỏi thì hệ thống sẽ tự động chuyển sang câu hỏi tiếp theo.</p>
+                </div>
+                <p class="d-flex align-items-center">
+                    Chúc các bạn thi đấu vui vẻ
+                    <span class="ms-2">
+                        <ion-icon class="fs-5 md hydrated" name="happy" role="img" aria-label="happy"></ion-icon>
+                        <ion-icon class="fs-5 md hydrated" name="happy" role="img" aria-label="happy"></ion-icon>
+                        <ion-icon class="fs-5 md hydrated" name="happy" role="img" aria-label="happy"></ion-icon>
+                    </span>
+                </p>
+            </div>
+        </div>
+    </div>
+    <div class="modal fade" id="outRoomModal" tabindex="-1" aria-labelledby="outRoomModalLabel" style="display: none;" aria-hidden="true">
+        <div class="modal-dialog" style="transition: all 0.3s ease">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="outRoomModalLabel">Xác nhận rời phòng</h5>
+                    <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">Bạn có muốn rời phòng thi đấu ???</div>
+                <div class="modal-footer">
+                    <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Từ chối</button>
+                    <button class="btn btn-primary" id="btn-out-room" type="button">Đồng ý</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src='/js/competition-detail.js'></script>

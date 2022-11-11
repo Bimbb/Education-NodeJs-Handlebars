@@ -1,5 +1,6 @@
 const socket = io();
 
+
 // chat all
 socket.on("server-send-count-message", (data) => {
     data === 0 ? $("#count-message").html("") : $("#count-message").html(data);
@@ -59,48 +60,51 @@ socket.on("user-writing-message", (data) => {
 socket.on("user-stopping-message", () => {
     $(".msg-loading").html("");
 });
-
-
-
-
-// create-room
+// add room to list
 socket.on("server-send-rooms", (data) => {
     $("table tbody").html("");
-    data.map((room, index) => {
-        var status = room.status;
-        $("table tbody").append(`
-            <tr class='align-middle' style='line-height: 1.5' id='${
-                room.roomName
-            }'>
-                <td class='pt-3 pb-3' scope='row'>${index + 1}</td>
-                <td>
-                    <img class='rounded-pill' src=${
-                        room.avatar
-                    } width=30 height=30 />
-                    <span class='ms-2'>${room.master}</span>
-                </td>
-                <td>${room.gradeID}</td>
-                <td>
-                    <span class='fw-bold'>${room.subject[0].name}:</span>
-                    <span>${room.lession[0].name}</span>
-                </td>
-                <td class='text-center length-members'>${
-                    room.members.length + 1
-                }/2</td>
-                <td class='fw-bold status ${
-                    status === "Đang thi..." ? "text-warning" : "text-success"
-                }'>${status}</td>
-                <td>
-                    <a class='text-primary' ${
-                        status === "Full" || status === "Đang thi..."
-                            ? `href="javascript:void(0)" style="opacity: 0.3; cursor: none"`
-                            : `href='/competition/${room.roomName}'`
-                    }>Tham gia</a>
-                </td>
-            </tr>
-        `);
-    });
+    if(data.length > 0){
+        data.map((room, index) => {
+            var status = room.status;
+            $("table tbody").append(`
+                <tr class='align-middle' style="text-align: center;" style='line-height: 1.5' id='${
+                    room.roomName
+                }'>
+                    <td class='pt-3 pb-3' scope='row'>${index + 1}</td>
+                    <td>
+                        <img class='rounded-pill' src=${
+                            room.avatar
+                        } width=30 height=30 />
+                        <span class='ms-2'>${room.master}</span>
+                    </td>
+                    <td>Lớp ${room.grade[0].name}</td>
+                    <td class='text-center length-members'>${
+                        room.members.length + 1
+                    }/${room.number}</td>
+                    <td class='fw-bold status ${
+                        status === "Đang thi..." ? "text-warning" : "text-success"
+                    }'>${status}</td>
+                    <td>
+                        <a class='text-primary' ${
+                            status === "Full" || status === "Đang thi..."
+                                ? `href="javascript:void(0)" style="opacity: 0.3; cursor: none"`
+                                : `href='/competition/${room.roomName}'`
+                        }>Tham gia</a>
+                    </td>
+                </tr>
+            `);
+        });
+    }else{
+        $("table tbody").append(` <tr class='align-middle' style="text-align: center;" style='line-height: 1.5'>
+                    <td class='pt-3 pb-3' colspan="5">Không có dữ liệu</td>
+        </tr>`);
+    }
 });
+
+
+
+
+
 
 socket.on("server-send-ranks-in-competition", (data) => {
     $(".leaderboard div ol").html("");
@@ -211,16 +215,12 @@ $(document).ready(function () {
             avatar: $(".user__avatar img").attr("src"),
             username: $(".user__info .username").text(),
             grade: $("#select-grade").val(),
-            subject: $("#select-subject").val(),
-            unit: $("#select-unit").val(),
-            lesson: $("#select-lesson").val(),
+            number: $("#select-number").val()
         };
 
         if (
             data.grade === null ||
-            data.subject === null ||
-            data.unit === null ||
-            data.lesson === null
+            data.number === null
         ) {
             alert("Bạn vui lòng chọn đầy đủ thông tin để tạo phòng!");
             return;
@@ -228,7 +228,7 @@ $(document).ready(function () {
 
         socket.emit("create-room", data);
         socket.on("room-id", function (response) {
-            // $("#btn-cancel-room").click();
+            
             window.location.href = `/competition/${response}`;
         });
     });
@@ -238,17 +238,7 @@ $(document).ready(function () {
         socket.emit("user-send-option-grade", $(this).val());
     });
 
-    $("#select-subject").change(function () {
-        socket.emit("user-send-option-subject", $(this).val());
-    });
-
-    $("#select-unit").change(function () {
-        socket.emit("user-send-option-unit", $(this).val());
-    });
-
-    $("#select-lession").change(function () {
-        socket.emit("user-send-option-lession", $(this).val());
-    });
+   
 
     // filter select grade
     $("#select-filter-grade").change(function () {
@@ -262,6 +252,9 @@ $(document).ready(function () {
     });
 
 
+
+
+    
     // get ranks by weeks, months
     let currentWeek = 0;
     let currentMonth = 0;
@@ -388,29 +381,3 @@ $(document).ready(function () {
     }
 });
 
-socket.on("server-send-list-subject-of-user-grade-option", (data) => {
-    $("#select-subject").html("");
-    data.map((subject) => {
-        $("#select-subject").append(`
-            <option value=${subject._id}>${subject.name}</option>
-        `);
-    });
-});
-
-socket.on("server-send-list-unit-of-user-subject-option", (data) => {
-    $("#select-unit").html("");
-    data.map((unit) => {
-        $("#select-unit").append(`
-            <option value=${unit._id}>${unit.name}</option>
-        `);
-    });
-});
-
-socket.on("server-send-list-lession-of-user-unit-option", (data) => {
-    $("#select-lession").html("");
-    data.map((lession) => {
-        $("#select-lession").append(`
-            <option value=${lession._id}>${lession.name}</option>
-        `);
-    });
-});

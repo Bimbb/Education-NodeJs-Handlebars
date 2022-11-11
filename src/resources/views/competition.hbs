@@ -1,23 +1,25 @@
+
 <section class="competition">
     <div class="row">
         <div class="col-sm-10">
             <div class="card shadow border-0 p-2 rounded-3">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
-                        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#competitionModal">Tạo phòng</button>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#competitionModal">Tạo phòng</button>
                         <div class="ms-4">
                             <div class="input-group">
+
+                                <input class="form-control" id="search-client" type="text" placeholder="Tìm Kiếm">
                                 <span class="input-group-text">
                                     <ion-icon name="search" role="img" class="md hydrated" aria-label="search"></ion-icon>
                                 </span>
-                                <input class="form-control" id="search-client" type="text" placeholder="Tìm Kiếm">
                             </div>
                         </div>
                         <div class="ms-4">
                             <select class="form-select" id="select-filter-grade">
-                                <option disabled="disabled" selected="selected" value="">-- Chọn Lớp --</option>
+                                <option disabled selected="selected" value="">-- Chọn Lớp --</option>
                                 {{#each grades}}
-                                <option value="{{this.name}}">{{this.name}}</option>
+                                    <option value="{{this._id}}">{{this.name}}</option>
                                 {{/each}}
                             </select>
                         </div>
@@ -28,15 +30,52 @@
                                 <tr class="text-center">
                                     <th scope="col">#</th>
                                     <th scope="col">Chủ phòng</th>
-                                    <th scope="col">Khối</th>
-                                    <th scope="col">Chủ đề</th>
+                                    <th scope="col">Lớp</th>
                                     <th scope="col">Thành viên</th>
                                     <th scope="col">Trạng thái</th>
                                     <th scope="col"></th>
                                 </tr>
                             </thead>
                             <tbody>
-
+                                {{#each rooms}}
+                                     <tr class="align-middle" style='line-height: 1.5' id="{{this.roomName}}">
+                                        <td class="pt-3 pb-3" style="text-align: center;" scope ="row">{{sum @index 1}}</td>
+                                        <td style="text-align: center;">
+                                            <img src="{{this.avatar}}" alt="" width=30 height=30 class="rounded-circle">
+                                            <pan class="ms-2">{{this.master}}</pan>
+                                        </td style="text-align: center;">
+                                        {{#this.grade}}
+                                         <td style="text-align: center;">Lớp {{name}}</td>
+                                        {{/this.grade}}
+                                        <td class="text-center length-members" style="text-align: center;">
+                                            {{sum this.members.length  1}}/ {{this.number}}
+                                        </td>
+                                        {{#ifCond this.status "===" "Đang thi..."}}
+                                            <td class="fw-bold text-warning" style="text-align: center;">{{this.status}}</td>
+                                        {{else}}
+                                            {{#ifCond this.status "===" "Full"}}
+                                                <td class="fw-bold text-warning" style="text-align: center;">{{this.status}}</td>
+                                                {{else}}
+                                                <td class="fw-bold text-success" style="text-align: center;">{{this.status}}</td>
+                                            {{/ifCond}}     
+                                        {{/ifCond}}
+                                        <td>
+                                            {{#ifCond this.status "===" "Đang thi..."}}
+                                                <a href="javascript:void(0)" style="opacity: 0.3; cursor: none" style="text-align: center;" class="text-primary">
+                                                    Đang Thi
+                                                </a>                                             
+                                            {{else}}
+                                                {{#ifCond this.status "===" "Full"}}
+                                                    <a href="javascript:void(0)" style="opacity: 0.3; cursor: none" style="text-align: center;" class="text-primary">
+                                                        Đã đủ người
+                                                    </a>
+                                                    {{else}}
+                                                    <a href="/competition/{{this.roomName}}" style="text-align: center;" class="text-primary">Tham gia</a>
+                                                {{/ifCond}}      
+                                            {{/ifCond}}
+                                        </td>
+                                     </tr>
+                                {{/each}}
                             </tbody>
                         </table>
                     </div>
@@ -50,6 +89,7 @@
             <span class="ms-2 me-2">Bảng xếp hạng</span>
             <ion-icon class="fs-5 md hydrated" name="chevron-down" role="img" aria-label="chevron down"></ion-icon>
         </h1>
+        
         <div>
             <ol>
                 {{#each ranksCompetition}}
@@ -165,21 +205,24 @@
             </div>
             <div class="modal-body">
                 <div class="row mt-4">
-                    <div class="col-sm-12"> 
+                    <div class="col-sm-6">
                         <div class="mb-2 fw-bold">Chọn Lớp</div>
                         <select class="form-select" id="select-grade">
                             <option disabled="disabled" selected="selected" value="">-- Chọn lớp --</option>
                             {{#each grades}}
-                                <option value="{{this.name}}">{{this.name}}</option>
+                                <option value="{{this._id}}">{{this.name}}</option>
                             {{/each}}
                         </select>
                     </div>
-                    {{!-- <div class="col-sm-6">
-                        <div class="mb-2 fw-bold">Chọn môn</div>
-                        <select class="form-select" id="select-subject">
-                            <option disabled="disabled" selected="selected" value="">-- Chọn môn --</option>
+                    <div class="col-sm-6">
+                        <div class="mb-2 fw-bold">Chọn Số Người Phòng</div>
+                        <select class="form-select" id="select-number">
+                            <option disabled="disabled" selected="selected" value="">-- Số Người --</option>
+                             <option value="2">2 người</option>
+                             <option value="3">3 người</option>
+                             <option value="4">4 người</option>
                         </select>
-                    </div> --}}
+                    </div>
                 </div>
                 {{!-- <div class="row mt-4">
                     <div class="col-sm-12">
@@ -205,6 +248,7 @@
         </div>
     </div>
 </div>
+
 <script src="/socket.io/socket.io.js"></script>
 <script src='/js/competition.js'></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.22.2/moment.min.js'></script>

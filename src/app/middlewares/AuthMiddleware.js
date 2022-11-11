@@ -5,28 +5,19 @@ const ObjectId = mongoose.Types.ObjectId;
 
 module.exports = {
     requireAuth: async function (req, res, next) {
-        // if (!req.signedCookies.userId) {
-        //     res.redirect("/login");
-        //     return;
-        // }
-        // const user = await User.aggregate([
-        //     { $match: { _id: ObjectId(req.signedCookies.userId) } },
-        //     {
-        //         $lookup: {
-        //             from: "roles",
-        //             localField: "roleID",
-        //             foreignField: "_id",
-        //             as: "role",
-        //         },
-        //     },
-        // ]);
-        // if (user.length > 0) {
-        //     res.locals.user = user;
-        //     next();
-        // } else {
-        //     res.redirect("/login");
-        // }
-        next();
+        if (!req.signedCookies.userId) {
+            res.redirect("/login");
+            return;
+        }
+        const user = await User.aggregate([
+            { $match: { _id: ObjectId(req.signedCookies.userId) } },
+        ]);
+        if (user.length > 0) {
+            res.locals.user = user;
+            next();
+        } else {
+            res.redirect("/login");
+        }
     },
 
     checkRequireAdmin: async function (req, res, next) {
@@ -49,43 +40,46 @@ module.exports = {
     },
 
     authValidate: function (req, res, next) {
-        // const { email, password } = req.body;
-        // if (!email && !password) {
-        //     req.flash(
-        //         "error",
-        //         "Vui lòng nhập thông tin dưới đây để đăng nhập tài khoản của bạn!"
-        //     );
-        //     res.render("login", {
-        //         errors: req.flash("error"),
-        //     });
-        //     return;
-        // }
-        // if (!email) {
-        //     req.flash("error", "Vui lòng nhập tài khoản email!");
-        //     res.render("login", {
-        //         errors: req.flash("error"),
-        //         values: req.body,
-        //     });
-        //     return;
-        // }
-        // const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
-        // if (!email.match(regexEmail)) {
-        //     req.flash("error", "Vui lòng nhập địa chỉ email hợp lệ!");
-        //     res.render("login", {
-        //         errors: req.flash("error"),
-        //         values: req.body,
-        //     });
-        //     return;
-        // }
-        // if (!password) {
-        //     req.flash("error", "Vui lòng nhập mật khẩu!");
-        //     res.render("login", {
-        //         errors: req.flash("error"),
-        //         values: req.body,
-        //     });
-        //     return;
-        // }
-
+        const { email, password } = req.body;
+        if (!email && !password) {
+            req.flash(
+                "error",
+                "Vui lòng nhập thông tin dưới đây để đăng nhập tài khoản của bạn!"
+            );
+            res.render("login", {
+                errors: req.flash("error"),
+                layout:"",
+            });
+            return;
+        }
+        if (!email) {
+            req.flash("error", "Vui lòng nhập tài khoản email!");
+            res.render("login", {
+                errors: req.flash("error"),
+                values: req.body,
+                layout:"",
+            });
+            return;
+        }
+        const regexEmail = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
+        if (!email.match(regexEmail)) {
+            req.flash("error", "Vui lòng nhập địa chỉ email hợp lệ!");
+            res.render("login", {
+                errors: req.flash("error"),
+                values: req.body,
+                layout:"",
+            });
+            return;
+        }
+        if (!password) {
+            req.flash("error", "Vui lòng nhập mật khẩu!");
+            res.render("login", {
+                errors: req.flash("error"),
+                values: req.body,
+                layout:"",
+            });
+            return;
+        }
         next();
     },
 
