@@ -12,6 +12,40 @@ const path = require("path");
 
 class LessonController {
 
+
+    // [GET]/lesson/:slug
+    async show(req, res, next) {
+
+        const lesson = await Lesson.findOne({ slug: req.params.slug });
+        const theory = await Theory.find({ lessonID: lesson._id });
+
+
+        res.render("lessons/show", {
+            success: req.flash("success"),
+            errors: req.flash("error"),
+            lesson: mongooseToObject(lesson),
+            theory: multipleMongooseToObject(theory),
+        });
+    }
+
+
+
+    // [GET]/lesson/:slug
+    async show(req, res, next) {
+
+        const lesson = await Lesson.findOne({ slug: req.params.slug });
+        const theory = await Theory.find({ lessonID: lesson._id });
+
+
+        res.render("lessons/show", {
+            success: req.flash("success"),
+            errors: req.flash("error"),
+            lesson: mongooseToObject(lesson),
+            theory: multipleMongooseToObject(theory),
+        });
+    }
+
+
     // [POST]/lesson/create
     async create(req, res) {
         const formLesson = req.body;

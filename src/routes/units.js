@@ -10,11 +10,11 @@ const {
 const unitController = require("../app/controllers/UnitController");
 
 
-router.post("/create",checkRequireAdmin, unitController.postCreate);
-router.put("/:id", checkRequireAdmin ,unitController.update);
-router.delete("/:id", checkRequireAdmin ,unitController.delete);
-router.get("/:id/detail",checkRequireAdmin , unitController.detail);
+router.post("/create", checkRequireAdmin, unitController.postCreate);
+router.put("/:id", checkRequireAdmin, unitController.update);
+router.delete("/:id", checkRequireAdmin, unitController.delete);
+router.get("/:id/detail", checkRequireAdmin, unitController.detail);
 
-
+router.get("/:id", unitController.show);
 
 module.exports = router;

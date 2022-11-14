@@ -1,0 +1,113 @@
+<div class="row">
+    <div class="col-sm-11 mx-auto">
+        <h4 class="infor__title mb-4 fw-bold">
+            Thông tin cá nhân
+        </h4>
+        <div class="section__infor shadow">
+            <div class="row">
+                <div class="col-sm-4">
+                    <div class="Boxchange__avatar mt-5">
+                        <div class="change__avatar">
+                            <img src="/img/avatar-no-name.png" alt="Ảnh đại diện" class="avatar__profile w-100 h-100"
+                                style="width: 100px;height:100px">
+                            <div class="avatar__upload">
+                                <ion-icon name="camera"></ion-icon>
+                            </div>
+                            <form name="form-change-avatar" action="`/infor//avatar?_method=PUT`"
+                                enctype="multipart/form-data" , method="POST">
+                                <input class="file-upload" type="file" name="avatar" accept="image/*" hidden="hidden" />
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-sm-8">
+                    <div class="box__infor">
+                        <form action="">
+                            <div>
+                                <p style='margin-bottom: 1.2rem'>
+                                    <label> Tên tài khoản :
+                                        <span class="user-name">
+                                            {{!-- username --}}
+                                            huy@gmail.com
+                                        </span>
+                                    </label>
+                                </p>
+                            </div>
+
+                            <div>
+                                <p>
+                                    <label for="">Họ tên
+                                        <span class="text-danger">(*)</span>
+                                    </label>
+
+                                    <input class="infor__input" maxlength='30' type='text' name='fullname'
+                                        placeholder='Nhập họ và tên' value="" required="required" autocomplete="off">
+                                </p>
+                            </div>
+
+
+                            <div>
+                                <p>
+                                    <label for="">Số điện thoại
+                                        <span class="text-danger">(*)</span>
+                                    </label>
+                                    <input class="infor__input" maxlength='30' type='text' name='phone'
+                                        placeholder='Nhập số điện thoại' value="" required="required"
+                                        autocomplete="off">
+                                </p>
+                            </div>
+
+                            <div>
+                                <p>
+                                    <label for="">Ngày sinh
+                                        <span class="text-danger">(*)</span>
+                                    </label>
+
+                                    <input class="infor__input" id="birthday" type="date" name="birthDay"
+                                        required="required" autocomplete="off" value="" />
+                                </p>
+                            </div>
+
+
+                            <div>
+                                <p>
+                                    <label for="">Địa chỉ
+                                        <span class="text-danger">(*)</span>
+                                    </label>
+
+                                    <input class="infor__input" maxlength='30' type='text' name='address'
+                                        placeholder='Địa chỉ' value="" required="required" autocomplete="off">
+                                </p>
+                            </div>
+
+                            <div>
+                                <p>
+                                    <label style='margin: 1.4rem 0 1.8rem 0'>Email:
+                                        <span class="text-danger">(*)</span>
+                                    </label>
+
+                                    <span class="email">
+                                        {{!-- email --}}
+                                    </span>
+                                </p>
+
+                                <p>
+                                    | Hãy nhập chính xác
+                                    <span style="color: red">
+                                        số điện thoại của bạn hoặc người thân
+                                    </span>
+                                    | để được thầy cô hỗ trợ nhanh chóng!
+                                </p>
+                            </div>
+
+                            <p class="box__update">
+                                <button class="btn__update" type="submit">| Cập nhật</button>
+                            </p>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

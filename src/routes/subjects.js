@@ -17,5 +17,7 @@ router.get("/:gradeId/theory", checkRequireAdmin, subjectController.createSubjec
 router.post("/:gradeId/bible", checkRequireAdmin, subjectController.createSubjectBible);
 router.get("/:gradeId/bible", checkRequireAdmin, subjectController.createSubjectBible);
 
+//user
+router.get("/:slug", subjectController.show);
 
 module.exports = router;

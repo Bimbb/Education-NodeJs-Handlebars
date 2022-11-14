@@ -16,13 +16,19 @@ const path = require("path");
 class SubjectController {
 
     // [GET]/subjects/:slug
+    async show(req, res, next) {
 
-    async show(req, res) {
+        const subject = await Subject.findOne({ slug: req.params.slug });
+        const unit = await Unit.find({ subjectID: subject._id });
 
+
+        res.render("subjects/show", {
+            success: req.flash("success"),
+            errors: req.flash("error"),
+            subject: mongooseToObject(subject),
+            unit: multipleMongooseToObject(unit),
+        });
     }
-
-
-
 
 
 

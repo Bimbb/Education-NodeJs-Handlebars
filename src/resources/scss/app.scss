@@ -30,6 +30,7 @@
     border-radius: 50%;
     margin-right: 4px;
 }
+
 * {
     margin: 0;
     padding: 0;
@@ -44,6 +45,7 @@ html {
 ::selection {
     background: rgba(200, 200, 200, 0.99);
 }
+
 .main-datatable>thead>tr>th {
     border-bottom-width: 0;
     color: #443f3f;
@@ -94,3 +96,5 @@ div.dataTables_wrapper div.dataTables_filter input {
 @import "./reset";
 @import "./header";
 @import "./quiz";
+
+@import "./cardgrade";

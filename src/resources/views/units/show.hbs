@@ -1,0 +1,18 @@
+<div>
+    <h2>Danh sách bài học phần {{unit.name}}</h2>
+    <div class="hero-section">
+        <div class="card-grid">
+            {{#each lesson}}
+            <a class="card" href="/theories/{{this._id}}">
+                <div class="card__background"
+                    style="background-image: url(https://images.unsplash.com/photo-1557187666-4fd70cf76254?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60)">
+                </div>
+                <div class="card__content">
+                    <p class="card__category">{{unit.name}}</p>
+                    <h3 class="card__heading">{{this.name}}</h3>
+                </div>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</div>
