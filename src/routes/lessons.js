@@ -9,7 +9,7 @@ const lessonController = require("../app/controllers/LessonController");
 
 router.post("/create", checkRequireAdmin, lessonController.create);
 router.put("/:id", checkRequireAdmin, lessonController.update);
-router.delete("/:id",checkRequireAdmin,  lessonController.delete);
+router.delete("/:id", checkRequireAdmin, lessonController.delete);
 
-
+router.get("/:id", lessonController.show);
 module.exports = router;
