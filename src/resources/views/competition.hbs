@@ -5,14 +5,15 @@
             <div class="card shadow border-0 p-2 rounded-3">
                 <div class="card-body">
                     <div class="d-flex align-items-center">
-                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#competitionModal">Tạo phòng</button>
+                        <button class="btn btn-success" data-bs-toggle="modal" data-bs-target="#competitionModal">
+                            <i class="fa-solid fa-plus"></i>
+                            Tạo phòng
+                        </button>
                         <div class="ms-4">
                             <div class="input-group">
 
-                                <input class="form-control" id="search-client" type="text" placeholder="Tìm Kiếm">
-                                <span class="input-group-text">
-                                    <ion-icon name="search" role="img" class="md hydrated" aria-label="search"></ion-icon>
-                                </span>
+                                <input class="form-control" id="search-client" type="text" placeholder="Tìm Kiếm" style="border-radius: 20px;">
+
                             </div>
                         </div>
                         <div class="ms-4">
@@ -200,7 +201,7 @@
     <div class="modal-dialog" style="transition: all 0.3s ease; max-width: 650px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="competitionModalLabel">Tạo phòng đấu</h5>
+                <h5 class="modal-title" id="competitionModalLabel" style="text-align: center;">Tạo phòng đấu</h5>
                 <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -217,33 +218,17 @@
                     <div class="col-sm-6">
                         <div class="mb-2 fw-bold">Chọn Số Người Phòng</div>
                         <select class="form-select" id="select-number">
-                            <option disabled="disabled" selected="selected" value="">-- Số Người --</option>
+                            <option disabled="disabled" selected="selected" value="">-- Chọn số Người --</option>
                              <option value="2">2 người</option>
                              <option value="3">3 người</option>
                              <option value="4">4 người</option>
                         </select>
                     </div>
                 </div>
-                {{!-- <div class="row mt-4">
-                    <div class="col-sm-12">
-                        <div class="mb-2 fw-bold">Chọn chuyên đề</div>
-                        <select class="form-select" id="select-unit">
-                            <option disabled="disabled" selected="selected" value="">-- Chọn chuyên đề --</option>
-                        </select>
-                    </div>
-                </div>
-                <div class="row mt-4">
-                    <div class="col-sm-12">
-                        <div class="mb-2 fw-bold">Chọn chủ đề</div>
-                        <select class="form-select" id="select-lession">
-                            <option disabled="disabled" selected="selected" value="">-- Chọn chủ đề --</option>
-                        </select>
-                    </div>
-                </div> --}}
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" id="btn-cancel-room" type="button" data-bs-dismiss="modal">Hủy</button>
-                <button class="btn btn-primary" id="btn-create-room" type="button">Tạo phòng</button>
+                <button class="btn btn-success" id="btn-create-room" type="button">Tạo phòng</button>
             </div>
         </div>
     </div>

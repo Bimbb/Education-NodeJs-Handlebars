@@ -641,7 +641,7 @@ io.on("connection", async (socket) => {
 
                 users_scored.forEach((item) => {
                     if (item.roomId === data.roomId) {
-                        item.score = 15;
+                        item.score = 20;
                     }
                 });
             } else if (
@@ -650,7 +650,7 @@ io.on("connection", async (socket) => {
             ) {
                 const obj = {
                     roomId: data.roomId,
-                    score: 15,
+                    score: 20,
                     socketID: socket.id,
                     fullname: data.fullname,
                     avatar: data.avatar,

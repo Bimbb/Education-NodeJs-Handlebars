@@ -155,14 +155,14 @@ socket.on("server-send-question", (data) => {
     $(".next-button-container button").click(function () {
         isClick = true;
         countClick++;
-
+        
         if (countClick === 1) {
             handleQuestion();
         } else {
             Eggy({
                 title: 'Bạn đã hoàn thành câu này',
                 message: 'Vui lòng đợi người chơi khác hoàn thành để sang câu tiếp theo!!!',
-                type: 'warning',
+                type: 'error',
                 duration: 5000,
             });
         }
@@ -189,10 +189,6 @@ socket.on("server-send-question", (data) => {
             options[2].checked === false &&
             options[3].checked === false
         ) {
-            //- if (confirm("Bạn muốn bỏ qua câu này?") === false) {
-            //-     countClick = 0;
-            //-     return false;
-            //- }
             answeredCorrect = 0;
             var option = null;
             const obj = {

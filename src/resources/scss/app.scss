@@ -86,10 +86,15 @@ div.dataTables_wrapper div.dataTables_filter input {
     line-height: 1.5;
 }
 
+.bg-light{
+    background-color: #d8dce0!important;
+}
+
 @import './main';
 @import "./button";
-@import "./sidebar";
+
 @import "./login";
+@import "./style";
 
 @import "./reset";
 @import "./header";
