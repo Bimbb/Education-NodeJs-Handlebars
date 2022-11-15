@@ -2,10 +2,45 @@ const Blog = require("../models/Blog");
 const BlogCategory = require("../models/BlogCategory");
 const User = require("../models/User");
 const mongoose = require("mongoose");
-const { multipleMongooseToObject, mongooseToObject}  = require('../../util/mongoose')
+const { multipleMongooseToObject, mongooseToObject } = require('../../util/mongoose')
 const ObjectId = mongoose.Types.ObjectId;
 class BlogController {
-    
+
+    // [GET]/blog/
+    show(req, res, next) {
+        Blog.find({})
+            .then(blog => {
+                res.render('blog/show', {
+                    blog: multipleMongooseToObject(blog)
+                })
+            })
+            .catch(next);
+    }
+
+
+    // [GET]/blog/:slug
+    async detail(req, res, next) {
+        const blog = await Blog.findOne({ slug: req.params.slug });
+
+        const customBlog = await Blog.aggregate([
+            {
+                $lookup: {
+                    from: "blog-categories",
+                    localField: "bcID",
+                    foreignField: "_id",
+                    as: "BlogCategory",
+                },
+            },
+        ]);
+        res.render("blog/detail", {
+            success: req.flash("success"),
+            errors: req.flash("error"),
+            blog: mongooseToObject(blog),
+            customBlog,
+        });
+    }
+
+
     async create(req, res) {
         const categories = await BlogCategory.find({});
         res.render("blog/create", {
@@ -32,9 +67,9 @@ class BlogController {
         res.render("blog/edit", {
             success: req.flash("success"),
             errors: req.flash("error"),
-            categories : multipleMongooseToObject(categories),
+            categories: multipleMongooseToObject(categories),
             layout: "admin",
-            blog : mongooseToObject(blog),
+            blog: mongooseToObject(blog),
         });
     }
 
@@ -101,12 +136,12 @@ class BlogController {
             success: req.flash("success"),
             errors: req.flash("error"),
             blogs,
-            categories : multipleMongooseToObject(categories),
+            categories: multipleMongooseToObject(categories),
             layout: "admin",
         });
     }
 
-  
+
 }
 
 module.exports = new BlogController();

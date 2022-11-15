@@ -11,7 +11,7 @@ const {
 
 
 
-router.get('/', requireAuth ,siteController.index);
+router.get('/', siteController.index);
 router.get("/admin", checkRequireAdmin, siteController.admin);
 
 router.get("/login-admin", siteController.LoginAdmin);
@@ -23,4 +23,7 @@ router.post("/login", authValidate, siteController.postLogin);
 router.get("/logout", requireAuth, siteController.logout);
 
 router.get("/competition", requireAuth, siteController.competition);
+
+
+router.get('/infor', siteController.infor);
 module.exports = router;

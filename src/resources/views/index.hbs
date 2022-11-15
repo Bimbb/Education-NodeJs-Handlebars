@@ -1,3 +1,4 @@
+
 <div class="slideshow">
     <div class="slideshow__wrapper">
         <div class="slick__slider">
@@ -106,3 +107,48 @@
     </div> --}}
 
 </section>
+=======
+<div>
+    &nbsp;&nbsp;
+
+    <h2>#Danh sách lớp học</h2>
+    <div class="hero-section">
+        <div class="card-grid">
+            {{#each customGrade}}
+            <a class="card" href="grade/{{this.slug}}">
+                <div class="card__background"
+                    style="background-image: url(https://images.unsplash.com/photo-1557187666-4fd70cf76254?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60)">
+                </div>
+                <div class="card__content">
+                    <p class="card__category">Lớp học</p>
+                    <h3 class="card__heading">{{this.name}}</h3>
+                </div>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</div>
+&nbsp;&nbsp;
+
+<hr />
+<div>
+    <h2>#Blog nổi bật
+    </h2>
+
+    &nbsp;&nbsp;
+    <div class="container text-center">
+        <div class="row align-items-start">
+            {{#each customBlog}}
+
+            <a class="col" style="color: black; text-decoration: none; margin-left: 30px; margin-right:30px;"
+                href="/blog/{{this.slug}}">
+                <img src="{{this.image}}" alt="123" style="width : 150px;height:150px;  border-radius: 25px;">
+                <p style="font-weight: bold;font-size:20px">{{this.title}}
+                </p>
+                <span class="text-secondary"></span>
+            </a>
+            {{/each}}
+        </div>
+    </div>
+</div>
+

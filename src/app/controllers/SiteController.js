@@ -17,9 +17,13 @@ const Report = require("../models/Report");
 const ObjectId = mongoose.Types.ObjectId;
 
 class SiteController {
+
+
+
     // [GET] /
     async index(req, res, next) {
-        const customSubject = await Grade.aggregate([
+        const grade = await Grade.findOne({ slug: req.params.slug });
+        const customGrade = await Grade.aggregate([
             {
                 $lookup: {
                     from: "subjects",
@@ -30,17 +34,40 @@ class SiteController {
             },
         ]);
 
+        const customBlog = await Blog.aggregate([
+            {
+                $lookup: {
+                    from: "blog-categories",
+                    localField: "bcID",
+                    foreignField: "_id",
+                    as: "BlogCategory",
+                },
+            },
+        ]);
 
         res.render("index", {
             success: req.flash("success"),
             errors: req.flash("error"),
-            customSubject,
+            customGrade,
+            customBlog,
         });
     }
 
     // [GET] /search
     search(req, res) {
         res.render('search');
+    }
+
+    // [GET] /infor
+    async infor(req, res) {
+        try {
+            res.render("auth/infor", {
+                success: req.flash("success"),
+                errors: req.flash("error"),
+            });
+        } catch (error) {
+            res.render("error");
+        }
     }
 
     // [GET]/admin
@@ -165,7 +192,7 @@ class SiteController {
         res.render("login", {
             errors: req.flash("error"),
             success: req.flash("success"),
-            layout:"",
+            layout: "",
         });
     }
 
@@ -178,7 +205,7 @@ class SiteController {
             res.render("login", {
                 values: req.body,
                 errors: req.flash("error"),
-                layout:"",
+                layout: "",
             });
             return;
         }
@@ -189,7 +216,7 @@ class SiteController {
             res.render("login", {
                 values: req.body,
                 errors: req.flash("error"),
-                layout:"",
+                layout: "",
             });
             return;
         }
@@ -199,7 +226,7 @@ class SiteController {
             req.flash("error", "Tài khoản của bạn chưa được kích hoạt!");
             res.render("login", {
                 errors: req.flash("error"),
-                layout:"",
+                layout: "",
             });
             return;
         }
@@ -228,7 +255,7 @@ class SiteController {
                     as: "grade",
                 },
             },
-            
+
         ]);
 
         // load ranks in competition

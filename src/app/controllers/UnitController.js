@@ -11,53 +11,68 @@ const mongoose = require("mongoose");
 const ObjectId = mongoose.Types.ObjectId;
 const readXlsxFile = require("read-excel-file/node");
 const path = require("path");
-const { multipleMongooseToObject, mongooseToObject}  = require('../../util/mongoose')
- 
-class UnitController{
+const { multipleMongooseToObject, mongooseToObject } = require('../../util/mongoose')
+
+class UnitController {
 
 
+    // [GET]/unit/:id
+    async show(req, res, next) {
 
-// [POST]/units/create
-async postCreate(req, res) {
-    const { name, subjectID } = req.body;
-    const findUnit = await Unit.findOne({
-        name: name,
-        subjectID: subjectID,
-    });
-    if (findUnit) {
-        req.flash(
-            "error",
-            "Chuyên đề này đã tồn tại... Vui lòng nhập chuyên đề khác!"
-        );
-        res.redirect("back");
-        return;
+        const unit = await Unit.findOne({ id: req.params._id });
+        const lesson = await Lesson.find({ unitID: unit._id });
+
+
+        res.render("units/show", {
+            success: req.flash("success"),
+            errors: req.flash("error"),
+            unit: mongooseToObject(unit),
+            lesson: multipleMongooseToObject(lesson),
+        });
     }
-    const unit = new Unit(req.body);
-    await unit.save();
-    req.flash("success", "Thêm mới thành công chuyên đề!");
-    res.redirect("back");
-}
 
 
-
-// [PUT]/units/:id
-async update(req, res, next) {
-    const { name, subjectID } = req.body;
-    const findUnit = await Unit.findOne({
-        name: name,
-        subjectID: subjectID,
-    });
-    if (findUnit) {
-        req.flash(
-            "error",
-            "Chuyên đề này đã tồn tại... Vui lòng nhập chuyên đề khác!"
-        );
+    // [POST]/units/create
+    async postCreate(req, res) {
+        const { name, subjectID } = req.body;
+        const findUnit = await Unit.findOne({
+            name: name,
+            subjectID: subjectID,
+        });
+        if (findUnit) {
+            req.flash(
+                "error",
+                "Chuyên đề này đã tồn tại... Vui lòng nhập chuyên đề khác!"
+            );
+            res.redirect("back");
+            return;
+        }
+        const unit = new Unit(req.body);
+        await unit.save();
+        req.flash("success", "Thêm mới thành công chuyên đề!");
         res.redirect("back");
-        return;
     }
-    await Unit.updateOne({ _id: req.params.id }, req.body);
-    req.flash("success", "Cập nhật thành công chuyên đề!");
-    res.redirect("back");
+
+
+
+    // [PUT]/units/:id
+    async update(req, res, next) {
+        const { name, subjectID } = req.body;
+        const findUnit = await Unit.findOne({
+            name: name,
+            subjectID: subjectID,
+        });
+        if (findUnit) {
+            req.flash(
+                "error",
+                "Chuyên đề này đã tồn tại... Vui lòng nhập chuyên đề khác!"
+            );
+            res.redirect("back");
+            return;
+        }
+        await Unit.updateOne({ _id: req.params.id }, req.body);
+        req.flash("success", "Cập nhật thành công chuyên đề!");
+        res.redirect("back");
     }
 
     // [DELETE]/units/:id
@@ -94,10 +109,10 @@ async update(req, res, next) {
     }
 
     /// [GET] units/:id/detail
-    async detail(req, res, next){
-        const unit = await Unit.findOne({ _id : req.params.id });
-        const subject = await Subject.findOne({ unitID : unit._id});
-        const grade = await Grade.findOne({ subjectID : subject._id });
+    async detail(req, res, next) {
+        const unit = await Unit.findOne({ _id: req.params.id });
+        const subject = await Subject.findOne({ unitID: unit._id });
+        const grade = await Grade.findOne({ subjectID: subject._id });
         const lessons = await Lesson.aggregate([
             { $match: { unitID: unit._id } },
             {
@@ -140,7 +155,7 @@ async update(req, res, next) {
 
     }
 
-    
+
 }
 
 

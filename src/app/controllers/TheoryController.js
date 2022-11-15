@@ -12,9 +12,28 @@ const ObjectId = mongoose.Types.ObjectId;
 const fs = require("fs");
 const pdf = require("pdf-creator-node");
 const path = require("path");
-const { multipleMongooseToObject, mongooseToObject}  = require('../../util/mongoose')
+const { multipleMongooseToObject, mongooseToObject } = require('../../util/mongoose')
 const options = require("../../util/options");
 class TheoryController {
+
+
+    //GET theory/:slug
+    async show(req, res, next) {
+        //lấy ra bài học
+        const theory = await Theory.findOne({ slug: req.params.slug });
+
+        // lấy cái tên
+        const lesson = await Lesson.findOne({ _id: theory.lessonID });
+
+        res.render("theories/show", {
+            success: req.flash("success"),
+            errors: req.flash("error"),
+            theory: mongooseToObject(theory),
+            lesson: mongooseToObject(lesson),
+
+        });
+    }
+
 
     // [GET]/theories?lesson
     async detail(req, res) {
@@ -23,7 +42,7 @@ class TheoryController {
                 const lesson = await Lesson.findById(req.query.lesson);
                 const unit = await Unit.findOne({ _id: lesson.unitID });
                 const subject = await Subject.findOne({ _id: unit.subjectID });
-                const grade = await Grade.findOne({_id : subject.gradeID});
+                const grade = await Grade.findOne({ _id: subject.gradeID });
                 if (lesson) {
                     const theory = await Theory.aggregate([
                         { $match: { lessonID: lesson._id } },
@@ -59,7 +78,7 @@ class TheoryController {
                         },
                     ]);
                     res.render("theories/detail", {
-                        lesson : mongooseToObject(lesson),
+                        lesson: mongooseToObject(lesson),
                         subject: mongooseToObject(subject),
                         layout: "admin",
                         theory,
@@ -69,10 +88,10 @@ class TheoryController {
                         errors: req.flash("error"),
                     });
                 } else {
-                    res.render("error",{layout:""});
+                    res.render("error", { layout: "" });
                 }
             } else {
-                res.render("error",{layout:""});
+                res.render("error", { layout: "" });
             }
         } catch (error) {
             console.log(error);
@@ -86,7 +105,7 @@ class TheoryController {
             const unit = await Unit.findOne({ _id: lesson.unitID });
             const subject = await Subject.findOne({ _id: unit.subjectID });
             const theory = await Theory.findOne({ lessonID: lesson._id });
-            const grade = await Grade.findOne({_id : subject.gradeID});
+            const grade = await Grade.findOne({ _id: subject.gradeID });
             if (theory) {
                 res.redirect(`/theories/detail?lesson=${lesson._id}`);
                 return;
@@ -100,7 +119,7 @@ class TheoryController {
                 errors: req.flash("error"),
             });
         } else {
-            res.render("error",{layout:""});
+            res.render("error", { layout: "" });
         }
     }
 
@@ -127,7 +146,7 @@ class TheoryController {
         const subject = await Subject.findById(unit.subjectID);
         await theory.delete();
         req.flash("success", "Xóa thành công!");
-        
+
         res.redirect(`/units/${unit._id}/detail`);
     }
     // [PUT]/theories/:id
