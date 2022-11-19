@@ -15,7 +15,8 @@
                             <div class="avatar__upload">
                                 <ion-icon name="camera"></ion-icon>
                             </div>
-                            <form name="form-change-avatar" action="/infor/{{this._id}}/avatar?_method=PUT" enctype="multipart/form-data" , method="POST">
+                            <form name="form-change-avatar" action="/infor/{{this._id}}/avatar?_method=PUT"
+                                enctype="multipart/form-data" , method="POST">
                                 <input class="file-upload" type="file" name="avatar" accept="image/*" hidden="hidden" />
                             </form>
                         </div>
@@ -27,9 +28,9 @@
                         <form method="POST" action="/infor/{{this._id}}?_method=PUT">
                             <div>
                                 <p style='margin-bottom: 1.2rem'>
-                                   <label>Tên Tài khoản:</label>
+                                    <label>Tên Tài khoản:</label>
                                     <span class="user-name">
-                                       @{{this.username}}
+                                        @{{this.username}}
                                     </span>
                                 </p>
                             </div>
@@ -65,7 +66,8 @@
                                     </label>
                                     {{!-- chưa show ra được ngày tháng năm --}}
                                     <input class="infor__input" id="birthday" type="date" name="birthDay"
-                                        required="required" autocomplete="off" value="{{formatDateYMD this.birthDay}}" />
+                                        required="required" autocomplete="off"
+                                        value="{{formatDateYMD this.birthDay}}" />
                                 </p>
                             </div>
 
@@ -117,51 +119,51 @@
 
 
 {{#if errors}}
-    <div id="errors" style="visibility: hidden;">{{errors}}</div>
+<div id="errors" style="visibility: hidden;">{{errors}}</div>
 {{else}}
-    {{#if success}}
-    <div id="success" style="visibility: hidden;">{{success}}</div>
-    {{/if}}
+{{#if success}}
+<div id="success" style="visibility: hidden;">{{success}}</div>
+{{/if}}
 {{/if}}
 
 
 <script>
     var msgError = document.getElementById('errors');
-        ///toast message
+    ///toast message
     let msgToastError = msgError.innerHTML;
 
-    if(msgToastError != ''){
+    if (msgToastError != '') {
         Eggy({
             title: 'Oops... Có gì đó không đúng',
-            message:  msgToastError,
+            message: msgToastError,
             type: 'warning',
             duration: 5000,
         });
     }
 </script>
 <script>
-        var msgSuccess = document.getElementById('success');
-        let msgToastSuccess = msgSuccess.innerHTML;
-        if(msgToastSuccess != ''){
-            Eggy({
-                title: 'Thành Công',
-                message:  msgToastSuccess,
-                type: 'success',
-                duration: 5000,
-            });
-        }
+    var msgSuccess = document.getElementById('success');
+    let msgToastSuccess = msgSuccess.innerHTML;
+    if (msgToastSuccess != '') {
+        Eggy({
+            title: 'Thành Công',
+            message: msgToastSuccess,
+            type: 'success',
+            duration: 5000,
+        });
+    }
 </script>
 
 
 
 <script>
     $(document).ready(function () {
-            $(".avatar__upload, .avatar__profile").on('click', function() {
-                $(".file-upload").click();
-            });
+        $(".avatar__upload, .avatar__profile").on('click', function () {
+            $(".file-upload").click();
+        });
 
-            $(".file-upload").change(function() {
-                $("form[name=form-change-avatar]").submit();
-            })
+        $(".file-upload").change(function () {
+            $("form[name=form-change-avatar]").submit();
         })
+    })
 </script>
