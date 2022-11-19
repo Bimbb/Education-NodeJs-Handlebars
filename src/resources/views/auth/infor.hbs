@@ -15,8 +15,7 @@
                             <div class="avatar__upload">
                                 <ion-icon name="camera"></ion-icon>
                             </div>
-                            <form name="form-change-avatar" action="/infor/{{user._id}}/avatar?_method=PUT"
-                                enctype="multipart/form-data" , method="POST">
+                            <form name="form-change-avatar" action="/infor/{{this._id}}/avatar?_method=PUT" enctype="multipart/form-data" , method="POST">
                                 <input class="file-upload" type="file" name="avatar" accept="image/*" hidden="hidden" />
                             </form>
                         </div>
@@ -28,12 +27,10 @@
                         <form method="POST" action="/infor/{{this._id}}?_method=PUT">
                             <div>
                                 <p style='margin-bottom: 1.2rem'>
-                                    <label> {{this.username}}
-                                        <span class="user-name">
-                                            {{!-- username --}}
-
-                                        </span>
-                                    </label>
+                                   <label>Tên Tài khoản:</label>
+                                    <span class="user-name">
+                                       @{{this.username}}
+                                    </span>
                                 </p>
                             </div>
 
@@ -68,7 +65,7 @@
                                     </label>
                                     {{!-- chưa show ra được ngày tháng năm --}}
                                     <input class="infor__input" id="birthday" type="date" name="birthDay"
-                                        required="required" autocomplete="off" value="{{this.birthDay}}" />
+                                        required="required" autocomplete="off" value="{{formatDateYMD this.birthDay}}" />
                                 </p>
                             </div>
 
@@ -98,7 +95,7 @@
                                 </p>
 
                                 <p>
-                                    | Hãy nhập chính xác
+                                    Hãy nhập chính xác
                                     <span style="color: red">
                                         số điện thoại của bạn hoặc người thân
                                     </span>
@@ -107,7 +104,7 @@
                             </div>
 
                             <p class="box__update">
-                                <button class="btn__update" type="submit">| Cập nhật</button>
+                                <button class="btn__update" type="submit"> Cập nhật</button>
                             </p>
                         </form>
                     </div>
@@ -117,3 +114,54 @@
         {{/each}}
     </div>
 </div>
+
+
+{{#if errors}}
+    <div id="errors" style="visibility: hidden;">{{errors}}</div>
+{{else}}
+    {{#if success}}
+    <div id="success" style="visibility: hidden;">{{success}}</div>
+    {{/if}}
+{{/if}}
+
+
+<script>
+    var msgError = document.getElementById('errors');
+        ///toast message
+    let msgToastError = msgError.innerHTML;
+
+    if(msgToastError != ''){
+        Eggy({
+            title: 'Oops... Có gì đó không đúng',
+            message:  msgToastError,
+            type: 'warning',
+            duration: 5000,
+        });
+    }
+</script>
+<script>
+        var msgSuccess = document.getElementById('success');
+        let msgToastSuccess = msgSuccess.innerHTML;
+        if(msgToastSuccess != ''){
+            Eggy({
+                title: 'Thành Công',
+                message:  msgToastSuccess,
+                type: 'success',
+                duration: 5000,
+            });
+        }
+</script>
+
+
+
+<script>
+    $(document).ready(function () {
+            $(".avatar__upload, .avatar__profile").on('click', function() {
+                $(".file-upload").click();
+            });
+
+            $(".file-upload").change(function() {
+                $("form[name=form-change-avatar]").submit();
+            })
+        })
+</script>

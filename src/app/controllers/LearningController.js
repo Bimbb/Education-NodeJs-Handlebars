@@ -97,7 +97,7 @@ class LearningController {
 
                 const unit = await Unit.findById(lesson.unitID);
                 const subject = await Subject.findById(unit.subjectID);
-
+                const grade  = await Grade.findById(subject.gradeID);
                 const nextLesson = await Lesson.findOne({
                     _id: { $gt: lesson._id },
                 })
@@ -179,6 +179,7 @@ class LearningController {
                     statistical,
                     nextLesson: mongooseToObject(nextLesson),
                     exercises : multipleMongooseToObject(exercises),
+                    grade: mongooseToObject(grade),
                 });
             } else if (subject && !unit) {
                 const subjects = await Subject.find({});

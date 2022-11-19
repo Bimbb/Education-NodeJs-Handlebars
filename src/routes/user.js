@@ -17,4 +17,5 @@ router.delete('/:id', checkRequireAdmin ,userController.destroy);
 router.delete('/:id/force',checkRequireAdmin , userController.forceDestroy);
 router.post("/upload",checkRequireAdmin , upload.single("filename"), userController.addUserList);
 router.post("/export",checkRequireAdmin , userController.export);
+
 module.exports = router;

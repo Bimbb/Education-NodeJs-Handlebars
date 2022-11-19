@@ -1,4 +1,5 @@
 const cloudinary = require("cloudinary").v2;
+
 cloudinary.config({
     cloud_name: "dgtkag7b2",
     api_key: "743399966281418",

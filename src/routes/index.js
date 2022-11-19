@@ -12,7 +12,7 @@ const competitionRouter = require("./competition");
 const reportRouter = require("./reports");
 const statisticalsRouter = require("./statisticals");
 const learningRouter = require("./learning");
-
+const inforRouter = require("./infor");
 const {
     requireAuth,
 } = require("../app/middlewares/AuthMiddleware");
@@ -32,6 +32,7 @@ function route(app){
     app.use("/reports", reportRouter);
     app.use("/statisticals", statisticalsRouter);
     app.use("/learning", requireAuth, learningRouter);
+    app.use("/infor", requireAuth, inforRouter);
 
 }
 module.exports = route

@@ -3,25 +3,21 @@
         <div class="col-10">
             <h2>Phù hợp với bạn</h2>
             {{#each blog}}
-            <hr />
+            <hr >
             <div class="d-flex position-relative" style="margin: 20px;">
                 <img src="{{this.image}}" style="width: 150px;height:150px" class="flex-shrink-0 me-3" alt="">
                 <div>
                     <h5 class="mt-0">{{this.title}}</h5>
                     <p style="max-height: 150px">
-                        {{{this.content}}}
+                        <b>Chủ Đề: </b>
+                        {{#this.BlogCategory}}
+                        {{{category}}}
+                        {{/this.BlogCategory}}
                     </p>
                     <a text-decoration: none; href="/blog/{{this.slug}}" class="stretched-link">Chi tiết</a>
                 </div>
             </div>
             {{/each}}
         </div>
-        {{!-- --}}
-
-        {{!-- <div class="col-2">
-            <h4>|Các chủ đề khác</h4>
-
-            {{!-- chưa làm --}}
-        </div> --}}
+        </div> 
     </div>
-</div>

@@ -1,7 +1,7 @@
 <section class="learning-result">
     <div class="row">
         <div class="col-sm-9">
-
+            {{#each statistical}}
             <div class="result">
                 <div class="animate"></div>
                 <div class="score">
@@ -13,7 +13,7 @@
                     <span class="mb-2">
                         <ion-icon name="shield-checkmark" role="img" class="md hydrated" aria-label="shield checkmark"></ion-icon>
                         Số câu làm đúng: 
-                    {{#each statistical}}
+                    
                         {{this.totalAnswerTrue}}
                         /
                     {{/each}}
@@ -29,7 +29,7 @@
                 
                 <ul class="menu d-flex align-items-center justify-content-center">
                     <li>
-                        <a href="/subjects/{{subject.slug}}"> 
+                        <a href="/subjects/theory/{{grade.slug}}"> 
                             <img src="../img/reload.png">
                             <span class="text-uppercase"> Quay Lại danh mục bài học</span>
                         </a>

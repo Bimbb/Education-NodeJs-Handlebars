@@ -7,14 +7,22 @@ const ObjectId = mongoose.Types.ObjectId;
 class BlogController {
 
     // [GET]/blog/
-    show(req, res, next) {
-        Blog.find({})
-            .then(blog => {
-                res.render('blog/show', {
-                    blog: multipleMongooseToObject(blog)
-                })
-            })
-            .catch(next);
+    async show(req, res, next) {
+        
+
+        const blog = await Blog.aggregate([
+            {
+                $lookup: {
+                    from: "blog-categories",
+                    localField: "bcID",
+                    foreignField: "_id",
+                    as: "BlogCategory",
+                },
+            },
+        ]);
+        res.render('blog/show', {
+            blog
+        })
     }
 
 
