@@ -48,7 +48,7 @@ module.exports = {
             );
             res.render("login", {
                 errors: req.flash("error"),
-                layout:"",
+                layout: "",
             });
             return;
         }
@@ -57,7 +57,7 @@ module.exports = {
             res.render("login", {
                 errors: req.flash("error"),
                 values: req.body,
-                layout:"",
+                layout: "",
             });
             return;
         }
@@ -67,7 +67,7 @@ module.exports = {
             res.render("login", {
                 errors: req.flash("error"),
                 values: req.body,
-                layout:"",
+                layout: "",
             });
             return;
         }
@@ -76,7 +76,7 @@ module.exports = {
             res.render("login", {
                 errors: req.flash("error"),
                 values: req.body,
-                layout:"",
+                layout: "",
             });
             return;
         }
@@ -84,42 +84,42 @@ module.exports = {
     },
 
     changePassValidate: function (req, res, next) {
-        // const { passwordOld, passwordNew, passwordConfirm } = req.body;
-        // if (!passwordOld && !passwordNew && !passwordConfirm) {
-        //     req.flash(
-        //         "error",
-        //         "Vui lòng nhập thông tin dưới đây để đổi mật khẩu mới cho tài khoản của bạn!"
-        //     );
-        //     res.render("auth/password-change", {
-        //         errors: req.flash("error"),
-        //         values: req.body,
-        //     });
-        //     return;
-        // }
-        // if (!passwordOld) {
-        //     req.flash("error", "Vui lòng nhập mật khẩu cũ!");
-        //     res.render("auth/password-change", {
-        //         errors: req.flash("error"),
-        //         values: req.body,
-        //     });
-        //     return;
-        // }
-        // if (!passwordNew) {
-        //     req.flash("error", "Vui lòng nhập mật khẩu mới!");
-        //     res.render("auth/password-change", {
-        //         errors: req.flash("error"),
-        //         values: req.body,
-        //     });
-        //     return;
-        // }
-        // if (!passwordConfirm) {
-        //     req.flash("error", "Vui lòng nhập lại mật khẩu mới để xác nhận!");
-        //     res.render("auth/password-change", {
-        //         errors: req.flash("error"),
-        //         values: req.body,
-        //     });
-        //     return;
-        // }
+        const { passwordOld, passwordNew, passwordConfirm } = req.body;
+        if (!passwordOld && !passwordNew && !passwordConfirm) {
+            req.flash(
+                "error",
+                "Vui lòng nhập thông tin dưới đây để đổi mật khẩu mới cho tài khoản của bạn!"
+            );
+            res.render("auth/password-change", {
+                errors: req.flash("error"),
+                values: req.body,
+            });
+            return;
+        }
+        if (!passwordOld) {
+            req.flash("error", "Vui lòng nhập mật khẩu cũ!");
+            res.render("auth/password-change", {
+                errors: req.flash("error"),
+                values: req.body,
+            });
+            return;
+        }
+        if (!passwordNew) {
+            req.flash("error", "Vui lòng nhập mật khẩu mới!");
+            res.render("auth/password-change", {
+                errors: req.flash("error"),
+                values: req.body,
+            });
+            return;
+        }
+        if (!passwordConfirm) {
+            req.flash("error", "Vui lòng nhập lại mật khẩu mới để xác nhận!");
+            res.render("auth/password-change", {
+                errors: req.flash("error"),
+                values: req.body,
+            });
+            return;
+        }
         // if (passwordNew.length < 6) {
         //     req.flash("error", "Mật khẩu phải chứa ít nhất 6 ký tự!");
         //     res.render("auth/password-change", {
@@ -128,14 +128,14 @@ module.exports = {
         //     });
         //     return;
         // }
-        // if (passwordNew !== passwordConfirm) {
-        //     req.flash("error", "Xác nhận mật khẩu mới không khớp!");
-        //     res.render("auth/password-change", {
-        //         errors: req.flash("error"),
-        //         values: req.body,
-        //     });
-        //     return;
-        // }
+        if (passwordNew !== passwordConfirm) {
+            req.flash("error", "Xác nhận mật khẩu mới không khớp!");
+            res.render("auth/password-change", {
+                errors: req.flash("error"),
+                values: req.body,
+            });
+            return;
+        }
         next();
     },
 

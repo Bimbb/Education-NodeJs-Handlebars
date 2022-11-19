@@ -22,7 +22,7 @@ class SiteController {
 
     // [GET] /
     async index(req, res, next) {
-        
+
         const customGrade = await Grade.aggregate([
             {
                 $lookup: {
@@ -34,10 +34,10 @@ class SiteController {
             },
         ]);
 
-        const gradeSoCap = await Grade.find({"name": /.*Sơ Cấp*./})
-        const gradeCanBan = await Grade.find({"name": /.*Căn Bản*./})
-        const gradeKinhThanh = await Grade.find({"name": /.*Kinh Thánh*./})
-        const gradeVaoDoi = await Grade.find({"name": /.*Vào Đời*./})
+        const gradeSoCap = await Grade.find({ "name": /.*Sơ Cấp*./ })
+        const gradeCanBan = await Grade.find({ "name": /.*Căn Bản*./ })
+        const gradeKinhThanh = await Grade.find({ "name": /.*Kinh Thánh*./ })
+        const gradeVaoDoi = await Grade.find({ "name": /.*Vào Đời*./ })
 
         const customBlog = await Blog.aggregate([
             {
@@ -49,7 +49,7 @@ class SiteController {
                 },
             },
         ]);
-       
+
 
         res.render("index", {
             success: req.flash("success"),
@@ -57,9 +57,9 @@ class SiteController {
             customGrade,
             customBlog,
             gradeSoCap: multipleMongooseToObject(gradeSoCap),
-            gradeCanBan : multipleMongooseToObject(gradeCanBan),
+            gradeCanBan: multipleMongooseToObject(gradeCanBan),
             gradeKinhThanh: multipleMongooseToObject(gradeKinhThanh),
-            gradeVaoDoi : multipleMongooseToObject(gradeVaoDoi),
+            gradeVaoDoi: multipleMongooseToObject(gradeVaoDoi),
         });
     }
 
@@ -68,16 +68,53 @@ class SiteController {
         res.render('search');
     }
 
-    // [GET] /infor
     async infor(req, res) {
         try {
             res.render("auth/infor", {
+
                 success: req.flash("success"),
                 errors: req.flash("error"),
             });
         } catch (error) {
-            res.render("error");
+            res.send('lỗi rồi')
         }
+    }
+
+    // [PUT]/infor/:id
+    async updateInfor(req, res) {
+        const { fullname, phone, birthDay, address } = req.body;
+        const user = await User.findById(req.params.id);
+        const checkUser = await User.findOne({
+            fullname,
+            phone,
+            birthDay,
+            address,
+        });
+        if (checkUser) {
+            res.redirect("back");
+            return;
+        }
+
+        const phones = await User.find({ phone: phone });
+        const checkPhone = phones.filter((x) => x.phone !== user.phone);
+        if (checkPhone.length > 0) {
+            req.flash("error", "Số điện thoại này đã có người sử dụng!");
+            res.redirect("back");
+            return;
+        }
+
+        await User.updateOne(
+            { _id: req.signedCookies.userId },
+            {
+                fullname,
+                phone,
+                birthDay,
+                address,
+                // username: slugify(fullname).toLowerCase(),
+            }
+        );
+        req.flash("success", "Cập nhật thông tin thành công!");
+        res.redirect("back");
     }
 
     // [GET]/admin

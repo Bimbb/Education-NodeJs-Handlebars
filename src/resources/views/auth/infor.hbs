@@ -3,17 +3,19 @@
         <h4 class="infor__title mb-4 fw-bold">
             Thông tin cá nhân
         </h4>
+        {{!-- mấy cái thông báo đang còn rất là loằng ngoằng --}}
+        {{#each user}}
         <div class="section__infor shadow">
             <div class="row">
                 <div class="col-sm-4">
                     <div class="Boxchange__avatar mt-5">
                         <div class="change__avatar">
-                            <img src="/img/avatar-no-name.png" alt="Ảnh đại diện" class="avatar__profile w-100 h-100"
+                            <img src="{{this.avatar}}" alt="Ảnh đại diện" class="avatar__profile w-100 h-100"
                                 style="width: 100px;height:100px">
                             <div class="avatar__upload">
                                 <ion-icon name="camera"></ion-icon>
                             </div>
-                            <form name="form-change-avatar" action="`/infor//avatar?_method=PUT`"
+                            <form name="form-change-avatar" action="/infor/{{user._id}}/avatar?_method=PUT"
                                 enctype="multipart/form-data" , method="POST">
                                 <input class="file-upload" type="file" name="avatar" accept="image/*" hidden="hidden" />
                             </form>
@@ -23,13 +25,13 @@
 
                 <div class="col-sm-8">
                     <div class="box__infor">
-                        <form action="">
+                        <form method="POST" action="/infor/{{this._id}}?_method=PUT">
                             <div>
                                 <p style='margin-bottom: 1.2rem'>
-                                    <label> Tên tài khoản :
+                                    <label> {{this.username}}
                                         <span class="user-name">
                                             {{!-- username --}}
-                                            huy@gmail.com
+
                                         </span>
                                     </label>
                                 </p>
@@ -42,7 +44,8 @@
                                     </label>
 
                                     <input class="infor__input" maxlength='30' type='text' name='fullname'
-                                        placeholder='Nhập họ và tên' value="" required="required" autocomplete="off">
+                                        placeholder='Nhập họ và tên' value="{{this.fullname}}" required="required"
+                                        autocomplete="off">
                                 </p>
                             </div>
 
@@ -53,7 +56,7 @@
                                         <span class="text-danger">(*)</span>
                                     </label>
                                     <input class="infor__input" maxlength='30' type='text' name='phone'
-                                        placeholder='Nhập số điện thoại' value="" required="required"
+                                        placeholder='Nhập số điện thoại' value="{{this.phone}}" required="required"
                                         autocomplete="off">
                                 </p>
                             </div>
@@ -63,9 +66,9 @@
                                     <label for="">Ngày sinh
                                         <span class="text-danger">(*)</span>
                                     </label>
-
+                                    {{!-- chưa show ra được ngày tháng năm --}}
                                     <input class="infor__input" id="birthday" type="date" name="birthDay"
-                                        required="required" autocomplete="off" value="" />
+                                        required="required" autocomplete="off" value="{{this.birthDay}}" />
                                 </p>
                             </div>
 
@@ -77,7 +80,8 @@
                                     </label>
 
                                     <input class="infor__input" maxlength='30' type='text' name='address'
-                                        placeholder='Địa chỉ' value="" required="required" autocomplete="off">
+                                        placeholder='Địa chỉ' value="{{this.address}}" required="required"
+                                        autocomplete="off">
                                 </p>
                             </div>
 
@@ -89,6 +93,7 @@
 
                                     <span class="email">
                                         {{!-- email --}}
+                                        {{this.email}}
                                     </span>
                                 </p>
 
@@ -97,7 +102,7 @@
                                     <span style="color: red">
                                         số điện thoại của bạn hoặc người thân
                                     </span>
-                                    | để được thầy cô hỗ trợ nhanh chóng!
+                                    để được thầy cô hỗ trợ nhanh chóng!
                                 </p>
                             </div>
 
@@ -109,5 +114,6 @@
                 </div>
             </div>
         </div>
+        {{/each}}
     </div>
 </div>

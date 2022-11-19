@@ -1,161 +1,159 @@
-<nav class="navbar navbar-expand-lg bg-light">
-  <div class="container-fluid">
-    <a class="navbar-brand" href="/">
-      <img src="https://hdgmvietnam.com/admin/upload/image/giao-hoi-cong-giao-dan-than-trong-su-mang-giao-duc.jpg" alt="logo" style="height: 30px;width: 30px; margin-right: 20px;margin-left: 20px">
-    </a>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" aria-current="page" href="/">Trang chủ</a>
-        </li>
-        {{!-- <li class="nav-item">
-          <a class="nav-link" href="#">Blog</a>
-        </li> --}}
-        <li class="nav-item dropdown" style="font-weight: 600;">
-          <a class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-            Chức năng
-          </a>  
-          <ul class="dropdown-menu" style="font-weight: 600;">
-            <li>
-              <a class="dropdown-item" href="/competition" >
-               <ion-icon name="star-sharp" style="color: rgb(73, 73, 1); margin-right:10px; " ></ion-icon>
-                {{!-- thêm hình gì đó hợp lý --}}
-                Thi đấu
-              </a>
-            </li>
-            <li>
-              <hr class="dropdown-divider" >
-            </li>
-            <li>
-              <a class="dropdown-item" href="#">Blog</a>
-            </li>
-            
-            {{!-- <li><a class="dropdown-item" href="#" style="height: 30px;width: 30px; margin-right: 20px;margin-left: 20px">Hỏi đáp</a>
-            </li> --}}
-          </ul>
-        </li>
-        <li class="nav-item">
+<div class="hero">
+    <nav>
+        <a href="/">
+            <img src="https://hdgmvietnam.com/admin/upload/image/giao-hoi-cong-giao-dan-than-trong-su-mang-giao-duc.jpg"
+                alt="logo">
+        </a>
 
-        </li>
-      </ul>
-      <div class="header__actions--user">
-        {{#each user}}
-          <div class="header__actions--avatar">
-            <img src="{{this.avatar}}">
-          </div>
-          <div class="header__actions--userMenu shadow">
-            <div class="user">
-              <div class="user__avatar">
+        {{!-- <h2 class="logo"> dasdwad</h2> --}}
+        <ul>
+            <li><a href="/">Trang chủ</a></li>
+            <li><a href="/blog">Blog</a></li>
+            <li><a href="#">Học</a></li>
+            <li><a href="#">Kết quả học tập</a></li>
+
+            <li><a href="#">Thi đấu</a></li>
+        </ul>
+
+
+        {{!-- Không hiểu sao k bỏ cái button này đi dc, phải để nó ẩn đi, chưa có thời gian sửa --}}
+        <div class="btn-group" hidden>
+            <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown"
+                aria-expanded="false">
+                Thông tin
+            </button>
+            <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="infor">Thông tin cá nhân</a></li>
+                <li><a class="dropdown-item" href="password/change">Đổi mật khẩu</a></li>
+                <hr />
+                {{!-- chưa làm logout --}}
+                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
+            </ul>
+        </div>
+
+        {{!-- Chưa fix được cái chỗ này cho nó thành 1 hàng --}}
+        <div class="header__actions--user">
+            {{#each user}}
+            <div class="header__actions--avatar">
                 <img src="{{this.avatar}}">
-              </div>
-              <div class="user__info">
-                <div class="name">{{this.fullname}}</div>
-                <div class="username">@{{this.username}}</div>
-              </div>
             </div>
-            
-            <hr>
-            <ul class="list">
-              <li class="list__item">
-                <a class="list__link" href="/admin">Quản lý hệ thống</a>
-              </li>
-            </ul>
-            <hr>
-            <ul class="list">
-              <li class="list__item">
-                <a class="list__link" href="/new-question">Đặt câu hỏi</a>
-              </li>
-              <li class="list__item">
-                <a class="list__link" href="/my-qa">Câu hỏi của tôi</a>
-              </li>
-            </ul>
-            <hr>
-            <ul class="list">
-              <li class="list__item">
-                <a class="list__link" href="/infor">Thông tin cá nhân</a>
-              </li>
-              <li class="list__item">
-                <a class="list__link" href="/password/change">Đổi mật khẩu</a>
-              </li>
-              <li class="list__item">
-                <a class="list__link" href="/learning/result?subject=toan-hoc-10">Kết quả học tập</a>
-              </li>
-            </ul>
-            <hr>
-            <ul class="list">
-              <li class="list__item">
-                <a class="list__link" href="/logout">Đăng xuất</a>
-              </li>
-            </ul>
-          </div>
-        {{else}}
-            <a href="/login" class="list__link btn btn-primary btn-padding fs-7">Đăng nhập</a>
-        {{/each}}
-      </div>
-    </div>
-  </div>
-</nav>
+            <div class="header__actions--userMenu shadow">
+                <div class="user">
+                    <div class="user__avatar">
+                        <img src="{{this.avatar}}">
+                    </div>
+                    <div class="user__info">
+                        <div class="name">{{this.fullname}}</div>
+                        <div class="username">@{{this.username}}</div>
+                    </div>
+                </div>
+
+                <hr>
+                <ul class="list">
+                    <li class="list__item">
+                        <a class="list__link" href="/admin">Quản lý hệ thống</a>
+                    </li>
+                </ul>
+                <hr>
+                <ul class="list" style="line-break: auto;">
+                    <li class="list__item" style="line-break: auto;">
+                        <a class="list__link" href="/new-question">Đặt câu hỏi</a>
+                    </li>
+                    <li class="list__item" style="line-break: auto;">
+                        <a class="list__link" href="/my-qa">Câu hỏi của tôi</a>
+                    </li>
+                </ul>
+                <hr>
+                <ul class="list">
+                    <li class="list__item">
+                        <a class="list__link" href="/infor">Thông tin cá nhân</a>
+                    </li>
+                    <li class="list__item">
+                        <a class="list__link" href="/password/change">Đổi mật khẩu</a>
+                    </li>
+                    <li class="list__item">
+                        <a class="list__link" href="/learning/result?subject=toan-hoc-10">Kết quả học tập</a>
+                    </li>
+                </ul>
+                <hr>
+                <ul class="list">
+                    <li class="list__item">
+                        <a class="list__link" href="/logout">Đăng xuất</a>
+                    </li>
+                </ul>
+            </div>
+            {{else}}
+            {{!-- sửa trong scss chưa sửa được, sửa tạm ở đây --}}
+            <a style="margin-bottom: 20px;" href="/login" class="list__link btn btn-primary btn-padding fs-7">Đăng
+                nhập</a>
+            {{/each}}
+        </div>
+    </nav>
+</div>
+
 <script>
-          document.addEventListener('DOMContentLoaded', function() {
-            var searchAll = $("#search__all");
-            var iconClose = $("ion-icon[name=close]");
-            var searchResult = $(".search__result");
-            var markAllRead = $(".mark-all-read");
+    document.addEventListener('DOMContentLoaded', function () {
+        var searchAll = $("#search__all");
+        var iconClose = $("ion-icon[name=close]");
+        var searchResult = $(".search__result");
+        var markAllRead = $(".mark-all-read");
 
-            searchAll.keyup(function(e) {
-                iconClose.addClass("d-block");
-                searchResult.addClass("d-block");
-                var searchString = $(this).val();
-                $(".search__string").text(`Kết quả cho '${searchString}'`)
+        searchAll.keyup(function (e) {
+            iconClose.addClass("d-block");
+            searchResult.addClass("d-block");
+            var searchString = $(this).val();
+            $(".search__string").text(`Kết quả cho '${searchString}'`)
 
-                if ($(this).val() == "") {
-                    clearSearch();
-                }
-                else {
-                    $.ajax({
-                        method: 'POST',
-                        url: '/search',
-                        contentType: 'application/json',
-                        data: JSON.stringify({query: searchString}),
-                        success: function (data) {
-                            $(".search__result--content").replaceWith(data);
-                        }
-                    });     
-                }
-            });
-
-            markAllRead.click(function(e) {
+            if ($(this).val() == "") {
+                clearSearch();
+            }
+            else {
                 $.ajax({
                     method: 'POST',
-                    url: '/notif/mark-all-read',
+                    url: '/search',
                     contentType: 'application/json',
-                    data: JSON.stringify({action: 'mark all as read'}),
+                    data: JSON.stringify({ query: searchString }),
                     success: function (data) {
-                        $(".header__actions--notiMenu .notiMenu-container").replaceWith(data);
-                        $(".header__actions--notiIcon span").html("");
+                        $(".search__result--content").replaceWith(data);
                     }
-                });  
-            })
-
-            iconClose.click(function (e) {
-                clearSearch();
-            })
-
-            $(document).click(function (e) {
-                // Nếu click bên ngoài đối tượng container thì ẩn nó đi
-                if (!searchResult.is(e.target) && searchResult.has(e.target).length === 0) {
-                    clearSearch();
-                }
-            });
-
-            function clearSearch() {
-                iconClose.removeClass("d-block");
-                searchResult.removeClass("d-block");
-                searchAll.val("");
+                });
             }
         });
+
+        markAllRead.click(function (e) {
+            $.ajax({
+                method: 'POST',
+                url: '/notif/mark-all-read',
+                contentType: 'application/json',
+                data: JSON.stringify({ action: 'mark all as read' }),
+                success: function (data) {
+                    $(".header__actions--notiMenu .notiMenu-container").replaceWith(data);
+                    $(".header__actions--notiIcon span").html("");
+                }
+            });
+        })
+
+        iconClose.click(function (e) {
+            clearSearch();
+        })
+
+        $(document).click(function (e) {
+            // Nếu click bên ngoài đối tượng container thì ẩn nó đi
+            if (!searchResult.is(e.target) && searchResult.has(e.target).length === 0) {
+                clearSearch();
+            }
+        });
+
+        function clearSearch() {
+            iconClose.removeClass("d-block");
+            searchResult.removeClass("d-block");
+            searchAll.val("");
+        }
+    });
 </script>
+
+
+
+
+
+</html>
