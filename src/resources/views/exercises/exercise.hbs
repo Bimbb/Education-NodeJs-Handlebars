@@ -1,0 +1,256 @@
+<section class="exercise">
+    <div class="row">
+        <div class="col-sm-5 pe-5">
+            <h4 class="fw-bold mb-4">Bài 1</h4>
+            <ul class="nav nav-tabs" id="myTab" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="description-tab" data-bs-toggle="tab" data-bs-target="#description" type="button" role="tab" aria-controls="description" aria-selected="true">Mô tả bài tập</button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="rank-tab" data-bs-toggle="tab" data-bs-target="#rank" type="button" role="tab" aria-controls="rank" aria-selected="false">Bảng xếp hạng</button>
+                </li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade show active" id="description" role="tabpanel" aria-labelledby="description-tab">
+                    <div class="mb-4 mt-4">
+                        <button class="btn btn-exercise btn-padding rounded-pill fs-7 me-2">#Quiz</button>
+                        <a class="btn btn-primary btn-padding rounded-pill" href="/learning?name={{lesson.slug}}">
+                            <div class="d-flex align-items-center fs-7">
+                                <ion-icon name="book" role="img" class="md hydrated" aria-label="book"></ion-icon>
+                                <span class="ms-2">Ôn lý thuyết</span>
+                            </div>
+                        </a>
+                    </div>
+                    <div>
+                        <blockquote>Chọn đáp án đúng bên phải màn hình và bấm Câu tiếp theo.</blockquote>
+                    </div>
+                    <div class="mt-5 row">
+                        <div class="col-sm-4">
+                            <div class="homework__time">
+                                <div class="top">Thời gian làm bài</div>
+                                <div class="bottom" id="stopwatch">00:00:00</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="questions__done">
+                                <div class="top">Số câu đã làm</div>
+                                <div class="bottom">0</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="tab-pane fade" id="rank" role="tabpanel" aria-labelledby="rank-tab">
+                    <div class="table-responsive">
+                        <table class="table table-striped mt-4">
+                            <thead>
+                                <tr>
+                                    <th scope="col">#</th>
+                                    <th scope="col">Thành viên</th>
+                                    <th scope="col">Điểm</th>
+                                    <th scope="col">Thời gian làm</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {{#ifCond ranks.length ">" 0}}
+                                    {{#each ranks}}
+                                    <tr class="align-middle">
+                                        <th></th>
+                                        <td>
+                                            {{#this.user}}
+                                            <div class="d-flex align-items-center">
+                                                <img src="{{avatar}}" alt="" width='30', height='30' class="rounded-circle">
+                                                <span class="ms-2 fs-7">{{fullname}}</span>
+                                            </div>
+                                            {{/this.user}}
+                                        </td>
+                                        <td>
+                                            <span class="fs-7">{{round this.score}}</span>
+                                        </td>
+                                        <td>
+                                            <span class="fs-7">{{this.time}}</span>
+                                        </td>
+                                    </tr>
+                                    {{/each}}
+                                {{else}}
+                                <tr>
+                                    <td class="text-center" colspan="4">Không có dữ liệu!!!</td>
+                                </tr>
+                                {{/ifCond}}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-7">
+            <div class="quiz mb-4">
+                {{#each exercises}}
+                    <div class="exercise-item mb-4">
+                        <div class="d-flex align-items-center justify-content-between">
+                            <strong class="d-block fw-bold mb-0">
+                                Câu 
+                                <span class="index-qa">{{sum @index 1}}</span>
+                            </strong>
+                            {{#this.Cate}}
+                                {{#if type}}
+                                    <button class="btn btn-success btn-padding btn-type rounded-pill fs-7">{{type}}</button>
+                                {{else}}
+                                    <button class="btn btn-success btn-padding btn-type rounded-pill fs-7">Nhận biết</button>
+                                {{/if}}
+                            {{/this.Cate}}
+                        </div>
+                        <div class="question mt-2">{{{question}}}</div>
+                        <div class="options mt-3">
+                            <div class="form-check d-flex align-items-center">
+                                <input class="form-check-input mt-0 me-3" id="option-1-{{sum @index 1}}" type="radio" name="{{this._id}}" value="{{this.option1}}">
+                                <label class="form-check-label" for="option-1-{{sum @index 1}}">A. {{{this.option1}}}</label>
+                            </div>
+                            <div class="form-check d-flex align-items-center">
+                                <input class="form-check-input mt-0 me-3" id="option-2-{{sum @index 1}}" type="radio" name="{{this._id}}" value="{{this.option2}}">
+                                <label class="form-check-label" for="option-2-{{sum @index 1}}">B. {{{this.option2}}}</label>
+                            </div>
+                            <div class="form-check d-flex align-items-center">
+                                <input class="form-check-input mt-0 me-3" id="option-3-{{sum @index 1}}" type="radio" name="{{this._id}}" value="{{this.option3}}">
+                                <label class="form-check-label" for="option-3-{{sum @index 1}}">C. {{{this.option3}}}</label>
+                            </div>
+                            <div class="form-check d-flex align-items-center">
+                                <input class="form-check-input mt-0 me-3" id="option-4-{{sum @index 1}}" type="radio" name="{{this._id}}" value="{{this.option4}}">
+                                <label class="form-check-label" for="option-4-{{sum @index 1}}">D. {{{this.option4}}}</label>
+                            </div>
+                        </div>
+                        <div class="check-result mb-3 d-none">
+                            <span class="message"></span>
+                            <span class="answer-true"></span>
+                        </div>
+                    
+                        {{#if this.recommend}}
+                        <div class="recommend">
+                            <div class="recommend-header text-primary d-inline-flex align-items-center mb-4">
+                                <span class="me-1">Gợi ý</span>
+                                <ion-icon name='sunny'></ion-icon>
+                            </div>
+                            <div class="recommend-body">
+                                <span class="fw-bold">Phương pháp giải</span>
+                                <div class="mt-2 recommend-content">{{{this.recommend}}}</div>
+                            </div>
+                        </div>
+                        {{/if}}
+                    </div>
+                {{/each}}
+            </div>
+            <div class="actions pt-4 d-flex align-items-center">
+                <button class="btn btn-success btn-padding" id="btn-next-question" value="submit">
+                    <ion-icon name="arrow-forward-outline" role="img" class="md hydrated" aria-label="arrow forward outline"></ion-icon>
+                    <span class="ms-1">Câu tiếp theo</span>
+                </button>
+                <button class="btn btn-primary btn-padding ms-2" id="btn-submit-exercise" value="submit">
+                    <ion-icon name="arrow-forward-outline" role="img" class="md hydrated" aria-label="arrow forward outline"></ion-icon>
+                    <span class="ms-1">Nộp bài</span>
+                </button>
+            </div>
+        </div>
+    </div>
+</section>
+<form name="form-submit-exercise" method="GET"></form>
+
+<div id="exercise-jon" hidden>{{JON exercises}}</div>
+<div id="slug" hidden>{{lesson.slug}}</div>
+
+<script>
+    $(document).ready(function () {
+            const exercises = document.getElementById('exercise-jon');
+            var listExercise =JSON.parse(exercises.innerHTML) ;
+            var currentQa = 0;
+            console.log(listExercise)
+            if (currentQa == listExercise.length - 1) {
+                $("#btn-next-question").hide();
+                $("#btn-submit-exercise").show();
+            } 
+            $(".exercise-item").first().addClass("show");
+
+            //StopWatch
+            $("#stopwatch").stopwatch().stopwatch("start");
+
+            // When btn check clicked
+            $("#btn-submit-exercise").click(function (e) {
+                e.preventDefault();
+                var inputChecked = $(".form-check-input:checked");
+                var arrayTemp = [];
+
+                if (inputChecked.length === 0 && (confirm("Bạn muốn bỏ qua câu này?") === false)) {
+                    return false;
+                }
+
+                arrayTemp.push({
+                    name: inputChecked.attr("name"),
+                    value: inputChecked.attr("value"),
+                });
+
+                currentQa++;
+
+                $.ajax({
+                    type: "POST",
+                    url: $(location).attr("href"),
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        objectData: arrayTemp,
+                        exercise: $(".exercise-item.show .form-check-input").attr("name"),
+                        time: $("#stopwatch").text(),
+                        currentQa: currentQa,
+                    }),
+                    success: function (data) {
+                        console.log(data);
+                    },
+                });
+
+                var slug = document.getElementById('slug').innerHTML;
+                window.location.href = `/learning/result?lesson=${slug}`;
+            })
+
+            // When btn next clicked
+            $("#btn-next-question").click(function (e) {
+                e.preventDefault();
+                
+                var inputChecked = $(".form-check-input:checked");
+                var arrayTemp = [];
+
+                if (inputChecked.length === 0 && (confirm("Bạn muốn bỏ qua câu này?") === false)) {
+                    return false;
+                }
+
+                arrayTemp.push({
+                    name: inputChecked.attr("name"),
+                    value: inputChecked.attr("value"),
+                });
+
+                $.ajax({
+                    type: "POST",
+                    url: $(location).attr("href"),
+                    contentType: "application/json",
+                    data: JSON.stringify({
+                        objectData: arrayTemp,
+                        exercise: $(".exercise-item.show .form-check-input").attr("name"),
+                        time: $("#stopwatch").text(),
+                    }),
+                    success: function (data) {
+                        console.log(data);
+                    },
+                });
+
+                currentQa++;
+                var exerciseItem = $(".exercise-item");
+                for (var i = 0; i < exerciseItem.length; i++) {
+                    exerciseItem[i].className = "exercise-item";
+                }
+                exerciseItem[currentQa].className = "exercise-item show";
+
+                if (currentQa == listExercise.length - 1) {
+                    $(this).hide();
+                    $("#btn-submit-exercise").show();
+                }
+
+                $(".questions__done .bottom").text(currentQa);
+                $(".form-check-input").prop('checked', false);
+            });
+        })
+</script>

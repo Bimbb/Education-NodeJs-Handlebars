@@ -1,0 +1,225 @@
+<section class="learning">
+    <div class="row">
+        <div class="col-sm-9">
+            <div class="learning__content shadow">
+                <div class="row">
+                    {{#ifCond exercises.length ">" 0}}
+                        <div class="col-sm-9">
+                            <h4 class="title mb-0"> <b>Bài {{lesson.lessonNumber}}:</b> {{lesson.name}}</h4>
+                        </div>
+                        <div class="col-sm-3 text-end">
+                            <a class="btn btn-danger btn-padding rounded-pill fs-7" type="button" data-bs-toggle="modal" data-bs-target="#exerciseModal">
+                                <span class="ms-1">Bài tập vận dụng</span>
+                            </a>
+                        </div>
+                    {{else}}
+                        <div class="col-sm-12">
+                            <h4 class="title mb-0">Bài {{lesson.lessonNumber}}: {{lesson.name}}</h4>
+                        </div>
+                    {{/ifCond}}
+                </div>
+                <div class="modal fade" id="exerciseModal" tabindex="-1" aria-labelledby="exerciseModalLabel" aria-hidden="true">
+                    <div class="modal-dialog" style="transition: all 0.3s ease">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exerciseModalLabel">Bài tập vận dụng</h5>
+                                <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body">
+                                 {{#if statistical}}
+                                    <div class="results d-flex align-items-center justify-content-around mb-5 mt-4">
+                                        <div class="text-center border border-5 border-success rounded-circle text-success d-flex align-items-center justify-content-center">
+                                            <div>
+                                                <span class="fs-1 fw-bold">{{statistical.totalAnswerTrue}}</span>
+                                                <span class="fs-7 mt-2">Câu đúng</span>
+                                            </div>
+                                        </div>
+                                        <div class="text-center border border-5 border-info rounded-circle text-info d-flex align-items-center justify-content-center">
+                                            <div>
+                                                <span class="fs-1 fw-bold">{{subtraction results.length statistical.totalAnswerTrue}}</span>
+                                                <span class="fs-7 mt-2">Câu sai</span>
+                                            </div>
+                                        </div>
+                                        <div class="text-center border border-5 border-warning rounded-circle text-warning d-flex align-items-center justify-content-center">
+                                            <div>
+                                                <span class="fs-1 fw-bold">{{results.length}}</span>
+                                                <span class="fs-7 mt-2">Đã làm</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                {{/if}}
+
+
+                                <h5 class="modal-title" id="exerciseModalLabel" style="margin-bottom: 10px; color:brown;">Điều cần biết:</h5>
+
+                                <div class="description" style="margin-left: 30px;">
+                                    <p>1. Làm xong biết đáp án, phương pháp giải chi tiết.</p>
+                                    <p>2. Học sinh có thể hỏi và trao đổi nếu không hiểu.</p>
+                                    <p>3. Xem lại lý thuyết.</p>
+                                    <p>4. Biết điểm yếu và có hướng giải pháp cải thiện.</p>
+                                </div>
+                               
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Hủy bỏ</button>
+                            {{#if statistical}}
+                                <a class="btn btn-primary" href="/exercises/{{subject.slug}}?name={{lesson.slug}}">Làm lại tất cả</a>
+                            {{else}}
+                                <a class="btn btn-primary" href="/exercises/{{subject.slug}}?name={{lesson.slug}}"> Bắt đầu</a>
+                            {{/if}}
+                        </div>
+                    </div>
+                </div>
+                </div>
+                <hr>
+                {{#if theory}}
+                <div class="mt-4 mb-4">
+                    <p >{{{theory.content}}}</p>
+                </div>
+                {{else}}
+                <div class="mt-4 mb-4" style='line-height: 1.5'>
+                    Nội dung lý thuyết của bài học đang cập nhật.
+                </div>
+                {{/if}}
+                <hr>
+                <div class="d-flex align-items-center justify-content-end">
+                    <div class="download">
+                        <form action="/theories/{{lesson._id}}/export" method="post">
+                            <button class="download__btn" type="submit">
+                                <ion-icon name="arrow-down-circle" role="img" class="md hydrated" aria-label="arrow down circle"></ion-icon>
+                                <span class="ms-1">Tải về</span>
+                            </button>
+                        </form>
+                    </div>
+                    <div class="report ms-4">
+                        <button class="report__btn" type="button" data-bs-toggle="modal" data-bs-target="#reportModal">
+                            <ion-icon name="close-circle" role="img" class="md hydrated" aria-label="close circle"></ion-icon>
+                            <span class="ms-1">Báo lỗi</span>
+                        </button>
+                        <div class="modal fade" id="reportModal" tabindex="-1" aria-labelledby="reportModalLabel" style="display: none;" aria-hidden="true">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="reportModalLabel">Báo lỗi</h5>
+                                        <button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                                    </div>
+                                    <form method="post" action="/report">
+                                        <div class="modal-body">
+                                            <div class="mb-3">
+                                                <label class="col-form-label" for="message-text">Vấn đề bạn gặp phải là gì?</label>
+                                                <div class="form-check d-flex align-items-center mt-1 mb-1">
+                                                    <input class="form-check-input mt-0 me-2" id="flexRadioReport1" type="radio" name="content" value="Sai nội dung">
+                                                    <label class="form-check-label" for="flexRadioReport1">Sai nội dung</label>
+                                                </div>
+                                                <div class="form-check d-flex align-items-center mt-1 mb-1">
+                                                    <input class="form-check-input mt-0 me-2" id="flexRadioReport2" type="radio" name="content" value="Lý thuyết khó hiểu">
+                                                    <label class="form-check-label" for="flexRadioReport2">Lý thuyết khó hiểu</label>
+                                                </div>
+                                                <div class="form-check d-flex align-items-center mt-1 mb-1">
+                                                    <input class="form-check-input mt-0 me-2" id="flexRadioReport3" type="radio" name="content" value="Nội dung chưa phù hợp">
+                                                    <label class="form-check-label" for="flexRadioReport3">Nội dung chưa phù hợp (VD: Đã giảm tải,...)</label>
+                                                </div>
+                                                <div class="form-check d-flex align-items-center mt-1 mb-1">
+                                                    <input class="form-check-input mt-0 me-2" id="flexRadioReport4" type="radio" name="content" value="Lỗi khác">
+                                                    <label class="form-check-label" for="flexRadioReport4">Lỗi khác</label>
+                                                </div>
+                                            </div>
+                                            <div class="mb-3">
+                                                <label class="col-form-label" for="message-text">Mô tả chi tiết</label>
+                                                <textarea class="form-control" id="message-text" rows="5" name="summary" placeholder="Góp ý lỗi bạn gặp phải với chúng tôi để khắc phục sớm nhất. Cảm ơn, chúc bạn học tập vui vẻ!" required="required"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="modal-footer">
+                                            <button class="btn btn-secondary" type="button" data-bs-dismiss="modal">Hủy bỏ</button>
+                                            <button class="btn btn-primary" type="submit">Gửi</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="learning__list">
+                <h5>{{subject.name}} - Lớp {{grade.name}}</h5>
+                <span class="fs-7">Tổng số {{lessons.length}} bài học</span>
+                <div class="accordion mt-3" id="accordionSubjectDetail">
+                    {{#each units}}
+                    <div class="accordion-item mb-0">
+                        <h2 class="accordion-header" id="heading{{sum @index 1}}">
+                            <button class="accordion-button text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{sum @index 1}}" aria-expanded="true" aria-controls="collapse{{sum @index 1}}">{{this.name}}</button>
+                        </h2>
+                        <div class="accordion-collapse collapse show" id="collapse{{sum @index 1}}" aria-labelledby="heading{{sum @index 1}}" data-bs-parent="#accordionSubjectDetail">
+                            <div class="accordion-body p-0">
+                                {{#this.lesson}}
+                                    {{#ifCond lesson.slug "===" slug }}
+                                    <a class="lession__item active" href="/learning?name={{slug}}"><b>Bài {{sum @index 1}}</b>: {{name}}</a>
+                                    {{else}}
+                                    <a class="lession__item" href="/learning?name={{slug}}"> <b>Bài {{sum @index 1}}</b>: {{name}}</a>
+                                    {{/ifCond}}
+                                {{/this.lesson}}
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{{#if errors}}
+    <div id="errors" style="visibility: hidden;">{{errors}}</div>
+{{else}}
+    {{#if success}}
+    <div id="success" style="visibility: hidden;">{{success}}</div>
+    {{/if}}
+{{/if}}
+
+
+<script>
+    var msgError = document.getElementById('errors');
+        ///toast message
+    let msgToastError = msgError.innerHTML;
+
+    if(msgToastError != ''){
+        Eggy({
+            title: 'Oops... Có gì đó không đúng',
+            message:  msgToastError,
+            type: 'warning',
+            duration: 5000,
+        });
+    }
+</script>
+<script>
+        var msgSuccess = document.getElementById('success');
+        let msgToastSuccess = msgSuccess.innerHTML;
+        if(msgToastSuccess != ''){
+            Eggy({
+                title: 'Thành Công',
+                message:  msgToastSuccess,
+                type: 'success',
+                duration: 5000,
+            });
+        }
+</script>
+
+<script>
+    $(document).ready(function () {
+        $(".learning__content .image_resized").each(function (index, item) {
+            item.style = 'margin-left: 6px; width: 24px; cursor: pointer';
+            item.onclick = function () {
+                var speakText = $(this).attr("alt");
+                //- responsiveVoice.speak(speakText);
+                var msg = new SpeechSynthesisUtterance(speakText);
+                window.speechSynthesis.speak(msg);
+            }
+        })
+       
+    });
+  
+</script>
+<script>
+
+</script>

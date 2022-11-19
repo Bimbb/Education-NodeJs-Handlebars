@@ -21,8 +21,6 @@ class GradeController {
     async show(req, res, next) {
         const grade = await Grade.findOne({ slug: req.params.slug });
         const subject = await Subject.find({ gradeID: grade._id });
-
-
         res.render("grades/show", {
             success: req.flash("success"),
             errors: req.flash("error"),
@@ -52,13 +50,13 @@ class GradeController {
         const checkLop = await Grade.findOne({ name: formGrade.name });
         if (checkLop) {
             req.flash("error", "Tên Lớp này đã tồn tại!");
-            res.redirect('/grades/list');
+            res.redirect('/grade/list');
             return;
         }
         const grade = new Grade(formGrade);
         await grade.save();
         req.flash("success", "Tạo Thành Công Một Lớp mới!");
-        res.redirect('/grades/list');
+        res.redirect('/grade/list');
     }
 
 
@@ -68,7 +66,7 @@ class GradeController {
         Grade.updateOne({ _id: formGrade.gradeID }, formGrade)
             .then(() => {
                 req.flash("success", "Đã cập nhật thành công lớp học!"),
-                    res.redirect('/grades/list')
+                    res.redirect('/grade/list')
             })
             .catch(next);
     }

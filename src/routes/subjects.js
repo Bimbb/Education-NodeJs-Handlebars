@@ -5,6 +5,7 @@ const router = express.Router();
 const subjectController = require("../app/controllers/SubjectController");
 const {
     checkRequireAdmin,
+    requireAuth,
 } = require("../app/middlewares/AuthMiddleware");
 
 
@@ -18,6 +19,7 @@ router.post("/:gradeId/bible", checkRequireAdmin, subjectController.createSubjec
 router.get("/:gradeId/bible", checkRequireAdmin, subjectController.createSubjectBible);
 
 //user
-router.get("/:slug", subjectController.show);
+router.get("/theory/:slug", subjectController.showTheory);
+router.get("/bible/:slug", subjectController.showBible);
 
 module.exports = router;

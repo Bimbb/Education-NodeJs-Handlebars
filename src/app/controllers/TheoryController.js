@@ -208,12 +208,12 @@ class TheoryController {
             };
 
             pdf.create(document, options)
-                .then(() => {
-                    res.download(document.path);
-                })
-                .catch((error) => {
-                    console.log(error);
-                });
+            .then(() => {
+                res.download(document.path);
+            })
+            .catch((error) => {
+                console.log(error);
+            });
         }
     }
 

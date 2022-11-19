@@ -1,4 +1,4 @@
-const { multipleMongooseToObject: multipleMongooseToObject } = require('../../util/mongoose')
+const { multipleMongooseToObject: multipleMongooseToObject, mongooseToObject } = require('../../util/mongoose')
 const Subject = require("../models/Subject");
 const Grade = require("../models/Grade");
 const User = require("../models/User");
@@ -22,7 +22,7 @@ class SiteController {
 
     // [GET] /
     async index(req, res, next) {
-        const grade = await Grade.findOne({ slug: req.params.slug });
+        
         const customGrade = await Grade.aggregate([
             {
                 $lookup: {
@@ -34,6 +34,11 @@ class SiteController {
             },
         ]);
 
+        const gradeSoCap = await Grade.find({"name": /.*Sơ Cấp*./})
+        const gradeCanBan = await Grade.find({"name": /.*Căn Bản*./})
+        const gradeKinhThanh = await Grade.find({"name": /.*Kinh Thánh*./})
+        const gradeVaoDoi = await Grade.find({"name": /.*Vào Đời*./})
+
         const customBlog = await Blog.aggregate([
             {
                 $lookup: {
@@ -44,12 +49,17 @@ class SiteController {
                 },
             },
         ]);
+       
 
         res.render("index", {
             success: req.flash("success"),
             errors: req.flash("error"),
             customGrade,
             customBlog,
+            gradeSoCap: multipleMongooseToObject(gradeSoCap),
+            gradeCanBan : multipleMongooseToObject(gradeCanBan),
+            gradeKinhThanh: multipleMongooseToObject(gradeKinhThanh),
+            gradeVaoDoi : multipleMongooseToObject(gradeVaoDoi),
         });
     }
 
@@ -279,6 +289,18 @@ class SiteController {
             ranksCompetition,
             grades: multipleMongooseToObject(grades),
         });
+    }
+    // [POST]/report
+    async report(req, res) {
+        const user = await User.findOne({ _id: req.signedCookies.userId });
+        const report = new Report({
+            userID: user.id,
+            content: req.body.content,
+            summary: req.body.summary,
+        });
+        await report.save();
+        req.flash("success", "Bạn đã báo cáo thành công. Cảm ơn!");
+        res.redirect("back");
     }
 
 }

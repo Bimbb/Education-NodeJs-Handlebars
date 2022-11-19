@@ -20,6 +20,192 @@ const { multipleMongooseToObject, mongooseToObject}  = require('../../util/mongo
 
 class ExerciseController {
 
+
+
+
+    // [GET]/exercises/:slug?name=lesson
+    async exercise(req, res) {
+        try {
+            const subject = await Subject.findOne({ slug: req.params.slug });
+            if (subject) {
+                const lesson = await Lesson.findOne({ slug: req.query.name });
+                const exercises = await Exercise.aggregate([
+                    {
+                        $match: {
+                            lessonID: ObjectId(lesson.id),
+                        },
+                    },
+                    {
+                        $lookup: {
+                            from: "exercise-categories",
+                            localField: "ceID",
+                            foreignField: "_id",
+                            as: "Cate",
+                        },
+                    },
+                    {
+                        $project: { answer: 0, explain: 0 },
+                    },
+                    { $sample: { size: 20 } },
+                ]);
+
+                // làm lại tất cả
+                const statistical = await Statistical.findOne({
+                    userID: ObjectId(req.signedCookies.userId),
+                    lessonID: lesson._id,
+                });
+
+                if (statistical) {
+                    const results = await Result.find({
+                        statisticalID: statistical._id,
+                    });
+                    const resultsUserIdArray = results.map(({ _id }) => _id);
+                    if (results.length > 0) {
+                        await Result.deleteMany({
+                            _id: { $in: resultsUserIdArray },
+                        });
+                        await Statistical.deleteOne({ _id: statistical._id });
+                    }
+                }
+
+                // bảng xếp hạng theo bài học
+                const ranks = await Statistical.aggregate([
+                    {
+                        $match: {
+                            lessonID: ObjectId(lesson._id),
+                        },
+                    },
+                    {
+                        $lookup: {
+                            from: "users",
+                            localField: "userID",
+                            foreignField: "_id",
+                            as: "user",
+                        },
+                    },
+                    { $sort: { score: -1, time: 1 } },
+                    {
+                        $limit: 10,
+                    },
+                ]);
+
+                res.render("exercises/exercise", {
+                    lesson: mongooseToObject(lesson),
+                    subject: mongooseToObject(subject),
+                    exercises,
+                    ranks,
+                });
+            } else {
+                res.render("error");
+            }
+        } catch (error) {
+            res.render("error");
+        }
+    }
+
+    // [POST]/exercise/:slug?name=lesson
+    async postExercise(req, res) {
+        try {
+            const lesson = await Lesson.findOne({ slug: req.query.name });
+            if (lesson) {
+                const myJsonData = req.body.objectData;
+                const myJsonObj = Object.assign({}, ...myJsonData);
+                const myTime = req.body.time;
+                const myExercise = req.body.exercise;
+
+                let score = 0;
+                let totalAnswerTrue = 0;
+                const exercises = await Exercise.find({
+                    lessonID: lesson._id,
+                });
+                exercises.forEach(function (exercise) {
+                    if (
+                        myJsonObj.name == exercise._id &&
+                        myJsonObj.value == exercise.answer
+                    ) {
+                        score += 100 / exercises.length;
+                        totalAnswerTrue++;
+                    }
+                });
+                const findStatistical = await Statistical.findOne({
+                    userID: ObjectId(req.signedCookies.userId),
+                    lessonID: lesson._id,
+                });
+                if (findStatistical) {
+                    if (req.body.currentQa == exercises.length) {
+                        await Statistical.updateOne(
+                            { _id: findStatistical._id },
+                            {
+                                time: myTime,
+                                $inc: {
+                                    totalAnswerTrue: totalAnswerTrue,
+                                    score: score,
+                                },
+                                isDone: true,
+                            }
+                        );
+                    } else {
+                        await Statistical.updateOne(
+                            { _id: findStatistical._id },
+                            {
+                                time: myTime,
+                                $inc: {
+                                    totalAnswerTrue: totalAnswerTrue,
+                                    score: score,
+                                },
+                            }
+                        );
+                    }
+
+                    if (Object.keys(myJsonObj).length === 0) {
+                        const result = new Result({
+                            statisticalID: findStatistical._id,
+                            exerciseID: myExercise,
+                            option: "",
+                        });
+                        await result.save();
+                    } else {
+                        const result = new Result({
+                            statisticalID: findStatistical._id,
+                            exerciseID: myJsonObj.name,
+                            option: myJsonObj.value,
+                        });
+                        await result.save();
+                    }
+                } else {
+                    const statistical = new Statistical({
+                        lessonID: lesson._id,
+                        userID: req.signedCookies.userId,
+                        totalAnswerTrue: totalAnswerTrue,
+                        score: score,
+                        time: myTime,
+                        isDone: false,
+                    });
+                    await statistical.save();
+
+                    if (Object.keys(myJsonObj).length === 0) {
+                        const result = new Result({
+                            statisticalID: statistical._id,
+                            exerciseID: myExercise,
+                            option: "",
+                        });
+                        await result.save();
+                    } else {
+                        const result = new Result({
+                            statisticalID: statistical._id,
+                            exerciseID: myJsonObj.name,
+                            option: myJsonObj.value,
+                        });
+                        await result.save();
+                    }
+                }
+            }
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
+
     // [GET]/exercise?lesson
     async detail(req, res) {
         if (ObjectId.isValid(req.query.lesson)) {

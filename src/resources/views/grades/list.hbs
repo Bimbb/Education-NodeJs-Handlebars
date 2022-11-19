@@ -28,6 +28,7 @@
                                     <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;"  scope="col">#</th>
                                     <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Tên lớp học</th>
                                     <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Biểu tượng</th>
+                                    <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Ảnh Đại Điện</th>
                                     <th style="min-width:auto; text-align: center;  font-weight: bold; font-size: large;" >Hành động</th>
                                 </tr>
                             </thead>
@@ -37,6 +38,11 @@
                                         <th scope="row" style="text-align: center;">{{sum @index 1}}</th>
                                         <td style="text-align: center; color: #000000;">{{this.name}}</td>
                                         <td style="text-align: center; color: #000000;"><ion-icon name="{{this.icon}}" role="img" class="md hydrated" aria-label="cog"></ion-icon></td>
+                                        {{#if this.image}}
+                                        <td style="text-align: center; color: #000000;"><img src="{{this.image}}" style="width: 40px;" alt=""></td>
+                                        {{else}}
+                                        <td style="text-align: center; color: #000000;"><img src="https://i.pinimg.com/236x/fe/09/05/fe09055dfc6d7638765d3fa255e4b788.jpg" alt=""></td>
+                                        {{/if}}
                                         <td style="text-align: center; ">
                                             {{!-- <a class="btn btn-primary mr-2" href="/subjects/{{this._id}}/content">
                                                 <span class="ti-notepad"></span>&nbsp;
@@ -146,6 +152,12 @@
                                 <input class="form-control" id="name-grade" type="text" placeholder="Nhập tên biểu tượng (Ví dụ: calculator, chỉ lấy phần name)" name="icon" >
                             </div>
                         </div>
+                        <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-dark" for="name-grade">Ảnh Đại Diện</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="name-grade" type="text" placeholder="Nhập link ảnh" name="image">
+                                </div>
+                        </div>
                         <div class="float-right">
                             <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy bỏ</button>
                             <button class="btn btn-primary ml-2" type="submit">Lưu lại</button>
@@ -184,6 +196,12 @@
                                 <div class="col-sm-9">
                                     <input class="form-control" id="name-grade" type="text" placeholder="Nhập tên biểu tượng (Ví dụ: calculator, chỉ lấy phần name)" name="icon" >
                                 </div>
+                            </div>
+                            <div class="form-group row">
+                                <label class="col-sm-3 col-form-label text-dark" for="name-grade">Ảnh Đại Diện</label>
+                                <div class="col-sm-9">
+                                    <input class="form-control" id="name-grade" type="text" placeholder="Nhập link ảnh" name="image">
+                                </div>  
                             </div>
                             <div class="float-right">
                                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy bỏ</button>

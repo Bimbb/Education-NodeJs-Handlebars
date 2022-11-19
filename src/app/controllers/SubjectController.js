@@ -15,25 +15,93 @@ const path = require("path");
 
 class SubjectController {
 
-    // [GET]/subjects/:slug
-    async show(req, res, next) {
+   // [GET]/subjects/theory/:slug
+   async showTheory(req, res) {
+        var formSubject = req.body;
+        const grade = await Grade.findOne({ slug: req.params.slug });
+        var SubjectTheory = await Subject.findOne({ gradeID: grade._id, name: "Phần Lý Thuyết" });
+        if (!SubjectTheory) {
+            formSubject.gradeID = grade._id;
+            formSubject.name = "Phần Lý Thuyết";
+            const subject = new Subject(formSubject);
+            await subject.save();
+            return;
+        }else{
+            const units = await Unit.aggregate([
+                { $match: { subjectID: ObjectId(SubjectTheory._id) } },
+                {      
+                    $lookup: {
+                        from: "lessons",
+                        localField: "_id",
+                        foreignField: "unitID",
+                        as: "lesson",
+                    },
+                },
+            ]);
+            const unitIdArray = units.map(({ _id }) => _id);
+            const lessons = await Lesson.find({
+                unitID: { $in: unitIdArray },
+            });
+            res.render("subjects/show", {
+                grade: mongooseToObject(grade),
+                SubjectTheory: mongooseToObject(SubjectTheory),
+                units,
+                lessons: multipleMongooseToObject(lessons)
+            });
+        }
+    }
+    // [GET]/subjects/bible/:slug
+    async showBible(req, res) {
+        var formSubject = req.body;
+        const grade = await Grade.findOne({ slug: req.params.slug });
+        var SubjectTheory = await Subject.findOne({ gradeID: grade._id, name: "Phần Kinh" });
+        if (!SubjectTheory) {
+            formSubject.gradeID = grade._id;
+            formSubject.name = "Phần Kinh";
+            const subject = new Subject(formSubject);
+            await subject.save();
+            req.flash("success", "Tạo thành công Học Phần Kinh");
+            return;
+        } else {
+            const unit = await Unit.findOne({ subjectID: SubjectTheory._id });
+            if (!unit) {
+                var formUnit = req.body;
+                formUnit.subjectID = SubjectTheory._id;
+                formUnit.name = "Phần Kinh";
+                const unitNew = new Unit(formUnit);
+                await unitNew.save();
+                return;
+            } else {
+                const units = await Unit.aggregate([
+                    { $match: { subjectID: ObjectId(SubjectTheory._id) } },
+                    {      
+                        $lookup: {
+                            from: "lessons",
+                            localField: "_id",
+                            foreignField: "unitID",
+                            as: "lesson",
+                        },
+                    },
+                ]);
+                const unitIdArray = units.map(({ _id }) => _id);
+                const lessons = await Lesson.find({
+                    unitID: { $in: unitIdArray },
+                });
+                res.render("subjects/show", {
+                    grade: mongooseToObject(grade),
+                    SubjectTheory: mongooseToObject(SubjectTheory),
+                    units,
+                    lessons: multipleMongooseToObject(lessons)
+                });
+            }
 
-        const subject = await Subject.findOne({ slug: req.params.slug });
-        const unit = await Unit.find({ subjectID: subject._id });
-
-
-        res.render("subjects/show", {
-            success: req.flash("success"),
-            errors: req.flash("error"),
-            subject: mongooseToObject(subject),
-            unit: multipleMongooseToObject(unit),
-        });
+        }
     }
 
 
 
-    // [GET]/subjects/list
 
+    // [GET]/subjects/list
     async listSubject(req, res, next) {
         Subject.find({})
             .then((subject) => {

@@ -1,18 +1,65 @@
-<div>
-    <h2>Danh sách môn học lớp {{subject.name}}</h2>
-    <div class="hero-section">
-        <div class="card-grid">
-            {{#each unit}}
-            <a class="card" href="/units/{{this._id}}">
-                <div class="card__background"
-                    style="background-image: url(https://images.unsplash.com/photo-1557187666-4fd70cf76254?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=800&q=60)">
+<section class="subject__detail">
+    <div class="row">
+        <div class="col-sm-8">
+            <div class="mb-5">
+                <h2 class="fw-bold mb-3">{{SubjectTheory.name}} - Lớp {{grade.name}}</h2>
+                {{!-- <span class="mt-4" style="line-height: 1.5">Nội dung {{SubjectTheory.name}}</span> --}}
+            </div>
+            <div>
+                <h5 class="fw-bold">Nội dung</h5>
+                <div class="mt-4">
+                    {{#ifCond SubjectTheory.name "===" "Phần Lý Thuyết"}}
+                        <span>{{units.length}} Chương</span>
+                        <span> - </span>
+                        <span>{{lessons.length}} bài học</span>
+                    {{else}}
+                        <span>{{lessons.length}} Bài Kinh</span>
+                    {{/ifCond}}
                 </div>
-                <div class="card__content">
-                    <p class="card__category">{{subject.name}}</p>
-                    <h3 class="card__heading">{{this.name}}</h3>
+                <div class="accordion mt-4" id="accordionSubjectDetail">
+                    {{#each units}}
+                    <div class="accordion-item mb-0">
+                        <h2 class="accordion-header" id="heading{{sum @index 1}}">
+                            <button class="accordion-button text-uppercase" type="button" data-bs-toggle="collapse" data-bs-target="#collapse{{sum @index 1}}" aria-expanded="true" aria-controls="collapse{{sum @index 1}}">
+                                {{this.name}}
+                                <span class="ms-1 text-lowercase">({{this.lesson.length}} bài)</span>
+                            </button>
+                        </h2>
+                        <div class="accordion-collapse collapse show" id="collapse{{sum @index 1}}" aria-labelledby="heading{{sum @index 1}}" data-bs-parent="#accordionSubjectDetail">
+                            <div class="accordion-body p-0">
+                            {{#this.lesson}}
+                                <a class="lession__item" href="/learning?name={{slug}}"><b>Bài {{sum @index 1}}</b>:   {{name}}</a>
+                            {{/this.lesson}}
+                            </div>
+                        </div>
+                    </div>
+                    {{/each}}
                 </div>
-            </a>
-            {{/each}}
+            </div>
+        </div>
+        <div class="col-sm-4" >
+            <div class="d-flex align-items-center flex-column ps-4"  >
+                {{#if grade.image}}
+                <img src="{{grade.image}}" alt="" style="margin-bottom: 30px; border-radius: 30px;" width="500" height="405" >
+                {{else}}
+                <img src="https://i.pinimg.com/236x/fe/09/05/fe09055dfc6d7638765d3fa255e4b788.jpg" alt="" style="margin-bottom: 30px; border-radius: 30px;" width="500" height="405">
+                {{/if}}
+                {{!-- <iframe style="margin-bottom: 30px; border-radius: 30px;" width="500" height="305" src="https://www.youtube.com/embed/OO_lDssfNEo" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" ></iframe> --}}
+                <div class="purchase-badge">
+                    <h3 class="text-center">
+                        <ion-icon name="heart-sharp" style="color: red;"></ion-icon>
+                        Miễn phí
+                    </h3>
+                    <ul class="ps-0 mb-0 pt-4 subject__detail--list">
+                        <li>
+                            <ion-icon name="barcode-outline" role="img" class="md hydrated" aria-label="barcode outline"></ion-icon>
+                            <span></span>Tổng số <b>{{lessons.length}}</b> bài học</li><li>
+                            <ion-icon name="battery-full-outline" role="img" class="md hydrated" aria-label="battery full outline"></ion-icon>
+                            <span>Học mọi lúc, mọi nơi</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
         </div>
     </div>
-</div>
+</section>

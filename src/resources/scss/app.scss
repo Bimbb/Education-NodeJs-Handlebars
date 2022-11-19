@@ -91,15 +91,23 @@ div.dataTables_wrapper div.dataTables_filter input {
 .bg-light{
     background-color: #d8dce0!important;
 }
-
+.form-select {
+    border-radius: 60.25rem;
+}
+.swiper-button-prev:after, .swiper-rtl .swiper-button-next:after{
+    color: #000000;
+}
+.swiper-button-next:after{
+    color: #000000;
+}
 @import './main';
 @import "./button";
 
 @import "./login";
-// @import "./style";
+
 
 @import "./reset";
 @import "./header";
-@import "./quiz";
+
 
 // @import "./cardgrade";

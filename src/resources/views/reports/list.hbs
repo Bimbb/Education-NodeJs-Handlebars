@@ -32,8 +32,8 @@
                                 {{#each reports }}
                                     <tr>
                                         <th scope="row" style="text-align: center;">{{sum @index 1}}</th>
-                                        <td style="text-align: center; color: #000000;">{{this.summary}}</td>
-                                        <td style="text-align: center; color: #000000;">{{this.content}}</td>
+                                        <td style="text-align: center; color: #000000;">{{{this.content}}}</td>
+                                        <td style="text-align: center; color: #000000;">{{{this.summary}}}</td>
                                         <td style="text-align: center; color: #000000;">{{formatDate this.createdAt}}</td>
                                         {{#this.user}}
                                         <td style="text-align: center; color: #000000;">
@@ -197,8 +197,8 @@
             content = button.data('content');  
             createAt = button.data('createAt');  
             $("#detailReportModal input[name='fullname']").val(fullName + " - " + email);
-            $("#detailReportModal input[name='content']").val(content);
-            $("#detailReportModal input[name='summary']").val(summary);
+            $("#detailReportModal input[name='content']").val(summary);
+            $("#detailReportModal input[name='summary']").val(content);
             $("#detailReportModal input[name='createAt']").val(createAt);
         });
         

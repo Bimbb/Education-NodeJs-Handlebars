@@ -15,7 +15,9 @@ const app = express();
 const route  = require('./routes');
 const db = require('./config/db');
 
-
+const {
+    userLocal,
+} = require("./app/middlewares/LocalMiddleware");
 
 ///MODel
 
@@ -45,15 +47,16 @@ app.use(
 
 
 app.use(morgan('combined'));
-
+app.use(cookieParser('MY SECRET'));
 
 app.use(express.json());
 
 
 app.use(methodOverride('_method'));
 
+app.use(userLocal);
 
-app.use(cookieParser('MY SECRET'));
+
 
 app.use(
   session({
@@ -73,6 +76,8 @@ app.engine('hbs',
         extname: '.hbs',
         helpers:{
           sum :(a, b) => a + b,
+          subtraction :(a, b) => a - b,
+          JON: (a) => JSON.stringify(a),
           formatDate: ( a )=> moment(a).format("DD-MM-YYYY"),
           formatDateYMD: ( a )=> moment(a).format("YYYY-MM-DD"),
           formatString:(a) => a,
@@ -123,7 +128,7 @@ app.set('views', path.join(__dirname, 'resources', 'views'));
 
 
 
-
+app.use(userLocal);
 
 ///Route init
 route(app);

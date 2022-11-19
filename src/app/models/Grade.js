@@ -9,6 +9,7 @@ const Grade = new Schema(
     {
         name: { type: String, require: true },
         icon: { type: String },
+        image: { type: String, require: true },
         slug: { type: String, slug: ["name", "gradeID"], unique: true },
     },   
     {

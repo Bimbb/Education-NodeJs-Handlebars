@@ -6,6 +6,7 @@ const upload = require("../app/middlewares/upload");
 
 const {
     checkRequireAdmin,
+    requireAuth,
 } = require("../app/middlewares/AuthMiddleware");
 
 router.post("/upload",checkRequireAdmin, upload.single("file"), exerciseController.createToFile);
@@ -15,5 +16,12 @@ router.get("/detail",checkRequireAdmin, exerciseController.detail);
 router.delete("/:id", checkRequireAdmin, exerciseController.delete);
 router.put("/:id",checkRequireAdmin,  exerciseController.update);
 router.post("/:id/export",checkRequireAdmin,  exerciseController.export);
+
+
+
+
+router.get("/:slug", requireAuth, exerciseController.exercise);
+router.post("/:slug", requireAuth, exerciseController.postExercise);
+
 
 module.exports = router;

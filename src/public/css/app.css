@@ -58,6 +58,15 @@ div.dataTables_wrapper div.dataTables_filter input {
 .bg-light {
   background-color: #d8dce0 !important; }
 
+.form-select {
+  border-radius: 60.25rem; }
+
+.swiper-button-prev:after, .swiper-rtl .swiper-button-next:after {
+  color: #000000; }
+
+.swiper-button-next:after {
+  color: #000000; }
+
 .main {
   min-height: 100vh;
   padding: 66px 28px 34px 104px; }
@@ -270,91 +279,6 @@ div.dataTables_wrapper div.dataTables_filter input {
     .main .slideshow .carousel-control-prev,
     .main .slideshow .carousel-control-next {
       width: 6%; }
-  .main .content .nav-tabs .nav-link {
-    color: #333; }
-    .main .content .nav-tabs .nav-link:hover, .main .content .nav-tabs .nav-link.active {
-      border-color: #fff #fff #292929 #fff; }
-    .main .content .nav-tabs .nav-link.active {
-      font-weight: 600; }
-  @media (max-width: 768px) {
-    .main .content .section__list .container {
-      padding: 0; } }
-  .main .content .section__list .swiper-container.swiper1,
-  .main .content .section__list .swiper-container.swiper2 {
-    position: relative;
-    overflow: hidden; }
-    .main .content .section__list .swiper-container.swiper1:hover .swiper-scrollbar,
-    .main .content .section__list .swiper-container.swiper2:hover .swiper-scrollbar {
-      opacity: 1;
-      visibility: visible; }
-    .main .content .section__list .swiper-container.swiper1 .swiper-scrollbar,
-    .main .content .section__list .swiper-container.swiper2 .swiper-scrollbar {
-      bottom: 0;
-      opacity: 0;
-      visibility: hidden;
-      transition: all 0.3s ease; }
-    .main .content .section__list .swiper-container.swiper1 .swiper-button-prev,
-    .main .content .section__list .swiper-container.swiper1 .swiper-button-next,
-    .main .content .section__list .swiper-container.swiper2 .swiper-button-prev,
-    .main .content .section__list .swiper-container.swiper2 .swiper-button-next {
-      top: 42%;
-      border-radius: 50%;
-      background: #fff;
-      width: 30px;
-      height: 30px;
-      box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
-      display: flex;
-      justify-content: center;
-      align-items: center; }
-      .main .content .section__list .swiper-container.swiper1 .swiper-button-prev::after,
-      .main .content .section__list .swiper-container.swiper1 .swiper-button-next::after,
-      .main .content .section__list .swiper-container.swiper2 .swiper-button-prev::after,
-      .main .content .section__list .swiper-container.swiper2 .swiper-button-next::after {
-        font-size: 14px;
-        font-weight: bold;
-        color: #000; }
-    @media (max-width: 768px) {
-      .main .content .section__list .swiper-container.swiper1 .swiper-button-prev,
-      .main .content .section__list .swiper-container.swiper2 .swiper-button-prev {
-        left: 0; } }
-    @media (max-width: 768px) {
-      .main .content .section__list .swiper-container.swiper1 .swiper-button-next,
-      .main .content .section__list .swiper-container.swiper2 .swiper-button-next {
-        right: 0; } }
-    .main .content .section__list .swiper-container.swiper1 .swiper-button-disabled,
-    .main .content .section__list .swiper-container.swiper2 .swiper-button-disabled {
-      opacity: 0;
-      visibility: hidden; }
-  .main .content .section__list .blogs__item .blogs__link {
-    display: block;
-    width: 100%;
-    height: 196px;
-    border-radius: 16px; }
-    .main .content .section__list .blogs__item .blogs__link img.imagepost {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border-radius: 16px; }
-  .main .content .section__list .blogs__item .blogs__title {
-    font-size: 18px;
-    line-height: 1.5;
-    font-weight: 600;
-    display: -webkit-box;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: 2;
-    -webkit-box-orient: vertical;
-    overflow: hidden; }
-  .main .content .section__list .blogs__item .post__author {
-    display: flex;
-    align-items: center; }
-    .main .content .section__list .blogs__item .post__author .avatar {
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      object-fit: cover;
-      margin-right: 8px; }
-    .main .content .section__list .blogs__item .post__author .dot {
-      margin: 0 8px; }
   .main .competition {
     padding-left: 40px;
     padding-top: -36px;
@@ -917,14 +841,14 @@ div.dataTables_wrapper div.dataTables_filter input {
     .main .exercise__title {
       font-size: 20px;
       line-height: 1.5;
-      font-weight: 600; }
+      font-weight: 800; }
     .main .subjects__link,
     .main .exercise__link {
       position: relative;
       display: flex;
       align-items: center;
       width: 100%;
-      height: 196px;
+      height: 250px;
       border-radius: 16px;
       border: 1px solid #dee2e6; }
       .main .subjects__link img,
@@ -932,7 +856,7 @@ div.dataTables_wrapper div.dataTables_filter input {
         width: 100%;
         height: 100%;
         object-fit: cover;
-        border-radius: inherit; }
+        border-radius: 10px 10px 0 0; }
       .main .subjects__link .brand,
       .main .exercise__link .brand {
         width: 40%;
@@ -2556,132 +2480,3 @@ blockquote {
           display: block;
           padding: 6px 0;
           text-decoration: none; }
-
-.quiz {
-  display: none;
-  justify-content: center; }
-  .quiz main {
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center; }
-  .quiz .game-quiz-container {
-    width: 100%;
-    height: 30rem;
-    background-color: #fafafa;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: space-around;
-    border-radius: 30px; }
-  .quiz .game-details-container {
-    width: 90%;
-    height: 4rem;
-    display: flex;
-    justify-content: space-between;
-    align-items: center; }
-    .quiz .game-details-container h1 {
-      font-size: 1rem; }
-  .quiz .game-question-container {
-    width: 90%;
-    height: 8rem;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    border: 2px solid darkgray;
-    border-radius: 25px; }
-    .quiz .game-question-container h1 {
-      font-size: 1.1rem;
-      text-align: center;
-      padding: 3px; }
-  .quiz .game-options-container {
-    width: 90%;
-    height: 12rem;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-between; }
-    .quiz .game-options-container span {
-      width: 48%;
-      height: 3rem;
-      border: 2px solid darkgray;
-      border-radius: 20px;
-      overflow: hidden; }
-      .quiz .game-options-container span label p {
-        margin-bottom: 0; }
-  .quiz span label {
-    width: 100%;
-    height: 100%;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    cursor: pointer;
-    transition: transform 0.3s;
-    font-weight: 600;
-    color: #161616; }
-    .quiz span label:hover {
-      -ms-transform: scale(1.12);
-      -webkit-transform: scale(1.12);
-      transform: scale(1.12); }
-  .quiz input[type="radio"] {
-    position: relative;
-    display: none; }
-  .quiz input[type="radio"]:checked ~ .option {
-    background: paleturquoise; }
-  .quiz .next-button-container {
-    width: 50%;
-    height: 3rem;
-    display: flex;
-    justify-content: center; }
-    .quiz .next-button-container button {
-      width: 9rem;
-      height: 2rem;
-      border-radius: 10px;
-      background: none;
-      color: #191919;
-      font-weight: 600;
-      border: 2px solid gray;
-      cursor: pointer;
-      outline: none; }
-      .quiz .next-button-container button:hover {
-        background-color: gray; }
-  @media (min-width: 300px) and (max-width: 350px) {
-    .quiz .game-quiz-container {
-      width: 90%;
-      height: 80vh; }
-    .quiz .game-details-container h1 {
-      font-size: 0.8rem; }
-    .quiz .game-question-container {
-      height: 6rem; }
-    .quiz .game-question-container h1 {
-      font-size: 0.9rem; }
-    .quiz .game-options-container span {
-      width: 90%;
-      height: 2.5rem; }
-    .quiz .game-options-container span label {
-      font-size: 0.8rem; } }
-  @media (min-width: 350px) and (max-width: 700px) {
-    .quiz .game-quiz-container {
-      width: 90%;
-      height: 80vh; }
-    .quiz .game-details-container h1 {
-      font-size: 1rem; }
-    .quiz .game-question-container {
-      height: 8rem; }
-    .quiz .game-question-container h1 {
-      font-size: 0.9rem; }
-    .quiz .game-options-container span {
-      width: 90%; } }
-
-@keyframes fadeIn {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
-
-@-webkit-keyframes fadeIn {
-  from {
-    opacity: 0; }
-  to {
-    opacity: 1; } }
