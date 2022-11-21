@@ -27,6 +27,7 @@ class CompetitionController {
     }
 
     async detail(req, res) {
+        
         const room = await Room.aggregate([
             {
                 $match: {
@@ -45,6 +46,7 @@ class CompetitionController {
         ]);
         if (room.length > 0) {
             res.render("competition/detail", {
+                
                 room,
             });
         } else {

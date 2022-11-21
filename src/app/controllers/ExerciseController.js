@@ -319,8 +319,6 @@ class ExerciseController {
             question,
             recommend,
             explain,
-            ceID,
-            audioUrl,
         } = req.body;
 
         if (answer === "A") {
@@ -343,8 +341,6 @@ class ExerciseController {
             answer,
             recommend,
             explain,
-            ceID,
-            audioUrl,
         });
         await exercise.save();
         req.flash("success", "Thêm mới thành công!");
