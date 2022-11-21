@@ -5,7 +5,8 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div>
                         <h4 class="card-title">Thêm mới câu hỏi</h4>
-                        <form class="forms-sample" action="/exercises/upload" method="post" enctype="multipart/form-data">
+                        <form class="forms-sample" action="/exercises/upload" method="post"
+                            enctype="multipart/form-data">
                             <div class="d-flex align-items-center">
                                 <div class="file-drop-area">
                                     <span class="fake-btn">Chọn tệp</span>
@@ -13,17 +14,19 @@
                                     <input class="file-input" type="file" name="file">
                                     <input type="text" name="lessonID" value="{{lesson._id}}" hidden="hidden">
                                 </div>
-                                <button class="ml-2 btn btn-sm btn-primary" id="btn-submit-add-excel" type="submit">Lưu</button>
+                                <button class="ml-2 btn btn-sm btn-primary" id="btn-submit-add-excel"
+                                    type="submit">Lưu</button>
                                 <button class="ml-2 btn btn-sm btn-secondary" id="btn-cancel" type="button">Hủy</button>
                             </div>
                         </form>
                     </div>
                     <div>
-                        <a class="btn btn-outline-success btn-icon-text ml-4" href="/files/sample-create-exercises.xlsx" download="download"> 
+                        <a class="btn btn-outline-success btn-icon-text ml-4" href="/files/sample-create-exercises.xlsx"
+                            download="download">
                             <i class="mdi mdi-file-excel btn-icon-prepend"></i>
                             Excel mẫu
                         </a>
-                        <a class="btn btn-outline-warning btn-icon-text ml-4" href="/units/{{unit._id}}/detail"> 
+                        <a class="btn btn-outline-warning btn-icon-text ml-4" href="/units/{{unit._id}}/detail">
                             <i class="mdi mdi-reload btn-icon-prepend"></i>
                             Quay lại
                         </a>
@@ -31,7 +34,8 @@
                 </div>
                 <hr>
                 <div>
-                    <div class="card-title text-uppercase">Câu hỏi {{subject.name}} - Lớp {{grade.name}} - {{unit.name}}</div>
+                    <div class="card-title text-uppercase">Câu hỏi {{subject.name}} - Lớp {{grade.name}} - {{unit.name}}
+                    </div>
                     <div class="card-title">Bài {{lesson.lessonNumber}} - {{lesson.name}}</div>
                 </div>
                 <p class="card-description">Nhập thông tin bên dưới để thêm mới 1 câu hỏi</p>
@@ -39,90 +43,107 @@
                     <input type="text" name="lessonID" value="{{lesson._id}}" hidden="hidden">
                     <div class="form-group row">
                         <div class="col-sm-12">
-                            <textarea class="form-control" id="exercise-question" type="text" placeholder="Nhập câu hỏi tại đây..." name='question'></textarea>
+                            <textarea class="form-control" id="exercise-question" type="text"
+                                placeholder="Nhập câu hỏi tại đây..." name='question'></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-3">
                             <div class="text-center position-relative">
-                                <input  class="form-check-input-custom color-1" id="custom1" type="radio" name='answer' value='A' required>
+                                <input class="form-check-input-custom color-1" id="custom1" type="radio" name='answer'
+                                    value='A' required>
                                 <label for="custom1">
-                                     <span>
-                                        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg' alt='Checked Icon'>
+                                    <span>
+                                        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg'
+                                            alt='Checked Icon'>
                                     </span>
                                 </label>
                                 <div class="custom-desc">
                                     Đánh dấu đây là câu trả lời đúng
-                                </div> 
+                                </div>
                             </div>
-                            <textarea class="form-control option-custom" type='text' placeholder='Nhập 1 tùy chọn câu trả lời tại đây...' name='option1'></textarea>
+                            <textarea class="form-control option-custom" type='text'
+                                placeholder='Nhập 1 tùy chọn câu trả lời tại đây...' name='option1'></textarea>
                         </div>
                         <div class="col-sm-3">
                             <div class="text-center position-relative">
-                                <input class="form-check-input-custom color-2" id="custom2" type="radio" name='answer' value='B' required>
+                                <input class="form-check-input-custom color-2" id="custom2" type="radio" name='answer'
+                                    value='B' required>
                                 <label for="custom2">
-                                     <span>
-                                        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg' alt='Checked Icon'>
+                                    <span>
+                                        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg'
+                                            alt='Checked Icon'>
                                     </span>
                                 </label>
                                 <div class="custom-desc">
                                     Đánh dấu đây là câu trả lời đúng
-                                </div> 
+                                </div>
                             </div>
-                            <textarea class="form-control option-custom" type='text' placeholder='Nhập 1 tùy chọn câu trả lời tại đây...' name='option2'></textarea>
+                            <textarea class="form-control option-custom" type='text'
+                                placeholder='Nhập 1 tùy chọn câu trả lời tại đây...' name='option2'></textarea>
                         </div>
                         <div class="col-sm-3">
                             <div class="text-center position-relative">
-                                <input type="radio" class="form-check-input-custom color-3" id="custom3"  name='answer' value='C' required>
+                                <input type="radio" class="form-check-input-custom color-3" id="custom3" name='answer'
+                                    value='C' required>
                                 <label for="custom3">
-                                     <span>
-                                        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg' alt='Checked Icon'>
+                                    <span>
+                                        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg'
+                                            alt='Checked Icon'>
                                     </span>
                                 </label>
                                 <div class="custom-desc">
                                     Đánh dấu đây là câu trả lời đúng
-                                </div> 
+                                </div>
                             </div>
-                            <textarea class="form-control option-custom" type='text' placeholder='Nhập 1 tùy chọn câu trả lời tại đây...' name='option3'></textarea>
+                            <textarea class="form-control option-custom" type='text'
+                                placeholder='Nhập 1 tùy chọn câu trả lời tại đây...' name='option3'></textarea>
                         </div>
                         <div class="col-sm-3">
                             <div class="text-center position-relative">
-                                <input type="radio" class="form-check-input-custom color-4" id="custom4 " name='answer' value='D' required>
+                                <input type="radio" class="form-check-input-custom color-4" id="custom4 " name='answer'
+                                    value='D' required>
                                 <label for="custom4">
                                     <span>
-                                        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg' alt='Checked Icon'>
+                                        <img src='https://s3-us-west-2.amazonaws.com/s.cdpn.io/242518/check-icn.svg'
+                                            alt='Checked Icon'>
                                     </span>
                                 </label>
                                 <div class="custom-desc">
                                     Đánh dấu đây là câu trả lời đúng
-                                </div> 
+                                </div>
                             </div>
-                            <textarea class="form-control option-custom" type='text' placeholder='Nhập 1 tùy chọn câu trả lời tại đây...' name='option4'></textarea>
+                            <textarea class="form-control option-custom" type='text'
+                                placeholder='Nhập 1 tùy chọn câu trả lời tại đây...' name='option4'></textarea>
                         </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-4">
-                            <select class="selectpicker show-tick border-0" name='ceID' data-style="btn-outline-light" data-width="100%" required >
-                                <option value="" class="selected">--Chọn loại câu hỏi--</option> 
+                            <select class="selectpicker show-tick border-0" name='ceID' data-style="btn-outline-light"
+                                data-width="100%">
+                                <option value="" class="selected">--Chọn loại câu hỏi--</option>
                                 {{#each categories}}
-                                    <option value="{{this._id}}">{{this.type}}</option>
+                                <option value="{{this._id}}">{{this.type}}</option>
                                 {{/each}}
                             </select>
                         </div>
                         <div class="col-sm-8">
-                            <textarea type='text' placeholder='Nhập gợi ý cho câu hỏi tại đây...' id='recommend' class="form-control" name="recommend"></textarea>
-                        </div>     
+                            <textarea type='text' placeholder='Nhập gợi ý cho câu hỏi tại đây...' id='recommend'
+                                class="form-control" name="recommend"></textarea>
+                        </div>
                     </div>
                     <div class="form-group row">
                         <div class="col-sm-12">
-                        <textarea type='text'placeholder='Nhập lời giải cho câu hỏi tại đây...' id='exercise-explain' class="form-control" name="explain"></textarea>
+                            <textarea type='text' placeholder='Nhập lời giải cho câu hỏi tại đây...'
+                                id='exercise-explain' class="form-control" name="explain"></textarea>
                         </div>
                     </div>
                     <div class="text-center">
                         <a href="/exercises/detail?lesson={{lesson._id}}" class="btn btn-secondary">
                             Hủy bỏ
                         </a>
-                        <button class="btn btn-primary ml-2" id="btn-submit-create-exercise" type='submit'>Lưu lại</button>
+                        <button class="btn btn-primary ml-2" id="btn-submit-create-exercise" type='submit'>Lưu
+                            lại</button>
                     </div>
                 </form>
             </div>
@@ -130,11 +151,11 @@
     </div>
 </section>
 {{#if errors}}
-    <div id="errors" style="visibility: hidden;">{{errors}}</div>
+<div id="errors" style="visibility: hidden;">{{errors}}</div>
 {{else}}
-    {{#if success}}
-    <div id="success" style="visibility: hidden;">{{success}}</div>
-    {{/if}}
+{{#if success}}
+<div id="success" style="visibility: hidden;">{{success}}</div>
+{{/if}}
 {{/if}}
 
 <script>
@@ -142,26 +163,26 @@
     ///toast message
     let msgToastError = msgError.innerHTML;
 
-    if(msgToastError != ''){
+    if (msgToastError != '') {
         Eggy({
             title: 'Oops... Có gì đó không đúng',
-            message:  msgToastError,
+            message: msgToastError,
             type: 'warning',
             duration: 5000,
         });
     }
 </script>
 <script>
-        var msgSuccess = document.getElementById('success');
-        let msgToastSuccess = msgSuccess.innerHTML;
-        if(msgToastSuccess != ''){
-            Eggy({
-                title: 'Thành Công',
-                message:  msgToastSuccess,
-                type: 'success',
-                duration: 5000,
-            });
-        }
+    var msgSuccess = document.getElementById('success');
+    let msgToastSuccess = msgSuccess.innerHTML;
+    if (msgToastSuccess != '') {
+        Eggy({
+            title: 'Thành Công',
+            message: msgToastSuccess,
+            type: 'success',
+            duration: 5000,
+        });
+    }
 </script>
 
 <script>
@@ -186,17 +207,17 @@
         var $droparea = $('.file-drop-area');
 
         // highlight drag area
-        $fileInput.on('dragenter focus click', function() {
+        $fileInput.on('dragenter focus click', function () {
             $droparea.addClass('is-active');
         });
 
         // back to normal state
-        $fileInput.on('dragleave blur drop', function() {
+        $fileInput.on('dragleave blur drop', function () {
             $droparea.removeClass('is-active');
         });
 
         // change inner text
-        $fileInput.on('change', function() {
+        $fileInput.on('change', function () {
             var filesCount = $(this)[0].files.length;
             var $textContainer = $(this).prev();
 
@@ -213,7 +234,7 @@
             }
         });
 
-        $("#btn-cancel").click(function() {
+        $("#btn-cancel").click(function () {
             $(this).hide();
             $("#btn-submit-add-excel").hide();
             $fileInput.val("");
