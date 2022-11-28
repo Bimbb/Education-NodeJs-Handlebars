@@ -340,6 +340,17 @@ class SiteController {
         res.redirect("back");
     }
 
+    //[GET]subjects
+    async subjects(req, res) {
+        const subjects = await Subject.find({});
+        res.render("subjects", {
+            subjects,
+        });
+    }
+
+
+
 }
+
 
 module.exports = new SiteController();

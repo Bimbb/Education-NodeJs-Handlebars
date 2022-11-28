@@ -29,7 +29,7 @@ router.get("/competition", requireAuth, siteController.competition);
 
 router.get('/infor', requireAuth, siteController.infor);
 router.put('/infor/:id', requireAuth, siteController.updateInfor);
-
+router.get("/subjects", siteController.subjects);
 
 router.get("/password/change", requireAuth, authController.passwordChange);
 router.put(

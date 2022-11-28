@@ -33,6 +33,7 @@ function route(app){
     app.use("/statisticals", statisticalsRouter);
     app.use("/learning", requireAuth, learningRouter);
     app.use("/infor", requireAuth, inforRouter);
+    
 
 }
 module.exports = route
