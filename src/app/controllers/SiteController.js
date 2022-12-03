@@ -63,11 +63,7 @@ class SiteController {
         });
     }
 
-    // [GET] /search
-    search(req, res) {
-        res.render('search');
-    }
-
+    // [Get]/infor/:id
     async infor(req, res) {
         try {
             res.render("auth/infor", {
@@ -343,8 +339,51 @@ class SiteController {
     //[GET]subjects
     async subjects(req, res) {
         const subjects = await Subject.find({});
-        res.render("subjects", {
-            subjects,
+        const gradeSoCap = await Grade.find({ "name": /.*Sơ Cấp*./ })
+        const gradeCanBan = await Grade.find({ "name": /.*Căn Bản*./ })
+        const gradeKinhThanh = await Grade.find({ "name": /.*Kinh Thánh*./ })
+        const gradeVaoDoi = await Grade.find({ "name": /.*Vào Đời*./ })
+        const statisticals = await Statistical.aggregate([
+            {
+                $match: { userID: ObjectId(req.signedCookies.userId) },
+            },
+        ]);
+
+
+        let subjectsStudying = [];
+        if (statisticals.length > 0) {
+            const statisticalsIdArr = statisticals.map(
+                ({ lessonID }) => lessonID
+            );
+
+            const lessons = await Lesson.find({
+                _id: { $in: statisticalsIdArr },
+            });
+
+            const lessonsIdArr = lessons.map(({ unitID }) => unitID);
+
+            const units = await Unit.find({ _id: { $in: lessonsIdArr } });
+
+            const unitsIdArr = units.map(({ subjectID }) => subjectID);
+
+            subjectsStudying = await Subject.aggregate([
+                { $match: { _id: { $in: unitsIdArr } } },
+                {
+                    $lookup: {
+                        from: "grades",
+                        localField: "gradeID",
+                        foreignField: "_id",
+                        as: "grade",
+                    },
+                },
+            ]);
+        }
+        res.render("subjects", { 
+            subjectsStudying ,
+            gradeSoCap: multipleMongooseToObject(gradeSoCap),
+            gradeCanBan: multipleMongooseToObject(gradeCanBan),
+            gradeKinhThanh: multipleMongooseToObject(gradeKinhThanh),
+            gradeVaoDoi: multipleMongooseToObject(gradeVaoDoi),
         });
     }
 

@@ -243,39 +243,18 @@ div.dataTables_wrapper div.dataTables_filter input {
       border-radius: 16px; }
       .main .slideshow .carousel-inner .carousel-item {
         height: 280px;
-        transition: all 0.3s ease; }
-        .main .slideshow .carousel-inner .carousel-item .carousel-caption {
-          padding: 45px 100px;
-          top: 0;
-          left: 0;
-          bottom: 0;
-          right: 50%;
-          background: linear-gradient(to right, #004603, #04000a); }
-          @media (max-width: 768px) {
-            .main .slideshow .carousel-inner .carousel-item .carousel-caption {
-              width: 100%;
-              display: block !important;
-              padding: 20px 36px 36px; } }
-          .main .slideshow .carousel-inner .carousel-item .carousel-caption h2,
-          .main .slideshow .carousel-inner .carousel-item .carousel-caption p {
-            line-height: 1.5;
-            display: -webkit-box;
-            text-overflow: ellipsis;
-            -webkit-line-clamp: 3;
-            -webkit-box-orient: vertical;
-            overflow: hidden; }
+        transition: all 0.3s ease;
+        width: 100%; }
         .main .slideshow .carousel-inner .carousel-item .carousel-banner {
           height: 100%;
           position: absolute;
-          bottom: 0;
-          right: 0;
-          left: 50%; }
+          width: 100%; }
           @media (max-width: 768px) {
             .main .slideshow .carousel-inner .carousel-item .carousel-banner {
               display: none; } }
           .main .slideshow .carousel-inner .carousel-item .carousel-banner img {
             height: 100%;
-            object-fit: cover; }
+            object-fit: fill; }
     .main .slideshow .carousel-control-prev,
     .main .slideshow .carousel-control-next {
       width: 6%; }
@@ -1983,168 +1962,6 @@ div.dataTables_wrapper div.dataTables_filter input {
 .btn-padding {
   padding: 4px 12px !important; }
 
-*,
-*:before,
-*:after {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0; }
-
-svg {
-  display: inline-block;
-  width: 2rem;
-  height: 2rem;
-  overflow: visible; }
-
-.svg-icon {
-  cursor: pointer; }
-  .svg-icon path {
-    stroke: rgba(255, 255, 255, 0.9);
-    fill: none;
-    stroke-width: 1; }
-
-input,
-button {
-  outline: none;
-  border: none; }
-
-.cont {
-  position: relative;
-  height: 100%;
-  background-image: url("https://s3-us-west-2.amazonaws.com/s.cdpn.io/142996/slider-2.jpg");
-  background-size: cover;
-  overflow: auto;
-  font-family: "Open Sans", Helvetica, Arial, sans-serif; }
-
-.demo {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  margin-left: -15rem;
-  margin-top: -26.5rem;
-  width: 30rem;
-  height: 53rem;
-  overflow: hidden; }
-
-.login {
-  position: relative;
-  height: 100%;
-  background: linear-gradient(to bottom, rgba(63, 53, 99, 0.8) 0%, rgba(0, 0, 0, 0.6) 100%);
-  transition: opacity 0.1s, transform 0.3s cubic-bezier(0.17, -0.65, 0.665, 1.25);
-  transform: scale(1); }
-  .login.inactive {
-    opacity: 0;
-    transform: scale(1.1); }
-  .login__check {
-    position: absolute;
-    top: 16rem;
-    left: 13.5rem;
-    width: 14rem;
-    height: 2.8rem;
-    background: #f7f5f5;
-    transform-origin: 0 100%;
-    transform: rotate(-45deg); }
-    .login__check:before {
-      content: "";
-      position: absolute;
-      left: 0;
-      bottom: 100%;
-      width: 2.8rem;
-      height: 5.2rem;
-      background: #fffefe;
-      box-shadow: inset -0.2rem -2rem 2rem rgba(0, 0, 0, 0.2); }
-  .login__form {
-    position: absolute;
-    top: 50%;
-    left: 0;
-    width: 100%;
-    height: 50%;
-    padding: 1.5rem 2.5rem;
-    text-align: center; }
-  .login__row {
-    height: 5rem;
-    padding-top: 1rem;
-    border-bottom: 1px solid rgba(255, 255, 255, 0.2); }
-  .login__icon {
-    margin-bottom: -0.4rem;
-    margin-right: 0.5rem; }
-    .login__icon.name path {
-      stroke-dasharray: 73.50196075439453;
-      stroke-dashoffset: 73.50196075439453;
-      animation: animatePath 2s 0.5s forwards; }
-    .login__icon.pass path {
-      stroke-dasharray: 92.10662841796875;
-      stroke-dashoffset: 92.10662841796875;
-      animation: animatePath 2s 0.5s forwards; }
-  .login__input {
-    display: inline-block;
-    width: 22rem;
-    height: 100%;
-    padding-left: 1.5rem;
-    font-size: 1.5rem;
-    background: transparent;
-    color: #FDFCFD; }
-  .login__submit {
-    position: relative;
-    width: 100%;
-    height: 4rem;
-    margin: 5rem 0 2.2rem;
-    color: rgba(255, 255, 255, 0.8);
-    background: #FF3366;
-    font-size: 1.5rem;
-    border-radius: 3rem;
-    cursor: pointer;
-    overflow: hidden;
-    transition: width 0.3s 0.15s, font-size 0.1s 0.15s; }
-    .login__submit:after {
-      content: "";
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      margin-left: -1.5rem;
-      margin-top: -1.5rem;
-      width: 3rem;
-      height: 3rem;
-      border: 2px dotted #fff;
-      border-radius: 50%;
-      border-left: none;
-      border-bottom: none;
-      transition: opacity 0.1s 0.4s;
-      opacity: 0; }
-    .login__submit.processing {
-      width: 4rem;
-      font-size: 0; }
-      .login__submit.processing:after {
-        opacity: 1;
-        animation: rotate 0.5s 0.4s infinite linear; }
-    .login__submit.success {
-      transition: transform 0.3s 0.1s ease-out, opacity 0.1s 0.3s, background-color 0.1s 0.3s;
-      transform: scale(30);
-      opacity: 0.9; }
-      .login__submit.success:after {
-        transition: opacity 0.1s 0s;
-        opacity: 0;
-        animation: none; }
-  .login__signup {
-    font-size: 1.2rem;
-    color: #ABA8AE; }
-    .login__signup a {
-      color: #fff;
-      cursor: pointer; }
-
-@keyframes animRipple {
-  to {
-    transform: scale(3.5);
-    opacity: 0; } }
-
-@keyframes rotate {
-  to {
-    transform: rotate(360deg); } }
-
-@keyframes animatePath {
-  to {
-    stroke-dashoffset: 0; } }
-
 a,
 a:hover {
   color: #292929;
@@ -2204,15 +2021,15 @@ nav {
   padding-top: 20px;
   padding-left: 10%;
   padding-right: 10%; }
-  nav ul li {
+  nav .header-da li {
     list-style-type: none;
     display: inline-block;
     padding: 10px 20px; }
-    nav ul li a {
+    nav .header-da li a {
       color: white;
       text-decoration: none;
       font-weight: bold; }
-      nav ul li a:hover {
+      nav .header-da li a:hover {
         color: #ea1583;
         transition: .3s; }
 
@@ -2421,7 +2238,13 @@ nav {
           .header__actions--notiMenu .notiMenu-container ul li a {
             display: block;
             padding: 16px;
-            border-radius: 10px; }
+            border-radius: 10px;
+            color: white;
+            text-decoration: none;
+            font-weight: bold; }
+            .header__actions--notiMenu .notiMenu-container ul li a:hover {
+              color: #ea1583;
+              transition: .3s; }
             .header__actions--notiMenu .notiMenu-container ul li a.unread {
               background-color: #fceeee; }
             .header__actions--notiMenu .notiMenu-container ul li a:hover:not(.unread) {
@@ -2460,7 +2283,7 @@ nav {
     .header__actions--userMenu {
       background: #fff;
       position: absolute;
-      top: 0;
+      top: 10px;
       right: 0;
       left: auto;
       bottom: auto;

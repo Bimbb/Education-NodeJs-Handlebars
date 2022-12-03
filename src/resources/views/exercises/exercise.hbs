@@ -158,99 +158,99 @@
 
 <script>
     $(document).ready(function () {
-            const exercises = document.getElementById('exercise-jon');
-            var listExercise =JSON.parse(exercises.innerHTML) ;
-            var currentQa = 0;
-            console.log(listExercise)
-            if (currentQa == listExercise.length - 1) {
-                $("#btn-next-question").hide();
-                $("#btn-submit-exercise").show();
-            } 
-            $(".exercise-item").first().addClass("show");
+        const exercises = document.getElementById('exercise-jon');
+        var listExercise =JSON.parse(exercises.innerHTML) ;
+        var currentQa = 0;
+        console.log(listExercise)
+        if (currentQa == listExercise.length - 1) {
+            $("#btn-next-question").hide();
+            $("#btn-submit-exercise").show();
+        } 
+        $(".exercise-item").first().addClass("show");
 
-            //StopWatch
-            $("#stopwatch").stopwatch().stopwatch("start");
+        //StopWatch
+        $("#stopwatch").stopwatch().stopwatch("start");
 
-            // When btn check clicked
-            $("#btn-submit-exercise").click(function (e) {
-                e.preventDefault();
-                var inputChecked = $(".form-check-input:checked");
-                var arrayTemp = [];
+        // When btn check clicked
+        $("#btn-submit-exercise").click(function (e) {
+            e.preventDefault();
+            var inputChecked = $(".form-check-input:checked");
+            var arrayTemp = [];
 
-                if (inputChecked.length === 0 && (confirm("Bạn muốn bỏ qua câu này?") === false)) {
-                    return false;
-                }
+            if (inputChecked.length === 0 && (confirm("Bạn muốn bỏ qua câu này?") === false)) {
+                return false;
+            }
 
-                arrayTemp.push({
-                    name: inputChecked.attr("name"),
-                    value: inputChecked.attr("value"),
-                });
-
-                currentQa++;
-
-                $.ajax({
-                    type: "POST",
-                    url: $(location).attr("href"),
-                    contentType: "application/json",
-                    data: JSON.stringify({
-                        objectData: arrayTemp,
-                        exercise: $(".exercise-item.show .form-check-input").attr("name"),
-                        time: $("#stopwatch").text(),
-                        currentQa: currentQa,
-                    }),
-                    success: function (data) {
-                        console.log(data);
-                    },
-                });
-
-                var slug = document.getElementById('slug').innerHTML;
-                window.location.href = `/learning/result?lesson=${slug}`;
-            })
-
-            // When btn next clicked
-            $("#btn-next-question").click(function (e) {
-                e.preventDefault();
-                
-                var inputChecked = $(".form-check-input:checked");
-                var arrayTemp = [];
-
-                if (inputChecked.length === 0 && (confirm("Bạn muốn bỏ qua câu này?") === false)) {
-                    return false;
-                }
-
-                arrayTemp.push({
-                    name: inputChecked.attr("name"),
-                    value: inputChecked.attr("value"),
-                });
-
-                $.ajax({
-                    type: "POST",
-                    url: $(location).attr("href"),
-                    contentType: "application/json",
-                    data: JSON.stringify({
-                        objectData: arrayTemp,
-                        exercise: $(".exercise-item.show .form-check-input").attr("name"),
-                        time: $("#stopwatch").text(),
-                    }),
-                    success: function (data) {
-                        console.log(data);
-                    },
-                });
-
-                currentQa++;
-                var exerciseItem = $(".exercise-item");
-                for (var i = 0; i < exerciseItem.length; i++) {
-                    exerciseItem[i].className = "exercise-item";
-                }
-                exerciseItem[currentQa].className = "exercise-item show";
-
-                if (currentQa == listExercise.length - 1) {
-                    $(this).hide();
-                    $("#btn-submit-exercise").show();
-                }
-
-                $(".questions__done .bottom").text(currentQa);
-                $(".form-check-input").prop('checked', false);
+            arrayTemp.push({
+                name: inputChecked.attr("name"),
+                value: inputChecked.attr("value"),
             });
+
+            currentQa++;
+
+            $.ajax({
+                type: "POST",
+                url: $(location).attr("href"),
+                contentType: "application/json",
+                data: JSON.stringify({
+                    objectData: arrayTemp,
+                    exercise: $(".exercise-item.show .form-check-input").attr("name"),
+                    time: $("#stopwatch").text(),
+                    currentQa: currentQa,
+                }),
+                success: function (data) {
+                    console.log(data);
+                },
+            });
+           
+            var slug = document.getElementById('slug').innerHTML;
+            window.location.href = `/learning/result?lesson=${slug}`;
         })
+
+        // When btn next clicked
+        $("#btn-next-question").click(function (e) {
+            e.preventDefault();
+            
+            var inputChecked = $(".form-check-input:checked");
+            var arrayTemp = [];
+
+            if (inputChecked.length === 0 && (confirm("Bạn muốn bỏ qua câu này?") === false)) {
+                return false;
+            }
+
+            arrayTemp.push({
+                name: inputChecked.attr("name"),
+                value: inputChecked.attr("value"),
+            });
+
+            $.ajax({
+                type: "POST",
+                url: $(location).attr("href"),
+                contentType: "application/json",
+                data: JSON.stringify({
+                    objectData: arrayTemp,
+                    exercise: $(".exercise-item.show .form-check-input").attr("name"),
+                    time: $("#stopwatch").text(),
+                }),
+                success: function (data) {
+                    console.log(data);
+                },
+            });
+
+            currentQa++;
+            var exerciseItem = $(".exercise-item");
+            for (var i = 0; i < exerciseItem.length; i++) {
+                exerciseItem[i].className = "exercise-item";
+            }
+            exerciseItem[currentQa].className = "exercise-item show";
+
+            if (currentQa == listExercise.length - 1) {
+                $(this).hide();
+                $("#btn-submit-exercise").show();
+            }
+
+            $(".questions__done .bottom").text(currentQa);
+            $(".form-check-input").prop('checked', false);
+        });
+    })
 </script>

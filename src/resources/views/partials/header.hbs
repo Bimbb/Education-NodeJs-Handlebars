@@ -6,41 +6,23 @@
                 style="width: 50px;height: 50px;margin-bottom: 20px; border-radius:50%;"
                 >
         </a>
-
-        {{!-- <h2 class="logo"> dasdwad</h2> --}}
-        <ul>
+        <ul class="header-da">
             <li><a href="/">Trang chủ</a></li>
             <li><a href="/blog">Blog</a></li>
-            <li><a href="#">Học</a></li>
+            <li><a href="subjects">Học</a></li>
             <li><a href="#">Kết quả học tập</a></li>
 
             <li><a href="/competition">Thi đấu</a></li>
         </ul>
-
-
-        {{!-- Không hiểu sao k bỏ cái button này đi dc, phải để nó ẩn đi, chưa có thời gian sửa --}}
         <div class="btn-group" hidden>
-            <button type="button" class="btn btn-success dropdown-toggle" data-bs-toggle="dropdown"
-                aria-expanded="false">
-                Thông tin
-            </button>
-            <ul class="dropdown-menu">
-                <li><a class="dropdown-item" href="infor">Thông tin cá nhân</a></li>
-                <li><a class="dropdown-item" href="password/change">Đổi mật khẩu</a></li>
-                <hr />
-                {{!-- chưa làm logout --}}
-                <li><a class="dropdown-item" href="#">Đăng xuất</a></li>
-            </ul>
         </div>
-
-        {{!-- Chưa fix được cái chỗ này cho nó thành 1 hàng --}}
         <div class="header__actions--user">
             {{#each user}}
             <div class="header__actions--avatar">
                 <img src="{{this.avatar}}">
             </div>
             <div class="header__actions--userMenu shadow">
-                <div class="user">
+                <a class="user" href="infor">
                     <div class="user__avatar">
                         <img src="{{this.avatar}}">
                     </div>
@@ -48,23 +30,18 @@
                         <div class="name">{{this.fullname}}</div>
                         <div class="username">@{{this.username}}</div>
                     </div>
-                </div>
+                </a>
 
-                <hr>
-                {{!-- <ul class="list">
-                    <li class="list__item">
-                        <a class="list__link" href="/admin">Quản lý hệ thống</a>
-                    </li>
-                </ul> 
-                <hr>--}}
-                <ul class="list" style="line-break: auto;">
+                {{!-- <hr> --}}
+                
+                {{!-- <ul class="list" style="line-break: auto;">
                     <li class="list__item" style="line-break: auto;">
                         <a class="list__link" href="/new-question">Đặt câu hỏi</a>
                     </li>
                     <li class="list__item" style="line-break: auto;">
                         <a class="list__link" href="/my-qa">Câu hỏi của tôi</a>
                     </li>
-                </ul>
+                </ul> --}}
                 <hr>
                 <ul class="list">
                     <li class="list__item">
@@ -78,14 +55,14 @@
                     </li>
                 </ul>
                 <hr>
-                <ul class="list">
+                <ul class="list" style="align-items: center;">
                     <li class="list__item">
                         <a class="list__link" href="/logout">Đăng xuất</a>
                     </li>
                 </ul>
             </div>
             {{else}}
-            {{!-- sửa trong scss chưa sửa được, sửa tạm ở đây --}}
+           
             <a style="margin-bottom: 20px;" href="/login" class="list__link btn btn-primary btn-padding fs-7">Đăng
                 nhập</a>
             {{/each}}

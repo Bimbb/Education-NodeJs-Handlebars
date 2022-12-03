@@ -32,16 +32,23 @@ class GradeController {
     // [GET]/Grade/list
     async listGrade(req, res, next) {
 
-        Grade.find({})
-            .then((grade) => {
-                res.render('grades/list', {
-                    grades: multipleMongooseToObject(grade),
-                    layout: 'admin',
-                    success: req.flash("success"),
-                    errors: req.flash("error"),
-                });
-            })
-            .catch(next);
+        const grades = await Grade.aggregate([
+            {   $lookup: {
+                from: "subjects",
+                localField: "_id",
+                foreignField: "gradeID",
+                as: "subject",
+            }},
+        ]);
+
+        res.render('grades/list', {
+            grades,
+            layout: 'admin',
+            success: req.flash("success"),
+            errors: req.flash("error"),
+        });
+
+
     }
 
     // [POST]/Grade/create

@@ -44,16 +44,12 @@
                                         <td style="text-align: center; color: #000000;"><img src="https://i.pinimg.com/236x/fe/09/05/fe09055dfc6d7638765d3fa255e4b788.jpg" alt=""></td>
                                         {{/if}}
                                         <td style="text-align: center; ">
-                                            {{!-- <a class="btn btn-primary mr-2" href="/subjects/{{this._id}}/content">
-                                                <span class="ti-notepad"></span>&nbsp;
-                                                Nội dung
-                                            </a> --}}
-                                            
                                             <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false">
                                                 <span class="ti-notepad"></span>&nbsp;
                                                     Nội dung
                                             </button>
                                             <div class="dropdown-menu">
+                                                
                                                 <form action="/subjects/{{this._id}}/theory" method="POST">
                                                     <button class="dropdown-item " type="submit">Phần Lý Thuyết</button>
                                                 </form>
@@ -88,12 +84,7 @@
                                             </button>
                                         </td>
                                     </tr>
-                                {{else}}
-                                    <tr>
-                                        <td colspan="5" class="text-center">
-                                            Bạn Chưa Tạo lớp học nào nào.
-                                        </td>
-                                    </tr>
+                              
                                 {{/each}}
                             </tbody>
                         </table>

@@ -17,50 +17,48 @@
             .carousel-item {
                 height: 280px;
                 transition: all 0.3s ease;
+                width: 100%;
+                // .carousel-caption {
+                //     padding: 45px 100px;
+                //     top: 0;
+                //     left: 0;
+                //     bottom: 0;
+                //     right: 50%;
+                //     background: linear-gradient(
+                //         to right,
+                //         $primary-color,
+                //         #fefeff
+                //     );
 
-                .carousel-caption {
-                    padding: 45px 100px;
-                    top: 0;
-                    left: 0;
-                    bottom: 0;
-                    right: 50%;
-                    background: linear-gradient(
-                        to right,
-                        $primary-color,
-                        #04000a
-                    );
+                //     @include mobile {
+                //         width: 100%;
+                //         display: block !important;
+                //         padding: 20px 36px 36px;
+                //     }
 
-                    @include mobile {
-                        width: 100%;
-                        display: block !important;
-                        padding: 20px 36px 36px;
-                    }
-
-                    h2,
-                    p {
-                        line-height: 1.5;
-                        display: -webkit-box;
-                        text-overflow: ellipsis;
-                        -webkit-line-clamp: 3;
-                        -webkit-box-orient: vertical;
-                        overflow: hidden;
-                    }
-                }
+                //     h2,
+                //     p {
+                //         line-height: 1.5;
+                //         display: -webkit-box;
+                //         text-overflow: ellipsis;
+                //         -webkit-line-clamp: 3;
+                //         -webkit-box-orient: vertical;
+                //         overflow: hidden;
+                //     }
+                // }
 
                 .carousel-banner {
                     height: 100%;
                     position: absolute;
-                    bottom: 0;
-                    right: 0;
-                    left: 50%;
-
+                
+                    width: 100%;
                     @include mobile {
                         display: none;
                     }
 
                     img {
                         height: 100%;
-                        object-fit: cover;
+                        object-fit: fill;
                     }
                 }
             }

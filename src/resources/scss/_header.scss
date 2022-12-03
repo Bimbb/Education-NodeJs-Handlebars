@@ -21,7 +21,7 @@ nav {
     padding-left: 10%;
     padding-right: 10%;
 
-    ul {
+    .header-da{
         li {
             list-style-type: none;
             display: inline-block;
@@ -43,18 +43,6 @@ nav {
 
 
 
-// a {
-//     img {
-//         width: 30px;
-//         height: 30px;
-//         margin-bottom: 20px;
-//     }
-// }
-
-
-
-
-///// Chưa xóa mấy cái lung tung
 
 .header {
     position: fixed;
@@ -348,7 +336,14 @@ nav {
                                 display: block;
                                 padding: 16px;
                                 border-radius: 10px;
+                                color: white;
+                                text-decoration: none;
+                                font-weight: bold;
 
+                                &:hover {
+                                    color: #ea1583;
+                                    transition: .3s;
+                                }
                                 &.unread {
                                     background-color: #fceeee;
                                 }
@@ -409,7 +404,7 @@ nav {
         &--userMenu {
             background: $white-color;
             position: absolute;
-            top: 0;
+            top: 10px;
             right: 0;
             left: auto;
             bottom: auto;
