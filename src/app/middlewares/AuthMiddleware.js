@@ -140,56 +140,56 @@ module.exports = {
     },
 
     resetPassValidate: function (req, res, next) {
-        // const { token } = req.params;
-        // const { password, passwordConfirm } = req.body;
-        // if (!password && !passwordConfirm) {
-        //     req.flash(
-        //         "error",
-        //         "Vui lòng nhập thông tin dưới đây để đặt lại mật khẩu mới cho tài khoản của bạn!"
-        //     );
-        //     res.render("auth/reset-confirm", {
-        //         token,
-        //         errors: req.flash("error"),
-        //         values: req.body,
-        //     });
-        //     return;
-        // }
-        // if (!password) {
-        //     req.flash("error", "Vui lòng nhập mật khẩu mới!");
-        //     res.render("auth/reset-confirm", {
-        //         token,
-        //         errors: req.flash("error"),
-        //         values: req.body,
-        //     });
-        //     return;
-        // }
-        // if (!passwordConfirm) {
-        //     req.flash("error", "Vui lòng nhập lại mật khẩu mới để xác nhận!");
-        //     res.render("auth/reset-confirm", {
-        //         token,
-        //         errors: req.flash("error"),
-        //         values: req.body,
-        //     });
-        //     return;
-        // }
-        // if (password.length < 6) {
-        //     req.flash("error", "Mật khẩu mới phải chứa ít nhất 6 ký tự!");
-        //     res.render("auth/reset-confirm", {
-        //         token,
-        //         errors: req.flash("error"),
-        //         values: req.body,
-        //     });
-        //     return;
-        // }
-        // if (password !== passwordConfirm) {
-        //     req.flash("error", "Xác nhận mật khẩu mới không khớp!");
-        //     res.render("auth/reset-confirm", {
-        //         token,
-        //         errors: req.flash("error"),
-        //         values: req.body,
-        //     });
-        //     return;
-        // }
+        const { token } = req.params;
+        const { password, passwordConfirm } = req.body;
+        if (!password && !passwordConfirm) {
+            req.flash(
+                "error",
+                "Vui lòng nhập thông tin dưới đây để đặt lại mật khẩu mới cho tài khoản của bạn!"
+            );
+            res.render("auth/reset-confirm", {
+                token,
+                errors: req.flash("error"),
+                values: req.body,
+            });
+            return;
+        }
+        if (!password) {
+            req.flash("error", "Vui lòng nhập mật khẩu mới!");
+            res.render("auth/reset-confirm", {
+                token,
+                errors: req.flash("error"),
+                values: req.body,
+            });
+            return;
+        }
+        if (!passwordConfirm) {
+            req.flash("error", "Vui lòng nhập lại mật khẩu mới để xác nhận!");
+            res.render("auth/reset-confirm", {
+                token,
+                errors: req.flash("error"),
+                values: req.body,
+            });
+            return;
+        }
+        if (password.length < 6) {
+            req.flash("error", "Mật khẩu mới phải chứa ít nhất 6 ký tự!");
+            res.render("auth/reset-confirm", {
+                token,
+                errors: req.flash("error"),
+                values: req.body,
+            });
+            return;
+        }
+        if (password !== passwordConfirm) {
+            req.flash("error", "Xác nhận mật khẩu mới không khớp!");
+            res.render("auth/reset-confirm", {
+                token,
+                errors: req.flash("error"),
+                values: req.body,
+            });
+            return;
+        }
         next();
     },
 };

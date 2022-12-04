@@ -9,6 +9,7 @@ const {
     requireAuth,
     authValidate,
     changePassValidate,
+    resetPassValidate,
 } = require("../app/middlewares/AuthMiddleware");
 
 
@@ -31,11 +32,22 @@ router.get('/infor', requireAuth, siteController.infor);
 router.put('/infor/:id', requireAuth, siteController.updateInfor);
 router.get("/subjects", siteController.subjects);
 
+
+
+
 router.get("/password/change", requireAuth, authController.passwordChange);
 router.put(
     "/password/change/:id",
     requireAuth,
     changePassValidate,
     authController.putPasswordChange
+);
+router.get("/password/reset", authController.passwordReset);
+router.post("/password/reset", authController.postPasswordReset);
+router.get("/reset/confirm/:token", authController.resetConfirm);
+router.post(
+    "/reset/confirm/:token",
+    resetPassValidate,
+    authController.postResetConfirm
 );
 module.exports = router;

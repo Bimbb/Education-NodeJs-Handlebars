@@ -9,18 +9,17 @@ module.exports = {
                 port: Number(process.env.EMAIL_PORT),
                 secure: true,
                 auth: {
-                    user: process.env.EMAIL_ADDRESS,
+                    user: process.env.EMAIL_USERNAME,
                     pass: process.env.EMAIL_PASSWORD,
                 },
             });
 
             let info = await transporter.sendMail({
-                from: `"${process.env.EMAIL_NAME}" <${process.env.EMAIL_ADDRESS}>`,
+                from: process.env.EMAIL_FROM_ADDRESS,
                 to,
                 subject,
                 text,
             });
-
             console.log(
                 `Message preview URL: ${nodemailer.getTestMessageUrl(info)}`
             );

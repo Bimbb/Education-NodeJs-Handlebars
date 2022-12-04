@@ -106,29 +106,33 @@
     {{/if}}
     
 <script>
-            // toast message
-                var msgError = document.getElementById('errors');
-                var msgSuccess = document.getElementById('success');
+    // toast message
+        var msgError = document.getElementById('errors');
+       
 
-                let msgToastError = msgError.innerHTML;
-                if(msgToastError != ''){
-                    Eggy({
-                        title: 'Oops... Có gì đó không đúng',
-                        message:  msgToastError,
-                        type: 'warning',
-                        duration: 5000,
-                    });
-                }
+        let msgToastError = msgError.innerHTML;
+        if(msgToastError != ''){
+            Eggy({
+                title: 'Oops... Có gì đó không đúng',
+                message:  msgToastError,
+                type: 'warning',
+                duration: 5000,
+            });
+        }
 
-                let msgToastSuccess = msgSuccess.innerHTML;
-                if(msgToastSuccess != ''){
-                    Eggy({
-                        title: 'Thành công',
-                        message:  msgToastSuccess,
-                        type: 'success',
-                        duration: 5000,
-                    });
-                }  
+
+</script>
+<script>
+    var msgSuccess = document.getElementById('success');
+        let msgToastSuccess = msgSuccess.innerHTML;
+        if(msgToastSuccess != ''){
+            Eggy({
+                title: 'Thành công',
+                message:  msgToastSuccess,
+                type: 'success',
+                duration: 5000,
+            });
+        }  
 </script>
  
 <script>

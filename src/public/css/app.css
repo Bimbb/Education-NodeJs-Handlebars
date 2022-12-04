@@ -1962,6 +1962,48 @@ div.dataTables_wrapper div.dataTables_filter input {
 .btn-padding {
   padding: 4px 12px !important; }
 
+.background {
+  background: url(https://giaoxudongtri.com/wp-content/uploads/2018/08/1.-bitichThanhTay.jpg) no-repeat;
+  background-size: cover;
+  height: 100vh;
+  width: 100%; }
+  .background .row-container {
+    border: 2px solid #fff;
+    border-radius: 10px;
+    padding: 30px;
+    background: #fff; }
+  .background .form-field {
+    position: relative;
+    margin-bottom: 18px; }
+    .background .form-field .form-input {
+      outline: none;
+      border: 1px solid #eee;
+      border-radius: 8px;
+      width: 100%;
+      height: 50px;
+      padding: 0 20px;
+      transition: 0.3s ease;
+      font-weight: 500; }
+      .background .form-field .form-input:focus, .background .form-field .form-input:hover {
+        border-color: #6a5af9; }
+      .background .form-field .form-input:not(:placeholder-shown) + .form-label,
+      .background .form-field .form-input:focus + .form-label {
+        top: 0;
+        left: 11px;
+        padding: 0 10px;
+        display: inline-block;
+        background: #fff;
+        color: #6a5af9; }
+    .background .form-field .form-label {
+      position: absolute;
+      top: 50%;
+      left: 21px;
+      transform: translateY(-50%);
+      user-select: none;
+      color: #999;
+      pointer-events: none;
+      transition: 0.3s ease; }
+
 a,
 a:hover {
   color: #292929;
