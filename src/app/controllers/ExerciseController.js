@@ -422,7 +422,7 @@ class ExerciseController {
                     "Đáp án": htmlToText(item.answer, { wordwrap: 130 }),
                     "Gợi ý": htmlToText(item.recommend, { wordwrap: 130 }),
                     "Lời giải": htmlToText(item.explain, { wordwrap: 130 }),
-                    "Loại câu hỏi": item.category[0].type,
+
                 };
                 exercisesExcel.push(exercise);
             });
@@ -463,11 +463,11 @@ class ExerciseController {
                 let categories = await ExerciseCategory.find({});
 
                 rows.forEach((row) => {
-                    categories.forEach((category) => {
-                        if (row[9].toString().toLowerCase() === category.type) {
-                            row[9] = category._id;
-                        }
-                    });
+                    // categories.forEach((category) => {
+                    //     if (row[9].toString().toLowerCase() === category.type) {
+                    //         row[9] = category._id;
+                    //     }
+                    // });
 
                     if (row[6] === "A" || row[6] === "a") {
                         row[6] = row[2];
