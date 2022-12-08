@@ -62,7 +62,7 @@
                                             <span class="ti-pencil-alt"></span>&nbsp;
                                             Sửa
                                         </a>
-                                        <button class="btn btn-danger remove" type="button" data-id="{{this._id}}" data-toggle="modal" data-target="#delete-user-modal">  
+                                        <button class="btn btn-danger remove" type="button" data-id="{{this._id}}" data-toggle="modal" data-target="#delete-blog-modal">  
                                             <span class="ti-trash"></span>&nbsp;
                                             Xóa
                                         </button>
@@ -78,7 +78,7 @@
 </section>
 
 {{!-- Confirm  delete courses --}}
-<div class="modal fade" id="delete-user-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="delete-blog-modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" style="transition: all 0.3s ease">
         <div class="modal-content">
             <div class="modal-header">
@@ -93,13 +93,13 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Hủy</button>
-                <button class="btn btn-danger" id="btn-delete-user" type="button">Xác nhận xóa</button>
+                <button class="btn btn-danger" id="btn-delete-blog" type="button">Xác nhận xóa</button>
             </div>
         </div>
     </div>
 </div>
 {{!-- Delete hidden form --}}
-<form name="delete-user-form" method="POST"></form>
+<form name="delete-blog-form" method="POST"></form>
 
 {{#if errors}}
     <div id="errors" style="visibility: hidden;">{{errors}}</div>
@@ -138,17 +138,17 @@
 <script>
     document.addEventListener("DOMContentLoaded", function(){
         //Delete
-        var userID;
-        var deleteForm = document.forms["delete-user-form"];
-        var btnDeleteUser = document.getElementById('btn-delete-user');
+        var blogID;
+        var deleteForm = document.forms["delete-blog-form"];
+        var btnDeleteblog = document.getElementById('btn-delete-blog');
             
-        $('#delete-user-modal').on('show.bs.modal', function (event) {
+        $('#delete-blog-modal').on('show.bs.modal', function (event) {
             var button = $(event.relatedTarget); 
-            userID = button.data('id');  
+            blogID = button.data('id');  
         });
         
-        btnDeleteUser.onclick= function(){
-            deleteForm.action ='/user/'+ userID +'?_method=DELETE';
+        btnDeleteblog.onclick= function(){
+            deleteForm.action ='/blog/'+ blogID +'/delete?_method=DELETE';
             deleteForm.submit();
         }
     });

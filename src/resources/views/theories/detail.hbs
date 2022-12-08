@@ -7,7 +7,11 @@
                     <div class="d-flex align-items-center justify-content-between">
                         <div>
                             <div class="card-title text-uppercase">{{subject.name}} - Lớp {{grade.name}} - {{unit.name}}</div>
+                            {{#ifCond subject.name "===" "Phần Lý Thuyết"}}
                             <div class="card-title">Bài {{lesson.lessonNumber}} - {{lesson.name}}</div>
+                            {{else}}
+                                <div class="card-title">Kinh {{lesson.lessonNumber}} - {{lesson.name}}</div>
+                            {{/ifCond}}
                         </div>
                         <div class="d-flex align-items-center">
                             {{#ifCond subject.name "===" "Phần Lý Thuyết"}}

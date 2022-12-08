@@ -111,5 +111,50 @@ class LessonController {
         res.redirect("back");
     }
 
+
+    // [POST]/lesson/upload
+    async upload(req, res) {
+        try {
+            if (req.file == undefined) {
+                req.flash("error", "Vui lòng tải lên một tệp excel!");
+                res.redirect("back");
+                return;
+            }
+            let fileExcel = path.resolve(
+                __dirname,
+                "../../public/uploads/" + req.file.filename
+            );
+
+            readXlsxFile(fileExcel).then((rows) => {
+                rows.shift();
+                let lessons = [];
+
+                rows.forEach((row) => {
+                    let lesson = new Lesson({
+                        lessonNumber: row[0],
+                        name: row[1],
+                        unitID: req.body.unitID,
+                    });
+                    lessons.push(lesson);
+                });
+
+                Lesson.create(lessons)
+                    .then(() => {
+                        req.flash("success", "Đã tải tệp lên thành công!");
+                        res.redirect("back");
+                    })
+                    .catch((error) => {
+                        req.flash(
+                            "error",
+                            "Không thể nhập dữ liệu vào cơ sở dữ liệu!"
+                        );
+                        res.redirect("back");
+                    });
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
+
 }
 module.exports = new LessonController();

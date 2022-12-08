@@ -213,7 +213,133 @@ class StatisticalController {
         }
     }
 
+// [POST]/statistical/:id/export
+    async export(req, res, next) {
+        
+        const grade = await Grade.findById(req.params.id);
+        const lesson = await Lesson.findById(req.params.id);
+        if (grade) {
+            const subject = await Subject.findOne({gradeID : grade._id, name: "Phần Lý Thuyết"});
+            const units = await Unit.find({ subjectID : subject._id  });
+            const unitIdArray = units.map(({ _id }) => _id);
+            const lessons = await Lesson.find({
+                unitID: { $in: unitIdArray },
+            });
+            const lessonIdArray = lessons.map(({ _id }) => _id);
+            const statisticals = await Statistical.aggregate([
+                {
+                    $match: {
+                        lessonID: { $in: lessonIdArray },
+                    },
+                },
+                {
+                    $group: {
+                        _id: "$userID",
+                        totalScore: { $sum: "$score" },
+                        totalLessonDone: { $count: {} },
+                    },
+                },
+                {
+                    $lookup: {
+                        from: "users",
+                        localField: "_id",
+                        foreignField: "_id",
+                        as: "user",
+                    },
+                },
+                {
+                    $project: {
+                        "user.birthDay": 0,
+                        "user.active": 0,
+                        "user.password": 0,
+                        "user.phone": 0,
+                        "user.roleID": 0,
+                        "user.address": 0,
+                        "user.username": 0,
+                    },
+                },
+                { $sort: { totalScore: -1 } },
+            ]);
 
+            let statisticalsExcel = [];
+            statisticals.forEach((item, index) => {
+                let percent = Math.round(
+                    (item.totalLessonDone / lessons.length) * 100
+                );
+                let evaluate;
+
+                if (percent <= 100 && percent >= 50) {
+                    evaluate = "Đạt";
+                } else {
+                    evaluate = "Chưa đạt";
+                }
+
+                let result = {
+                    STT: index + 1,
+                    "Họ tên": item.user[0].fullname,
+                    "Địa chỉ email": item.user[0].email,
+                    "Tổng điểm tích lũy": item.totalScore,
+                    "Tiến trình học": `Hoàn thành ${item.totalLessonDone}/${lessons.length} bài học (${percent}%)`,
+                    "Đánh giá": evaluate,
+                };
+                statisticalsExcel.push(result);
+            });
+
+            var wb = XLSX.utils.book_new();
+            var temp = JSON.stringify(statisticalsExcel);
+            temp = JSON.parse(temp);
+            var ws = XLSX.utils.json_to_sheet(temp);
+            let down = path.resolve(
+                __dirname,
+                `../../public/exports/thong-ke-ket-qua-mon-${subject.slug}.xlsx`
+            );
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+            XLSX.writeFile(wb, down);
+            res.download(down);
+        } else if (lesson) {
+            const exercises = await Exercise.find({
+                lessonID: lesson._id,
+            });
+            const statisticals = await Statistical.aggregate([
+                { $match: { lessonID: ObjectId(lesson._id) } },
+                {
+                    $lookup: {
+                        from: "users",
+                        localField: "userID",
+                        foreignField: "_id",
+                        as: "user",
+                    },
+                },
+                {
+                    $sort: { score: -1 },
+                },
+            ]);
+            let statisticalsExcel = [];
+            statisticals.forEach((item, index) => {
+                let result = {
+                    STT: index + 1,
+                    "Họ tên": item.user[0].fullname,
+                    "Địa chỉ email": item.user[0].email,
+                    "Điểm ": item.score,
+                    "Số câu đúng": `${item.totalAnswerTrue}/${exercises.length}`,
+                    "Thời gian làm bài": item.time,
+                    "Ngày làm bài": moment(item.updatedAt).format("DD-MM-YYYY"),
+                };
+                statisticalsExcel.push(result);
+            });
+            var wb = XLSX.utils.book_new();
+            var temp = JSON.stringify(statisticalsExcel);
+            temp = JSON.parse(temp);
+            var ws = XLSX.utils.json_to_sheet(temp);
+            let down = path.resolve(
+                __dirname,
+                `../../public/exports/thong-ke-ket-qua-bai-${lesson.slug}.xlsx`
+            );
+            XLSX.utils.book_append_sheet(wb, ws, "Sheet1");
+            XLSX.writeFile(wb, down);
+            res.download(down);
+        }
+    }
 
 
 }

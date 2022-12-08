@@ -52,8 +52,50 @@ class UnitController {
         req.flash("success", "Thêm mới thành công chuyên đề!");
         res.redirect("back");
     }
+    // [POST]/units/upload
+    async upload(req, res) {
+        try {
+            if (req.file == undefined) {
+                req.flash("error", "Vui lòng tải lên một tệp excel!");
+                res.redirect("back");
+                return;
+            }
+            let fileExcel = path.resolve(
+                __dirname,
+                "../../public/uploads/" + req.file.filename
+            );
 
+            readXlsxFile(fileExcel).then(async (rows) => {
+                rows.shift();
+                let units = [];
 
+                rows.forEach((row) => {
+                    let unit = new Unit({
+                        name: `CHƯƠNG ${row[0]}. ${row[1]
+                            .toString()
+                            .toUpperCase()}`,
+                        subjectID: req.body.subjectID,
+                    });
+                    units.push(unit);
+                });
+
+                Unit.create(units)
+                    .then(() => {
+                        req.flash("success", "Đã tải tệp lên thành công!");
+                        res.redirect("back");
+                    })
+                    .catch((error) => {
+                        req.flash(
+                            "error",
+                            "Không thể nhập dữ liệu vào cơ sở dữ liệu!"
+                        );
+                        res.redirect("back");
+                    });
+            });
+        } catch (error) {
+            console.log(error);
+        }
+    }
 
     // [PUT]/units/:id
     async update(req, res, next) {

@@ -6,6 +6,12 @@ const {
 } = require("../app/middlewares/AuthMiddleware");
 
 const lessonController = require("../app/controllers/LessonController");
+const upload = require("../app/middlewares/upload");
+
+
+
+
+router.post("/upload", upload.single("file"), lessonController.upload);
 
 router.post("/create", checkRequireAdmin, lessonController.create);
 router.put("/:id", checkRequireAdmin, lessonController.update);

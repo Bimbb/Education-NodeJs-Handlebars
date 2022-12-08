@@ -5,7 +5,7 @@
                 <div class="d-flex align-items-center justify-content-between">
                     <div class="card-title text-uppercase">Lớp {{grade.name}}</div>
                     <div class="d-flex align-items-center">
-                        <form class="mb-0" action="/statisticals/6329e8dafd0dd376001c8fcd/export" method="POST">
+                        <form class="mb-0" action="/statisticals/{{grade._id}}/export" method="POST">
                             <button class="btn btn-outline-primary btn-icon-text" type="submit">
                                 <i class="mdi mdi-file-excel btn-icon-prepend"></i>
                                 Xuất excel
@@ -34,7 +34,6 @@
                         <tbody>
                             {{#each ranks}}
                             <tr>
-                                
                                     <td>{{sum @index 1}}</td>
                                     {{#this.user}}
                                         <td>

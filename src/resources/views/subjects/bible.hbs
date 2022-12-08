@@ -1,5 +1,5 @@
 <section class="subject__bible">
-    <div class="col-lg-12 grid-margin stretch-card">
+    <div class="col-lg-8 grid-margin stretch-card mx-auto">
         <div class="card">
             <div class="card-body">
                 <div class="card-title">Nội dung {{SubjectTheory.name}} - Của lớp {{grade.name}} </div>
@@ -109,11 +109,11 @@
 
 
                     {{!-- add Lesson  --}}
-                    <div class="modal fade" id="addLessonModal" tabindex="-1" role="dialog" aria-labelledby="addLessionModalLabel" aria-hidden="true">
+                    <div class="modal fade" id="addLessonModal" tabindex="-1" role="dialog" aria-labelledby="addLessonModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document" style="transition: all 0.3s ease; max-width: 800px">
                             <div class="modal-content">
                                 <div class="modal-header">
-                                    <strong class="modal-title font-weight-bold text-dark text-uppercase" id="addLessionModalLabel">{{subject.name}} - Của lớp {{grade.name}} - Thêm mới bài học</strong>
+                                    <strong class="modal-title font-weight-bold text-dark text-uppercase" id="addLessonModalLabel">{{subject.name}} - Của lớp {{grade.name}} - Thêm mới bài học</strong>
                                     <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                         <span aria-hidden="true">×</span>
                                     </button>
@@ -121,7 +121,7 @@
                                 <div class="modal-body text-dark">
                                     <div class="label-unit-name font-weight-bold"></div>
                                     <div class="d-flex align-items-center justify-content-between mb-4 mt-4">
-                                        <form class="form-upload mb-0" action="/lessions/upload" method="post" enctype="multipart/form-data">
+                                        <form class="form-upload mb-0" action="/lessons/upload" method="post" enctype="multipart/form-data">
                                             <div class="d-flex align-items-center">
                                                 <div class="file-drop-area">
                                                     <span class="fake-btn">Chọn tệp</span>
@@ -133,7 +133,7 @@
                                                 <button class="ml-2 btn btn-sm btn-secondary" type="button">Hủy</button>
                                             </div>
                                         </form>
-                                        <a class="btn btn-outline-primary btn-icon-text" href="/files/sample-create-lessions.xlsx" download="download"> 
+                                        <a class="btn btn-outline-primary btn-icon-text" href="/files/sample-create-lessons.xlsx" download="download"> 
                                             <i class="mdi mdi-file-excel btn-icon-prepend"></i>
                                             Excel mẫu
                                         </a>
@@ -145,7 +145,7 @@
                                     <form class="mt-4" action="/lessons/create" method="post">
                                         <input class="form-control" type="text" name="unitID" hidden="hidden">
                                         <div class="form-group row">
-                                            <label class="col-sm-3 col-form-label text-dark" for="name-lession">Tên bài học</label>
+                                            <label class="col-sm-3 col-form-label text-dark" for="name-lesson">Tên bài học</label>
                                             <div class="col-sm-9">
                                                 <input class="form-control" id="name-lesson" type="text" placeholder="Nhập tên bài học" name="name" required="required">
                                             </div>
@@ -178,7 +178,7 @@
                                     </button>
                                 </div>
                                 <div class="modal-body text-dark">
-                                    <p>Hành động này sẽ xóa tất cả nội dung lý thuyết, bài tập vận dụng và kết quả làm bài của bài học này !!!</p>
+                                    <p>Hành động này sẽ xóa tất cả nội dung </p>
                                     <p>Hành động này rất nguy hiểm, không thể khôi phục lại dữ liệu.</p>
                                     <p>Bạn có chắc chắn muốn xóa bài học này ???</p>
                                 </div>

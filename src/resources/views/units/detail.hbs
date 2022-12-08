@@ -136,12 +136,12 @@
 
                 {{!-- add Lesson --}}
                 <div class="modal fade" id="addLessonModal" tabindex="-1" role="dialog"
-                    aria-labelledby="addLessionModalLabel" aria-hidden="true">
+                    aria-labelledby="addLessonModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document" style="transition: all 0.3s ease; max-width: 800px">
                         <div class="modal-content">
                             <div class="modal-header">
                                 <strong class="modal-title font-weight-bold text-dark text-uppercase"
-                                    id="addLessionModalLabel">{{subject.name}} - Của lớp {{grade.name}} - Thêm mới bài
+                                    id="addLessonModalLabel">{{subject.name}} - Của lớp {{grade.name}} - Thêm mới bài
                                     học</strong>
                                 <button class="close" type="button" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">×</span>
@@ -150,7 +150,7 @@
                             <div class="modal-body text-dark">
                                 <div class="label-unit-name font-weight-bold"></div>
                                 <div class="d-flex align-items-center justify-content-between mb-4 mt-4">
-                                    <form class="form-upload mb-0" action="/lessions/upload" method="post"
+                                    <form class="form-upload mb-0" action="/lessons/upload" method="post"
                                         enctype="multipart/form-data">
                                         <div class="d-flex align-items-center">
                                             <div class="file-drop-area">
@@ -164,7 +164,7 @@
                                         </div>
                                     </form>
                                     <a class="btn btn-outline-primary btn-icon-text"
-                                        href="/files/sample-create-lessions.xlsx" download="download">
+                                        href="/files/sample-create-lessons.xlsx" download="download">
                                         <i class="mdi mdi-file-excel btn-icon-prepend"></i>
                                         Excel mẫu
                                     </a>
@@ -176,7 +176,7 @@
                                 <form class="mt-4" action="/lessons/create" method="post">
                                     <input class="form-control" type="text" name="unitID" hidden="hidden">
                                     <div class="form-group row">
-                                        <label class="col-sm-3 col-form-label text-dark" for="name-lession">Tên bài
+                                        <label class="col-sm-3 col-form-label text-dark" for="name-lesson">Tên bài
                                             học</label>
                                         <div class="col-sm-9">
                                             <input class="form-control" id="name-lesson" type="text"
