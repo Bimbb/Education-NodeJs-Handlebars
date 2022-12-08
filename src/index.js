@@ -12,7 +12,7 @@ const session = require("express-session");
 const flash = require("connect-flash");
 const app = express();
 
-const route  = require('./routes');
+const route = require('./routes');
 const db = require('./config/db');
 
 const {
@@ -40,9 +40,9 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 
 app.use(
-  express.urlencoded({
-      extended: true,
-  }),
+    express.urlencoded({
+        extended: true,
+    }),
 );
 
 
@@ -59,12 +59,12 @@ app.use(userLocal);
 
 
 app.use(
-  session({
-      cookie: { maxAge: 60000 },
-      saveUninitialized: true,
-      resave: "true",
-      secret: "secret",
-  })
+    session({
+        cookie: { maxAge: 60000 },
+        saveUninitialized: true,
+        resave: "true",
+        secret: "secret",
+    })
 );
 
 app.use(flash());
@@ -74,44 +74,44 @@ app.use(flash());
 app.engine('hbs',
     handlebars({
         extname: '.hbs',
-        helpers:{
-          sum :(a, b) => a + b,
-          subtraction :(a, b) => a - b,
-          JON: (a) => JSON.stringify(a),
-          formatDate: ( a )=> moment(a).format("DD-MM-YYYY"),
-          formatDateYMD: ( a )=> moment(a).format("YYYY-MM-DD"),
-          formatString:(a) => a,
-          formatDateLocale:(a) =>moment(a).locale("vi").fromNow(),
-          round: ( a ) => Math.round(a),
-          percent: (a, b) => Math.round((a/b)*100),
-          ifCond: function (v1, operator, v2, options) {
-            switch (operator) {
-                case '==':
-                    return (v1 == v2) ? options.fn(this) : options.inverse(this);
-                case '===':
-                    return (v1 === v2) ? options.fn(this) : options.inverse(this);
-                case '!=':
-                    return (v1 != v2) ? options.fn(this) : options.inverse(this);
-                case '!==':
-                    return (v1 !== v2) ? options.fn(this) : options.inverse(this);
-                case '<':
-                    return (v1 < v2) ? options.fn(this) : options.inverse(this);
-                case '<=':
-                    return (v1 <= v2) ? options.fn(this) : options.inverse(this);
-                case '>':
-                    return (v1 > v2) ? options.fn(this) : options.inverse(this);
-                case '>=':
-                    return (v1 >= v2) ? options.fn(this) : options.inverse(this);
-                case '&&':
-                    return (v1 && v2) ? options.fn(this) : options.inverse(this);
-                case '||':
-                    return (v1 || v2) ? options.fn(this) : options.inverse(this);
-                default:
-                    return options.inverse(this);
-            }
-          },
+        helpers: {
+            sum: (a, b) => a + b,
+            subtraction: (a, b) => a - b,
+            JON: (a) => JSON.stringify(a),
+            formatDate: (a) => moment(a).format("DD-MM-YYYY"),
+            formatDateYMD: (a) => moment(a).format("YYYY-MM-DD"),
+            formatString: (a) => a,
+            formatDateLocale: (a) => moment(a).locale("vi").fromNow(),
+            round: (a) => Math.round(a),
+            percent: (a, b) => Math.round((a / b) * 100),
+            ifCond: function (v1, operator, v2, options) {
+                switch (operator) {
+                    case '==':
+                        return (v1 == v2) ? options.fn(this) : options.inverse(this);
+                    case '===':
+                        return (v1 === v2) ? options.fn(this) : options.inverse(this);
+                    case '!=':
+                        return (v1 != v2) ? options.fn(this) : options.inverse(this);
+                    case '!==':
+                        return (v1 !== v2) ? options.fn(this) : options.inverse(this);
+                    case '<':
+                        return (v1 < v2) ? options.fn(this) : options.inverse(this);
+                    case '<=':
+                        return (v1 <= v2) ? options.fn(this) : options.inverse(this);
+                    case '>':
+                        return (v1 > v2) ? options.fn(this) : options.inverse(this);
+                    case '>=':
+                        return (v1 >= v2) ? options.fn(this) : options.inverse(this);
+                    case '&&':
+                        return (v1 && v2) ? options.fn(this) : options.inverse(this);
+                    case '||':
+                        return (v1 || v2) ? options.fn(this) : options.inverse(this);
+                    default:
+                        return options.inverse(this);
+                }
+            },
         },
-        
+
     })
 );
 
@@ -257,7 +257,7 @@ io.on("connection", async (socket) => {
                                         as: "grade",
                                     },
                                 },
-                                
+
                             ]);
 
                             io.sockets.emit("server-send-rooms", roomsNew);
@@ -314,7 +314,7 @@ io.on("connection", async (socket) => {
         io.sockets.emit("user-stopping-message");
     });
 
-    
+
     // create room
     socket.on("create-room", async (data) => {
         var roomId = data.username;
@@ -371,7 +371,22 @@ io.on("connection", async (socket) => {
             score: 0,
         });
     });
-
+    async function loadQuestions(lessonIdArray) {
+        questions = await Exercise.aggregate([
+            {
+                $match: { lessonID: { $in: lessonIdArray } }
+            },
+            {
+                $lookup: {
+                    from: "exercise-categories",
+                    localField: "ceID",
+                    foreignField: "_id",
+                    as: "cate",
+                },
+            },
+            { "$sample": { "size": 5 } }
+        ]);
+    }
     ///server-send-question
     socket.on("room-request-questions", async (data) => {
         const room = await Room.findOne({ roomName: data.roomId });
@@ -383,7 +398,7 @@ io.on("connection", async (socket) => {
                 }
             });
 
-            var subject= await Subject.findOne({ gradeID: room.gradeId, name: "Phần Lý Thuyết" });
+            var subject = await Subject.findOne({ gradeID: room.gradeId, name: "Phần Lý Thuyết" });
             const units = await Unit.find({ subjectID: subject._id });
             const unitIdArray = units.map(({ _id }) => _id);
             const lessons = await Lesson.aggregate([
@@ -414,20 +429,10 @@ io.on("connection", async (socket) => {
                 },
             ]);
             const lessonIdArray = lessons.map(({ _id }) => _id);
-            const questions = await Exercise.aggregate([
-                {
-                    $match: { lessonID: { $in: lessonIdArray } } 
-                },
-                {
-                    $lookup: {
-                        from: "exercise-categories",
-                        localField: "ceID",
-                        foreignField: "_id",
-                        as: "cate",
-                    },
-                },
-                { "$sample": { "size": 5 } }
-            ]);
+            const questions = {};
+            if (questions.length <= 0) {
+                loadQuestions(lessonIdArray);
+            }
 
             if (data.indexQuestion <= questions.length - 1) {
                 const obj = {
@@ -560,7 +565,7 @@ io.on("connection", async (socket) => {
 
 
 
-    
+
     ///sever-send--option
     socket.on("user-send-option", async (data) => {
         const room = await Room.findOne({ roomName: data.roomId });
@@ -858,7 +863,7 @@ io.on("connection", async (socket) => {
             }
         }
     });
-    
+
 
 
 
@@ -896,7 +901,7 @@ io.on("connection", async (socket) => {
                                 },
                             },
                         }
-                        
+
                     );
                     await Room.updateOne(
                         { roomName: room.roomName },
@@ -994,7 +999,7 @@ io.on("connection", async (socket) => {
                         as: "grade",
                     },
                 },
-               
+
             ]);
             io.sockets.emit("server-send-rooms", rooms);
         } else {
@@ -1054,12 +1059,12 @@ io.on("connection", async (socket) => {
                     as: "grade",
                 },
             },
-           
+
         ]);
 
         socket.emit("server-send-rooms", rooms);
     });
-    
+
 
     // tìm kiếm theo tên chủ phòng
     socket.on("user-search", async (data) => {
@@ -1078,10 +1083,10 @@ io.on("connection", async (socket) => {
                         as: "grade",
                     },
                 },
-               
+
             ]);
             socket.emit("server-send-rooms", rooms);
-        }else{
+        } else {
             const rooms = await Room.aggregate([
                 {
                     $lookup: {
@@ -1096,7 +1101,7 @@ io.on("connection", async (socket) => {
         }
     });
 
-    
+
 });
 
 
