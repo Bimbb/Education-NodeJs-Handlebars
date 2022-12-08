@@ -372,20 +372,7 @@ io.on("connection", async (socket) => {
         });
     });
     async function loadQuestions(lessonIdArray) {
-        questions = await Exercise.aggregate([
-            {
-                $match: { lessonID: { $in: lessonIdArray } }
-            },
-            {
-                $lookup: {
-                    from: "exercise-categories",
-                    localField: "ceID",
-                    foreignField: "_id",
-                    as: "cate",
-                },
-            },
-            { "$sample": { "size": 5 } }
-        ]);
+       
     }
     ///server-send-question
     socket.on("room-request-questions", async (data) => {
@@ -429,10 +416,20 @@ io.on("connection", async (socket) => {
                 },
             ]);
             const lessonIdArray = lessons.map(({ _id }) => _id);
-            const questions = {};
-            if (questions.length <= 0) {
-                loadQuestions(lessonIdArray);
-            }
+            const questions = await Exercise.aggregate([
+                {
+                    $match: { lessonID: { $in: lessonIdArray } }
+                },
+                {
+                    $lookup: {
+                        from: "exercise-categories",
+                        localField: "ceID",
+                        foreignField: "_id",
+                        as: "cate",
+                    },
+                },
+                { "$sample": { "size": 5 } }
+            ]);
 
             if (data.indexQuestion <= questions.length - 1) {
                 const obj = {
