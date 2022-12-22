@@ -16,4 +16,9 @@ router.delete("/:id", checkRequireAdmin, theoryController.delete);
 router.put("/:id", checkRequireAdmin, theoryController.update);
 
 router.get("/:id", theoryController.show);
+
+
+
+router.post("/api",theoryController.api);
+
 module.exports = router;

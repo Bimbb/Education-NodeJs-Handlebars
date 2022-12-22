@@ -72,7 +72,16 @@
                 </div>
                 </div>
                 <hr>
+                
                 {{#if theory}}
+                <div class="col-sm-12" style="text-align: center; border-radius: 20px">
+                    {{#if theory.audioUrl}}
+                    <iframe width="560" height="315" src="https://www.youtube.com/embed/{{theory.audioUrl}}" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                    {{/if}}
+                </div>
+                <div class="col-sm-12" style="margin-top: 50px;">
+                    <h4 class="title mb-0">Lý Thuyết</h4>
+                </div>
                 <div class="mt-4 mb-4">
                     <p >{{{theory.content}}}</p>
                 </div>

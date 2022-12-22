@@ -17,4 +17,7 @@ router.get("/:id/detail", checkRequireAdmin, unitController.detail);
 
 router.get("/:id", unitController.show);
 
+
+router.post("/api-list",unitController.apiListUnit);
+
 module.exports = router;

@@ -8,8 +8,6 @@ class BlogController {
 
     // [GET]/blog/
     async show(req, res, next) {
-        
-
         const blog = await Blog.aggregate([
             {
                 $lookup: {
@@ -23,6 +21,20 @@ class BlogController {
         res.render('blog/show', {
             blog
         })
+    }
+    async showapi(req, res, next) {
+        const blog = await Blog.aggregate([
+            {
+                $lookup: {
+                    from: "blog-categories",
+                    localField: "bcID",
+                    foreignField: "_id",
+                    as: "BlogCategory",
+                },
+            },
+        ]);
+        
+        res.status(200).send(JSON.stringify(blog))
     }
 
 

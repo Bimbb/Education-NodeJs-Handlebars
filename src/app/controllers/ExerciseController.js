@@ -1,5 +1,5 @@
 const Subject = require("../models/Subject");
-const Lesson = require("../models/Lesson");
+
 const ExerciseCategory = require("../models/ExerciseCategory");
 const Exercise = require("../models/Exercise");
 const Result = require("../models/Result");
@@ -13,15 +13,14 @@ const readXlsxFile = require("read-excel-file/node");
 const path = require("path");
 const XLSX = require("xlsx");
 const { htmlToText } = require("html-to-text");
-const { multipleMongooseToObject, mongooseToObject}  = require('../../util/mongoose')
+const { multipleMongooseToObject, mongooseToObject}  = require('../../util/mongoose');
+const Lesson = require("../models/Lesson");
+
 
 
 
 
 class ExerciseController {
-
-
-
 
     // [GET]/exercises/:slug?name=lesson
     async exercise(req, res) {
@@ -102,6 +101,39 @@ class ExerciseController {
             res.render("error");
         }
     }
+
+
+    // [POST]/exercises/api?lessonId=lesson
+    async apiListExercises(req, res, next) {
+        const LessonId = req.body.LessonId;
+        const lesson = await Lesson.findById(ObjectId(LessonId));
+        if(lesson){
+
+           const exercises = await Exercise.aggregate([
+                { $match: { lessonID: ObjectId(lesson._id) } },
+                { $set: {
+                    contentRegex: {
+                        $regexFind: { input: "$Description", regex: /([^<>]+)(?!([^<]+)?>)/gi }
+                        }
+                    }
+                },
+                {
+                    $set: {
+                        content: { $ifNull: ["$contentRegex.match", "$Description"] }
+                    }
+                },
+                {
+                    $unset: [ "contentRegex" ]
+                }
+            ]);
+            
+            if(exercises){
+                console.log(exercises);
+                res.status(200).send(JSON.stringify(exercises))
+            }
+        }
+    }
+
 
     // [POST]/exercise/:slug?name=lesson
     async postExercise(req, res) {

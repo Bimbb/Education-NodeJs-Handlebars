@@ -97,6 +97,32 @@ class UnitController {
         }
     }
 
+    // [POST]/units/:id
+    async apiListUnit(req, res, next) {
+        const idGrade = req.body.idGrade;
+        const grade = await Grade.findById(ObjectId(idGrade));
+
+        if(grade){
+            var SubjectTheory = await Subject.findOne({ gradeID: grade._id, name: "Phần Lý Thuyết" });
+            if(SubjectTheory){
+                const units = await Unit.aggregate([
+                    { $match: { subjectID: ObjectId(SubjectTheory._id) } },
+                    {      
+                        $lookup: {
+                            from: "lessons",
+                            localField: "_id",
+                            foreignField: "unitID",
+                            as: "lesson",
+                        },
+                    },
+                ]);
+                if(units){
+                    res.status(200).send(JSON.stringify(units))
+                }
+            }
+        }
+        
+    }
     // [PUT]/units/:id
     async update(req, res, next) {
         const { name, subjectID } = req.body;

@@ -45,7 +45,8 @@
     "nodemailer": "^6.6.5",
     "pdf-creator-node": "^2.3.5",
     "read-excel-file": "^5.5.3",
-    "socket.io": "^4.3.2"
+    "socket.io": "^4.3.2",
+    "string-strip-html": "^8.3.0"
   },
   "devDependencies": {
     "fs": "^0.0.1-security",

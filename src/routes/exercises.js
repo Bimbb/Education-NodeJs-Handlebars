@@ -23,5 +23,6 @@ router.post("/:id/export",checkRequireAdmin,  exerciseController.export);
 router.get("/:slug", requireAuth, exerciseController.exercise);
 router.post("/:slug", requireAuth, exerciseController.postExercise);
 
+router.post("/api/list", exerciseController.apiListExercises);
 
 module.exports = router;

@@ -14,6 +14,7 @@ const pdf = require("pdf-creator-node");
 const path = require("path");
 const { multipleMongooseToObject, mongooseToObject } = require('../../util/mongoose')
 const options = require("../../util/options");
+
 class TheoryController {
 
 
@@ -32,6 +33,17 @@ class TheoryController {
             lesson: mongooseToObject(lesson),
 
         });
+    }
+    //GET theories/api
+    async api(req, res, next) {
+        const lessonID = req.body.lessonID;
+        const lesson = await Lesson.findById(ObjectId(lessonID));
+        if(lesson){
+            const theory = await Theory.findOne({ lessonID: ObjectId(lesson._id) });
+            if(theory){
+                res.status(200).send(JSON.stringify(theory))
+            }
+        }
     }
 
 

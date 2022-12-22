@@ -416,6 +416,7 @@ io.on("connection", async (socket) => {
                 },
             ]);
             const lessonIdArray = lessons.map(({ _id }) => _id);
+            
             const questions = await Exercise.aggregate([
                 {
                     $match: { lessonID: { $in: lessonIdArray } }
@@ -430,6 +431,7 @@ io.on("connection", async (socket) => {
                 },
                 { "$sample": { "size": 5 } }
             ]);
+            
 
             if (data.indexQuestion <= questions.length - 1) {
                 const obj = {

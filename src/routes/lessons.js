@@ -18,4 +18,7 @@ router.put("/:id", checkRequireAdmin, lessonController.update);
 router.delete("/:id", checkRequireAdmin, lessonController.delete);
 
 router.get("/:id", lessonController.show);
+
+router.post("/api-list",lessonController.apiListLesson);
+
 module.exports = router;

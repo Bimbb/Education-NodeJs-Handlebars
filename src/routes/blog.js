@@ -6,6 +6,8 @@ const {
     checkRequireAdmin,
 } = require("../app/middlewares/AuthMiddleware");
 
+router.get("/api-list", blogController.showapi);
+
 router.get("/list", checkRequireAdmin, blogController.listBlog);
 router.get("/list-category", checkRequireAdmin, blogController.listCategory);
 router.delete("/:id/delete-category", checkRequireAdmin, blogController.deleteCategory);

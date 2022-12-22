@@ -8,6 +8,8 @@ const {
     checkRequireAdmin,
 } = require("../app/middlewares/AuthMiddleware");
 
+
+router.get("/api-list", gradeController.listGrades);
 router.get("/list", checkRequireAdmin, gradeController.listGrade);
 router.post("/list", checkRequireAdmin, gradeController.createGrade);
 router.put('/:id', checkRequireAdmin, gradeController.update);

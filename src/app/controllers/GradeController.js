@@ -50,6 +50,32 @@ class GradeController {
 
 
     }
+     // [GET]/Grade/listApi
+    async listGrades(req, res, next) {
+        const grades = await Grade.find({});
+        res.status(200).send(JSON.stringify(grades))
+    }
+
+    async listGrade(req, res, next) {
+
+        const grades = await Grade.aggregate([
+            {   $lookup: {
+                from: "subjects",
+                localField: "_id",
+                foreignField: "gradeID",
+                as: "subject",
+            }},
+        ]);
+
+        res.render('grades/list', {
+            grades,
+            layout: 'admin',
+            success: req.flash("success"),
+            errors: req.flash("error"),
+        });
+
+
+    }
 
     // [POST]/Grade/create
     async createGrade(req, res) {

@@ -9,7 +9,7 @@ const Result = require("../models/Result");
 const slugify = require("slugify");
 const readXlsxFile = require("read-excel-file/node");
 const path = require("path");
-
+const ObjectId = mongoose.Types.ObjectId;
 class LessonController {
 
 
@@ -28,7 +28,21 @@ class LessonController {
         });
     }
 
+    // [POST]/lessons/apiList
+    async apiListLesson(req, res, next) {
+        const idUnit = req.body.idUnit;
+        const unit = await Unit.findById(ObjectId(idUnit));
+        if(unit){
 
+            const lessons = await Lesson.aggregate([
+                { $match: { unitID: ObjectId(unit._id) } },
+            ]);
+
+            if(lessons){
+                res.status(200).send(JSON.stringify(lessons))
+            }
+        }
+    }
 
     // [GET]/lesson/:slug
     async show(req, res, next) {
