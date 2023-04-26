@@ -14,4 +14,4 @@ const Report = new Schema(
     }
 );
 
-module.exports = mongoose.model("Report", Report);
+module.exports = mongoose.model("Report", Report); 

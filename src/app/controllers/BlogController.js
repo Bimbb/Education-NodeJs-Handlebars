@@ -22,6 +22,7 @@ class BlogController {
             blog
         })
     }
+
     async showapi(req, res, next) {
         const blog = await Blog.aggregate([
             {
@@ -33,7 +34,7 @@ class BlogController {
                 },
             },
         ]);
-        
+
         res.status(200).send(JSON.stringify(blog))
     }
 
