@@ -10,15 +10,10 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ADONIIS1/Education_DACN.git"
+    "type": "git"
   },
   "author": "nhom8",
   "license": "ISC",
-  "bugs": {
-    "url": "https://github.com/ADONIIS1/Education_DACN/issues"
-  },
-  "homepage": "https://github.com/ADONIIS1/Education_DACN#readme",
   "dependencies": {
     "@s-r0/eggy-js": "^1.3.4",
     "apexcharts": "^3.29.0",
