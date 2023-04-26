@@ -73,8 +73,6 @@ class GradeController {
             success: req.flash("success"),
             errors: req.flash("error"),
         });
-
-
     }
 
     // [POST]/Grade/create
@@ -88,7 +86,7 @@ class GradeController {
         }
         const grade = new Grade(formGrade);
         await grade.save();
-        req.flash("success", "Tạo Thành Công Một Lớp mới!");
+        req.flash("success", "Tạo Thành Công Một Lớp học mới!");
         res.redirect('/grade/list');
     }
 
